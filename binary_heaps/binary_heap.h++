@@ -12,60 +12,82 @@
 #define THESIS_BINARY_HEAP
 namespace KHJ {
   namespace thesis {
-    template <typename T, typename A = std::allocator<T>>
-      class binary_heap
-      {
-        // Private Data Members
-        //
+    namespace heap {
+      template <typename E, 
+                typename N, 
+                typename A = std::allocator<N>>
+        class binary_heap
+        {
+          // Private Data Members
+          //
         
-      public:
-        // Structors    
-        //
-         binary_heap( );
-        ~binary_heap( );
-    
-        // Typedefs
-        //
-              typedef T  value_type;
-              typedef A  allocator_type;
-              typedef T& reference;
-        typedef const T& const_reference;
-              typedef T* pointer;
-        typedef const T* const_pointer;
-      
-        // Allocators
-        //
-        //typedef typename allocator_type::template rebind<node_>::other node_allocator;
+        public:
+          // Structors    
+          //
+           binary_heap( );
+          ~binary_heap( );
         
-        // Iterators
-        //
-     
-        // Modifiers
-        //
-             bool empty   ( ) const;
-        reference top     ( ) const;           // find min/max
-        reference pop_top ( );                 // extract min/max
-             void insert  ( const_reference );
-             void decrease( );
-             void increase( T );
-             void erase   ( );
-             void replace ( );
-             void clear   ( );
-      private:
-        // Variable Members
-        //
-        //node_allocator  alloc_;
-        //         node_ *top_;
-      
-        // Function Members
-        //
-        //node_ *buy_node_( const T & ); 
-        //void  sell_node_( node_ * ); 
-        //void       clear( );
-        void siftup  ( );
-        void siftdown( );
-      
-      };
+          // Typedefs
+          //
+          typedef E  element_type;
+          typedef N  node_type;
+          typedef A  allocator_type;
+        
+          typedef E& reference;
+          typedef const E& const_reference;
+        
+          typedef E* pointer;
+          typedef const E* const_pointer;
+        
+          typedef N& node_reference;
+          typedef const N& const_node_reference;
+        
+          typedef N* node_pointer;
+          typedef const N* const_node_pointer;
+        
+          // Allocators
+          //
+          //typedef typename allocator_type::template rebind<N>::other node_allocator;
+          typedef allocator_type node_allocator;
+        
+          // Iterators
+          //
+        
+          // Modifiers
+          //
+          bool 
+          empty   ( ) const;
+          void 
+          clear   ( );
+          reference 
+          top     ( ) const;                         // find min/max
+          reference 
+          pop_top ( );                           // extract min/max
+          const_node_reference 
+          insert  ( const_reference );
+          void 
+          decrease( );
+          void 
+          increase( );
+          
+        private:
+          // Variable Members
+          //
+          node_pointer   t_;          
+          node_allocator alloc_;
+          
+          // Function Members
+          //
+          void 
+          swap_    ( );
+          void 
+          siftup_  ( );
+          void 
+          siftdown_( );
+          node_pointer 
+          buy_node_( const_reference );
+        };
+    }
   }
 }
 #include "binary_heap.i++"

@@ -1,0 +1,103 @@
+namespace KHJ  {
+  namespace thesis  {
+    
+    /*********************************************************************
+     *                                                                   *
+     *                 B i n a r y H e a p \ P u b l i c                 *
+     *                                                                   *
+     *********************************************************************/
+    
+    /**
+     * Constructor. Creates an empty heap.
+     * 
+     * complexity is (probably) O(1)
+     * @author KHJ
+     *
+     */
+    template <typename E, typename N, typename A>
+    heap::binary_heap<E, N, A>::binary_heap( ) : alloc_( A( ) ) 
+    { 
+      t_ = buy_node_( );
+    }
+    
+    /**
+     * DeConstructor. 
+     * 
+     * complexity is (probably) linear in the size of the heap.
+     * @author KHJ
+     *
+     */
+    template <typename E, typename N, typename A>
+    heap::binary_heap<E, N, A>::~binary_heap( ) 
+    { 
+      //clear( ); sell_node_( h_ );
+    }
+
+    /**
+     * Top
+     * 
+     * complexity is (probably) linear in the size of the heap.
+     * @author KHJ
+     *
+     */
+    template <typename E, typename N, typename A>
+    E&
+    heap::binary_heap<E, N, A>::top( ) const 
+    { 
+      //clear( ); sell_node_( h_ );
+    }
+
+    /**
+     * Insert. 
+     * 
+     * complexity is (probably) linear in the size of the heap.
+     * @author KHJ
+     *
+     */
+    template <typename E, typename N, typename A>
+    const N&
+    heap::binary_heap<E, N, A>::insert( const E& e ) 
+    { 
+      //clear( ); sell_node_( h_ );
+    }
+
+    /**
+     * Empty. 
+     * 
+     * complexity is O(1)
+     * @author KHJ
+     *
+     */
+    template <typename E, typename N, typename A>
+    bool
+    heap::binary_heap<E, N, A>::empty( ) const
+    { 
+      return t_->l_child_ == nullptr;
+    }
+
+
+     /*********************************************************************
+     *                                                                   *
+     *                B i n a r y H e a p \ P r i v a t e                *
+     *                                                                   *
+     *********************************************************************/
+
+    // Buy a node. Heap memory is the currency.
+    template <typename E, typename N, typename A> 
+    N*
+    heap::binary_heap<E, N, A>::buy_node_( const E& element = E( ) ) 
+    { 
+      N* node = alloc_.allocate( 1 );
+
+      try {
+        alloc_.construct( node, N( element ) );
+      }
+      catch(...) {
+        alloc_.deallocate( node, 1 );
+        throw;
+      }
+      return node;
+    }
+
+  }
+}
