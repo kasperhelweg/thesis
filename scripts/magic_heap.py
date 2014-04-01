@@ -1,54 +1,82 @@
-class heap_node( object ):
+#!/usr/bin/env python
+from magical_skew_list import *
+from binary_heap import *
+
+class magic_heap( object ):
   def __init__( self ):
-    self.color   = None # 0 is Black, 1 is White
-    self.right   = None # Right pointer
-    self.left    = None # Left pointer
-    self.element = None # Pointer to element
+    self.magical_skew = magical_skew_list( )
+    self.high_digits  = None # high and low digits might go in the magical_skew_list.
+    self.low_digits   = None
+    self.state_orbit  = None # maybe convenient, maybe not.
+        
+    self.min_pointer  = None
+        
+  def find_min( self ):
+    return self.min_pointer
 
-  def parent( self ):
-    if self.right == None:
-      return self
-    elif self.color == 0:#Black
-      return self.right.right
-    elif self.color == 1:#White
-      return self.right
+  def insert( self, element ):
+    # create empty, one element binary heap
+    # insert element into heap
+    new_heap = binary_heap( element )
 
-  def left_child( self ):
-    if self.left != None:
-      return self.left
+    # insert new_heap
+    front = self.magical_skew.front( )
+    if not front.head or front.head.find_min( ) < new_heap.find_min( ):
+      #insert at tail
+      front.append( new_heap )
+    else:
+      #insert at front
+      front.prepend( new_heap )
 
-  def right_child( self ):
-    if self.left != None:
-      return self.left.right
-
-  def right( self ):
-    return self.right
-
-  def left( self ):
-    return self.left
-
-  def root( self ):
-    return self.right == None
+    # update min pointer
+    if not self.min_pointer or new_heap.find_min( ) < self.min_pointer.find_min( ):
+      self.min_pointer = new_heap
+    
+    # Update list's of digits
+    # if front.size >= 3 # add to high digit list
+    # if in particular state, do a fix
 
 
-    # To figure out sift cases we examine self and parent
-    # ex. self = black, parent = black then case LS 1
-    #     self = white, parent = black then case LS 2
-    # etc...
+  def delete( self, node ):
+    pass
 
-node_root         = heap_node( )
-node_root.element = "root node"
+  def delete_min( self, node ):
+    pass
 
-node_l         = heap_node( )
-node_l.element = "left node"
-node_l.color   = 0
+  def meld( self, p_queue ):
+    pass
 
-node_r         = heap_node( )
-node_r.element = "right node"
-node_r.color   = 1
+  def size( self ):
+    #s = []
+    #while numerical.next( ) != None:
+    #  s.append += numerical.size( )
+    #  numerical.next( )
+      
+    #return s.to_decimal
+    pass
+    
+  def fix( self ):
+    # get first high node
+    # do insert
+    pass
 
-node_root.left = node_l
-node_l.right   = node_r
-node_r.right   = node_root
+  def unfix( self ):
+    pass
 
-print( "--Program heap_node--" )
+  def size( ):
+    pass
+
+
+if __name__ == "__main__":
+  m_heap = magic_heap( )
+  m_heap.insert( 21 )
+  m_heap.insert( 11 )
+  m_heap.insert( 10 )
+  
+  print( m_heap.min_pointer.find_min( ).element )
+  
+#node         = heap_node( "root" )
+#heap         = linked_list( )
+
+#print( heap.size( ) )
+#print( node.parent( ).element )
