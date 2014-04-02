@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 class heap_node( object ):
-  def __init__( self, element, color = 0 ):
+  def __init__( self, element = None, color = 0 ):
     self.right   = None    # Right pointer
     self.left    = None    # Left pointer
-    self.color   = color    # 0 is Black, 1 is White. Just a boolean bit value.
+    self.color   = color   # 0 is Black, 1 is White. Just a boolean bit value. Black is left. White is right.
     self.element = element # Pointer to element
 
 
@@ -11,9 +11,7 @@ class heap_node( object ):
 
 
   def parent( self ):
-    if self.right == None: 
-      return self
-    elif self.color == 0:       
+    if self.color == 0:       
       return self.right.right
     else:
       return self.right
@@ -26,11 +24,8 @@ class heap_node( object ):
     if self.left:
       return self.left.right
 
-  def left( self ):
-    return self.left
-
-  def right( self ):
-    return self.right
+  def is_root( self ):
+    return self.parent == None
 
 
   # H e a p N o d e \ P r i v a t e #
@@ -62,21 +57,62 @@ class binary_heap( object ):
   def cut_at_root( self ):
     lst = binary_heap( self.root.left )
     rst = binary_heap( self.root.left.right )
-    
+
     self.left      = None
     lst.root.right = None
     rst.root.right = None
+    lst.root.color = 0
     
     return [lst, rst]
-    
+
+  def replace( self ):
+    pass
+
   def splice( self, heaps ):
     print("wrapper for splice left and right")
     pass
 
-  def __siftup( self ):
+  def __siftup( self, node ):
+
+    while node < node.parent:
+      
+    #     /         /
+    #    R-        S-
+    #   / \   =>  / \
+    #  S - O     R - O
+
+      if node.color == 0 and node.parent.color == 0:
+        '''case 1 - left node in left subtree'''
+        s = node
+        o = node.right
+        r = node.parent
+      
+        # Cut loose
+        s.right = None
+        o.right = None
+        r.left  = s.left
+      
+        # Sew up
+        s.left   = r
+        s.right  = r.right
+        o.right  = s
+        s.parent = s
+
+    #     /         /
+    #    R-        S-
+    #   / \   =>  / \
+    #  O - S     O - R
+
+      if node.color == 1 and node.parent.color == 0:
+        '''case 2 - left node in left subtree'''
+        pass
+
+
+
+  def __siftdown( self, node ):
     pass
 
-  def __siftdown( self ):
+  def __swap( self ):
     pass
 
   def __splice_left( self, heap ):
@@ -84,11 +120,6 @@ class binary_heap( object ):
   
   def __splice_right( self, heap ):
     ''' Splice right subtree into heap'''
-
-  # To figure out sift cases we examine self and parent
-  # ex. self = black, parent = black then case LS 1
-  #     self = white, parent = black then case LS 2
-  # etc...
 
 if __name__ == "__main__":
   node_root           = heap_node( "root_node", 0 )

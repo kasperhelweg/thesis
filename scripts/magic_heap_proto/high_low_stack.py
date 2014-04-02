@@ -12,7 +12,7 @@ class high_stack( object ):
   def push( self, node ):
     n = h_stack_node( node )
     if not self.head:
-      self.head   = n
+      self.head = n
     else:
       n.next    = self.head
       self.head = n
