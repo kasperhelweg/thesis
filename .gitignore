@@ -21,4 +21,4 @@
 *.app
 
 # Special
-#__pycache__
+__pycache__
