@@ -37,17 +37,36 @@ class heap_node( object ):
   def left( self ):
     return self.left
 
-  def root( self ):
+  def is_root( self ):
     return self.right == None or self.right.color == 0
 
-
 class binary_heap( object ):
-  def __init__( self, element ):
-    # new black root node
+  def __init__( self ):
+    self.root  = None
+    self.right = None
+
+  def add_root( self, root ):
+    self.root = root
+
+  def insert( self, element ):
     self.root = heap_node( element, 0 )
-    
+
   def find_min( self ):
     return self.root
+
+  def split( self ):
+    print("splits heap into three")
+    pass
+
+  def splice( self, heaps ):
+    print("wrapper for split left and right")
+    pass
+
+  def splice_left( self, heap ):
+    ''' Splice left subtree into heap'''
+  
+  def splice_right( self, heap ):
+    ''' Splice right subtree into heap'''
 
   def siftup( self ):
     pass
