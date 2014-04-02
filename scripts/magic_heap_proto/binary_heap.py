@@ -60,8 +60,8 @@ class binary_heap( object ):
     return self.root
 
   def cut_at_root( self ):
-    lst = binary_heap( self.left_subtree( ) )
-    rst = binary_heap( self.right_subtree( ) )
+    lst = binary_heap( self.root.left )
+    rst = binary_heap( self.root.left.right )
     
     self.left      = None
     lst.root.right = None
