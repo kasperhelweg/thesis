@@ -1,13 +1,43 @@
 #!/usr/bin/env python
 class heap_node( object ):
-  def __init__( self, element, color ):
-    self.color   = None # 0 is Black, 1 is White. Just a boolean bit value.
-    self.right   = None # Right pointer
-    self.left    = None # Left pointer
+  def __init__( self, element, color = 0 ):
+    self.right   = None    # Right pointer
+    self.left    = None    # Left pointer
+    self.color   = color    # 0 is Black, 1 is White. Just a boolean bit value.
     self.element = element # Pointer to element
 
-  def __eq__( self, other ):
-    return self.element == other.element
+
+  # H e a p N o d e \ P u b l i c #
+
+
+  def parent( self ):
+    if self.right == None: 
+      return self
+    elif self.color == 0:       
+      return self.right.right
+    else:
+      return self.right
+
+  def left_subtree( self ):
+    if self.left:
+      return self.left
+
+  def right_subtree( self ):
+    if self.left:
+      return self.left.right
+
+  def left( self ):
+    return self.left
+
+  def right( self ):
+    return self.right
+
+
+  # H e a p N o d e \ P r i v a t e #
+
+
+  #def __eq__( self, other ):
+  #  return self.element == other.element
     
   def __lt__( self, other ):
     return self.element < other.element
@@ -15,34 +45,9 @@ class heap_node( object ):
   def __gt__( self, other ):
     return self.element > other.element
 
-  def parent( self ):
-    if self.root( ): 
-      return self
-    elif self.color == 0: 
-      return self.right.right
-    elif self.color == 1: 
-      return self.right
-
-  def left_child( self ):
-    if self.left:
-      return self.left
-
-  def right_child( self ):
-    if self.left:
-      return self.left.right
-
-  def right( self ):
-    return self.right
-
-  def left( self ):
-    return self.left
-
-  def is_root( self ):
-    return self.right == None or self.right.color == 0
-
 class binary_heap( object ):
-  def __init__( self ):
-    self.root  = None
+  def __init__( self, root = None ):
+    self.root  = root
     self.right = None
 
   def add_root( self, root ):
@@ -54,18 +59,24 @@ class binary_heap( object ):
   def find_min( self ):
     return self.root
 
-  def split( self ):
-    print("splits heap into three")
-    pass
-
+  def cut_at_root( self ):
+    lst = binary_heap( self.left_subtree( ) )
+    rst = binary_heap( self.right_subtree( ) )
+    
+    self.left      = None
+    lst.root.right = None
+    rst.root.right = None
+    
+    return [lst, rst]
+    
   def splice( self, heaps ):
-    print("wrapper for split left and right")
+    print("wrapper for splice left and right")
     pass
 
-  def siftup( self ):
+  def __siftup( self ):
     pass
 
-  def siftdown( self ):
+  def __siftdown( self ):
     pass
 
   def __splice_left( self, heap ):
@@ -80,24 +91,18 @@ class binary_heap( object ):
   # etc...
 
 if __name__ == "__main__":
-  node_root          = heap_node( )
-  node_root.element  = "root node"
-  assert "root node" == node_root.parent( ).element
+  node_root           = heap_node( "root_node", 0 )
+  assert "root_node" == node_root.parent( ).element
 
-  node_l         = heap_node( )
-  node_l.element = "left node"
-  node_l.color   = 0
-  
-  node_r         = heap_node( )
-  node_r.element = "right node"
-  node_r.color   = 1
+  node_l = heap_node( "left_node", 0 )
+  node_r = heap_node( "right_node", 1 )
 
   node_root.left = node_l
   node_l.right   = node_r
   node_r.right   = node_root
 
-  assert "left node"  == node_root.left_child( ).element
-  assert "right node" == node_root.right_child( ).element
+  assert "left_node"  == node_root.left_subtree( ).element
+  assert "right_node" == node_root.right_subtree( ).element
 
-  assert "root node"  == node_root.left_child( ).parent( ).element
-  assert "root node"  == node_root.right_child( ).parent( ).element
+  assert "root_node"  == node_root.left_subtree( ).parent( ).element
+  assert "root_node"  == node_root.right_subtree( ).parent( ).element

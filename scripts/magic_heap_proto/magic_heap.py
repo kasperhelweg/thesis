@@ -3,13 +3,47 @@ from binary_heap import *
 
 class magical_heap_node( object ):
   def __init__( self ):
-    self.east  = None
-    self.west  = None
+    self.next     = None
+    self.previous = None
     
     self.head = None
     self.tail = None
     
     self.size = 0
+
+  def insert( self, node ):
+    if not self.head or self.head.find_min( ) < node.find_min( ):
+      #insert at tail
+      if not self.tail:
+        self.head = node
+        self.tail = node
+      else:
+        self.tail.right = node
+        self.tail       = node
+    else:
+      #insert at front
+      node.right = self.head 
+      self.head  = node
+      
+    self.size += 1
+
+  def pop( self ):
+    e          = self.head
+    self.head  = self.head.right 
+    e.right    = None
+    self.size -= 1
+    
+    if self.size == 0:
+      self.tail = self.head
+
+    return e
+
+  def meld( self, other ):
+    pass
+    
+  def is_front( self  ):
+    return self.previous == None
+
 
 class magic_heap( object ):
   def __init__( self ):
@@ -21,24 +55,26 @@ class magic_heap( object ):
         
     self.min_pointer = None
 
-  #********************************************************************#
-  #                                                                    #
-  #                  M a g i c H e a p \ P u b l i c                   #
-  #                                                                    #
-  #********************************************************************#
+
+  # M a g i c H e a p \ P u b l i c #
+
 
   def find_min( self ):
-    return self.min_pointer
+    return self.min_pointer.find_min( )
 
   def insert( self, element ): # increment
     # create empty, one element binary heap
     # insert element into heap
-    new_heap = binary_heap( )
-    new_heap.insert( element )
-    
+    hn = heap_node( element )
+    nh = binary_heap( hn )
+
     node = self.__front( )
-    self.__meld( node, new_heap )
-    
+    node.insert( nh )
+
+    # update min pointer
+    if not self.min_pointer or nh.find_min( ) < self.min_pointer.find_min( ):
+      self.min_pointer = nh
+
     # Update list's of digits
     if node.size >= 3:
       self.__fix( node ) # add to high digit list
@@ -58,59 +94,32 @@ class magic_heap( object ):
     i = self.__front( )
     while i:
       s.append( i.size )
-      i = i.east
+      i = i.next
     return self.__value_of( s )
 
-  #********************************************************************#
-  #                                                                    #
-  #                 M a g i c H e a p \ P r i v a t e                  #
-  #                                                                    #
-  #********************************************************************#
+
+  # M a g i c H e a p \ P r i v a t e #
 
   def __front( self ):
     return self.first
 
-  def __grow( self ):
-    pass
+  def __grow( self, node ):
+    mhn          = magical_heap_node( )
+    node.next    = mhn
+    mhn.previous = node
 
-  def __shrink( self ):
-    pass
+  def __shrink( self, node ):
+    node.previous.next = None
+    node.previous      = None
 
   def __meld( self, node, heap ):
-    ''' 
-    '''
-    if not node.head or node.head.find_min( ) < heap.find_min( ):
-      #insert at tail
-      if not node.tail:
-        node.head = heap
-        node.tail = heap
-      else:
-        node.tail.right = heap
-        node.tail       = heap
-    else:
-      #insert at front
-      heap.right = node.head 
-      node.head  = heap
+   pass
     
-    node.size += 1
-
-    # update min pointer
-    if not self.min_pointer or heap.find_min( ) < self.min_pointer.find_min( ):
-      self.min_pointer = heap
-
-  def __pop ( self, node ):
-    e         = node.head
-    node.head = node.head.right 
-    e.right   = None
-    
-    return e
-    
-  def __slice:
-    ''' Slice of say two nodes instead of popping one. Usefull for fixes.
-    '''
+  def __slice( self ):
+    ''' Slice of say two nodes instead of popping one. Usefull for fixes.'''
     pass
 
-  def __splice:
+  def __splice( self ):
     ''' Instead of insert, splices a slice of nodes into heap list
     '''
     pass
@@ -118,23 +127,25 @@ class magic_heap( object ):
   def __fix( self, node ):
     # get first high node
     # do insert
-    
-    #min    = self.__pop( node )
-    #lchild = self.__pop( node )
-    #rchild = self.__pop( node )
-    
-    #new_heap_l = binary_heap( )
-    #new_heap_r = binary_heap( )
+   
+    # Decrease sigma_j by 3
+    mh = node.pop( )
+    lh = node.pop( )
+    rh = node.pop( )
 
-    #new_heap_r.add_root( min.split_left( ) )
-    #new_heap_l.add_root( min.split_right( ) )
-  
-    #min.add_left( lchild )
-    #min.add_right( rchild )
-
-    #self.__add( node.east, min  )
-    #self.__add( node,west, new_heap_l  )
-    #self.__add( node,west, new_heap_r  )
+    if not node.is_front( ):
+      lrh = mh.cut_at_root( )
+      
+    mh.root.left  = lh.root
+    lh.root.right = rh.root
+    
+    # Increase sigma_j+1 by 1
+    if node.next == None:
+      self.__grow( node )
+    node.next.insert( mh )
+    
+    # Increase sigma_j-1 by 2
+    # node.previous.meld( )
     pass
 
   def __unfix( self ):
@@ -158,11 +169,17 @@ class magic_heap( object ):
 
 if __name__ == "__main__":
   m_heap = magic_heap( )
+  
+  print( m_heap.size( ) )
   m_heap.insert( 21 )
   m_heap.insert( 11 )
   m_heap.insert( 10 )
-  
-  #print( m_heap.size( ) )
+  print( m_heap.size( ) )
+  m_heap.insert( 2 )
+  m_heap.insert( 8 )
+  m_heap.insert( 7 )
+  print( m_heap.size( ) )
+
   #print( m_heap.min_pointer.find_min( ).element )
   #m_heap.scan( )
 
