@@ -62,17 +62,17 @@ class binary_heap( object ):
     print("wrapper for split left and right")
     pass
 
-  def splice_left( self, heap ):
-    ''' Splice left subtree into heap'''
-  
-  def splice_right( self, heap ):
-    ''' Splice right subtree into heap'''
-
   def siftup( self ):
     pass
 
   def siftdown( self ):
     pass
+
+  def __splice_left( self, heap ):
+    ''' Splice left subtree into heap'''
+  
+  def __splice_right( self, heap ):
+    ''' Splice right subtree into heap'''
 
   # To figure out sift cases we examine self and parent
   # ex. self = black, parent = black then case LS 1
