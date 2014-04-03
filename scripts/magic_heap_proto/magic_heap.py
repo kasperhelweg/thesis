@@ -37,7 +37,7 @@ class magical_heap_node( object ):
     self.size -= 1
     self.head  = t
 
-    if self.size == 0:
+    if self.empty( ):
       self.tail = self.head
     return e
 
@@ -49,6 +49,9 @@ class magical_heap_node( object ):
     
   def is_high( self ):
     return self.size == 3
+
+  def empty( self ):
+    return self.size == 0
 
 class magic_heap( object ):
   def __init__( self ):
@@ -152,6 +155,7 @@ class magic_heap( object ):
     
     # increase sigma_j+1 by 1
     node.next.insert( mh )
+    # need to fix up this tail too!
     if node.next.is_high( ):
       self.high_stack.push( node.next )
   
@@ -161,14 +165,25 @@ class magic_heap( object ):
       node.previous.insert( lrh[1] )
       if node.previous.is_high( ):
         self.high_stack.push( node.previous  )
+
+    # fix tail pointers
+    if not node.empty( ):
+      node.tail.right = node.next.head
+      if not node.is_front( ):
+        node.previous.tail.right = node.head
+    else:
+      if not node.is_front( ):
+        node.previous.tail.right = node.next.head
   
+    
+
   def __unfix( self, node ):
     if not node.is_front( ):
       
       pass
     pass
 
-  def __scan( self ):
+  def scan( self ):
     head = self.__front( ).head
     while head:
       print( head.find_min( ).element  )
@@ -199,7 +214,7 @@ if __name__ == "__main__":
   m_heap = magic_heap( )
   print( "size: " + str( m_heap.size( ) ) )
 
-  for i in range( 0, 100000 ):
+  for i in range( 0, 20 ):
     node         = m_heap.buy_node( )
     node.element = get_random( )
     m_heap.insert( node  )
@@ -208,3 +223,5 @@ if __name__ == "__main__":
   print( "size: " + str( m_heap.size( ) ) )
   print( "structure: " + str( m_heap.list( ) ) )
   print( "min element: " + str( m_heap.find_min( ).element ) )
+
+  m_heap.scan()
