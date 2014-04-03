@@ -35,7 +35,7 @@ def to_binary( D ):
 
 
 D = [2,1]
-for i in range( 0, 10000):
+for i in range( 0, 100):
   D = increment( D )
   print( str( value_of(D) ) + ": " + str(D) )
 

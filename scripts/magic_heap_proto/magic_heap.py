@@ -92,8 +92,7 @@ class magic_heap( object ):
       if node_to_fix:
         self.__fix( node_to_fix ) 
 
-  def delete( self, node ): # decrement
-    
+  def delete( self, node ): # decrement    
     pass
 
   def delete_min( self, node ):
@@ -165,29 +164,20 @@ class magic_heap( object ):
       node.previous.insert( lrh[1] )
       if node.previous.is_high( ):
         self.high_stack.push( node.previous  )
-
-    # fix tail pointers
-    if not node.empty( ):
-      node.tail.right = node.next.head
-      if not node.is_front( ):
-        node.previous.tail.right = node.head
-    else:
-      if not node.is_front( ):
-        node.previous.tail.right = node.next.head
-  
-    
-
+        
   def __unfix( self, node ):
     if not node.is_front( ):
-      
       pass
     pass
 
-  def scan( self ):
-    head = self.__front( ).head
-    while head:
-      print( head.find_min( ).element  )
-      head = head.right
+  def __scan( self ):
+    miterator = self.__front( )
+    while miterator != None:
+      riterator = miterator.head
+      while riterator != None:
+        print( riterator.find_min( ).element  )
+        riterator = riterator.right
+      miterator = miterator.next
 
   def __empty( self, node ):
     return node.size == 0
@@ -207,21 +197,24 @@ class magic_heap( object ):
     return s
 
 
+
+
 if __name__ == "__main__":
   def get_random( ):
-    return random.randint( 1, 100000 )
+    return random.randint( 1, 1000000 )
 
   m_heap = magic_heap( )
   print( "size: " + str( m_heap.size( ) ) )
 
-  for i in range( 0, 20 ):
+  for i in range( 0, 1000000 ):
     node         = m_heap.buy_node( )
     node.element = get_random( )
     m_heap.insert( node  )
-    #print(str(m_heap.size()) + " : " + str( m_heap.numerical())) 
-  
+    #print( "size: " + str( m_heap.size( ) ) )
+    #print( "structure: " + str( m_heap.list( ) ) )
+
   print( "size: " + str( m_heap.size( ) ) )
   print( "structure: " + str( m_heap.list( ) ) )
   print( "min element: " + str( m_heap.find_min( ).element ) )
 
-  m_heap.scan()
+  #m_heap.__scan()

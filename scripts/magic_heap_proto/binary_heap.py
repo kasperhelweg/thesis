@@ -29,6 +29,9 @@ class heap_node( object ):
   def is_root( self ):
     return self.right == None
 
+  def is_leaf( self ):
+    return self.left == None
+
 
   # H e a p N o d e \ P r i v a t e #
   # ------------------------------- #
@@ -84,180 +87,6 @@ class binary_heap( object ):
     
     return [lst, rst]
 
-  def replace( self ):
-    pass
-
-  def splice( self, heaps ):
-    print("wrapper for splice left and right")
-    pass
-
-  
-  # B i n a r y H e a p \ P r i v a t e #
-  # ----------------------------------- #
-
-
-  def siftup( self, node ):
-    '''procedure __siftup. complexity is O(lg n)
-      each case does: 
-    3 temporary pointer variables + 2 cuts + at most 6 sews + at most 1 color-bit flip
-    = at most 12 operations 
-    = O(1) operations'''
-  
-    s = node
-    while not node.is_root( ) and node < node.parent( ):
-
-    #             
-    #    R         S
-    #   / \   =>  / \
-    #  S - O     R - O
-
-      if node.parent( ).is_root( ) and node.color == 1:
-        '''case 0 - left node, parent is root'''
-        s = node
-        o = node.right
-        r = node.parent( )
-      
-        # Cut out
-        s.right = None
-        o.right = None
-        r.left  = s.left
-
-        # Sew up
-        s.left  = r
-        o.right = s
-        r.right = o
-
-        s.color = 0
-
-    #               
-    #    R         S
-    #   / \   =>  / \
-    #  O - S     O - R
-
-      elif node.parent( ).is_root( ) and node.color == 0:
-        '''case 0-1 - right node, parent is root'''
-        s = node
-        o = node.parent( ).left
-        r = node.parent( )
-      
-        # Cut out 
-        s.right = None
-        o.right = None
-        r.left  = s.left
-
-        # Sew up
-        s.left  = o
-        o.right = r
-        r.right = s
-
-    #     /         /
-    #    R-        S-
-    #   / \   =>  / \
-    #  S - O     R - O
-
-      elif node.color == 1 and node.parent( ).color == 1:
-        '''case 1 - left node in left subtree'''
-        s = node
-        o = node.right
-        r = node.parent( )
-      
-        # Cut out
-        s.right = None
-        o.right = None
-        r.left  = s.left
-
-        # Sew up
-        s.left  = r
-        s.right = r.right
-        o.right = s
-        r.right = o
-        if not s.is_root( ):
-          s.parent( ).left = s
-
-    #     /         /
-    #    R-        S-
-    #   / \   =>  / \
-    #  O - S     O - R
-
-      elif node.color == 0 and node.parent( ).color == 1:
-        '''case 2 - right node in left subtree'''
-        s = node
-        o = node.parent( ).left
-        r = node.parent( )
-      
-        # Cut out
-        s.right = None
-        o.right = None
-        r.left  = s.left
-
-        # Sew up
-        s.left  = o
-        s.right = r.right
-        o.right = r
-        r.right = s
-        if not s.is_root( ):
-          s.parent( ).left = s
-          s.color = 1
-
-    #   \         \
-    #   -R        -S
-    #   / \   =>  / \
-    #  S - O     R - O
-
-      elif node.color == 1 and node.parent( ).color == 0:
-        '''case 3 - left node in right subtree'''
-        s = node
-        o = s.right
-        r = node.parent( )
-      
-        # Cut out
-        s.right = None
-        o.right = None
-        r.left  = s.left
-
-        # Sew up
-        s.left  = r
-        s.right = r.right
-        o.right = s
-        r.right = o
-        if not s.is_root( ):
-          s.parent( ).left.right = s
-          s.color = 0
-
-    #   \         \
-    #   -R        -S
-    #   / \   =>  / \
-    #  O - S     O - R
-
-      elif node.color == 0 and node.parent( ).color == 0:
-        '''case 4 - right node in right subtree'''
-        s = node
-        o = node.parent( ).left
-        r = node.parent( )
-        
-        # Cut out
-        s.right = None
-        o.right = None
-        r.left  = s.left
-
-        # Sew up
-        s.left  = o
-        s.right = r.right
-        o.right = r
-        r.right = s
-        if not s.is_root( ):
-          s.parent( ).left.right = s
-          
-    if s.is_root( ):
-      self.root = s
-
-  def __siftdown( self, node ):
-    '''siftup procedure. complexity is 2 O(lg n)'''
-    pass
-
-  def __swap( self, node, other ):
-    pass
-
   def replace( self, node, other ):
     other.left  = node.left
     other.right = node.right
@@ -274,15 +103,224 @@ class binary_heap( object ):
 
     return node
 
+  def splice( self, heaps ):
+    print("wrapper for splice left and right")
+    pass
+
+  def size( self ):
+    lvls = 0
+    n = self.root
+    
+    while n.left != None:
+      n = n.left
+      lvls += 1
+
+    return 2**lvls - 1
+  
+  # B i n a r y H e a p \ P r i v a t e #
+  # ----------------------------------- #
+
+
+  def siftup( self, node ):
+    '''procedure __siftup. complexity is O(lg n)
+      each case does: 
+    3 temporary pointer variables + 2 cuts + at most 6 sews + at most 1 color-bit flip
+    = at most 12 operations 
+    = O(1) operations'''
+  
+    s = node
+    p = node.parent( )
+    while not s.is_root( ) and s < p:
+      self.__swap( s, p)
+      p = s.parent( )
+
+    if s.is_root( ):
+      self.root = s
+
+  def siftdown( self, node ):
+    '''siftup procedure. complexity is 2 O(lg n)'''
+    
+    s  = node
+    lc = node.left_subtree( )
+    rc = node.right_subtree( )
+
+    while not s.is_leaf( ):
+      if   s > lc:
+        self.__swap( lc, s)
+      elif s > rc:
+        self.__swap( rc, s)
+      else:
+        break
+      lc = s.left_subtree( )
+      rc = s.right_subtree( )
+
+  def __swap( self, node, other ):
+    #             
+    #    R           S
+    #   / \   <=>   / \
+    #  S - O       R - O
+
+    if other.is_root( ) and node.color == 1:
+      '''case 0 - left node, parent is root'''
+      s = node
+      o = node.right
+      r = other
+      
+      # Cut out
+      s.right = None
+      o.right = None
+      r.left  = s.left
+
+      # Sew up
+      s.left  = r
+      o.right = s
+      r.right = o
+      self.__swap_colors( s, r ) 
+
+    #               
+    #    R           S
+    #   / \   <=>   / \
+    #  O - S       O - R
+
+    elif other.is_root( ) and node.color == 0:
+      '''case 0-1 - right node, parent is root'''
+      s = node
+      o = other.left
+      r = other
+      
+      # Cut out 
+      s.right = None
+      o.right = None
+      r.left  = s.left
+
+      # Sew up
+      s.left  = o
+      o.right = r
+      r.right = s
+
+    #     /           /
+    #    R-          S-
+    #   / \   <=>   / \
+    #  S - O       R - O
+
+    elif node.color == 1 and other.color == 1:
+      '''case 1 - left node in left subtree'''
+      s = node
+      o = node.right
+      r = other
+      
+      # Cut out
+      s.right = None
+      o.right = None
+      r.left  = s.left
+
+      # Sew up
+      s.left  = r
+      s.right = r.right
+      o.right = s
+      r.right = o
+      if not s.is_root( ):
+        s.parent( ).left = s
+
+    #     /           /
+    #    R-          S-
+    #   / \   <=>   / \
+    #  O - S       O - R
+
+    elif node.color == 0 and other.color == 1:
+      '''case 2 - right node in left subtree'''
+      s = node
+      o = other.left
+      r = other
+      
+      # Cut out
+      s.right = None
+      o.right = None
+      r.left  = s.left
+
+      # Sew up
+      s.left  = o
+      s.right = r.right
+      o.right = r
+      r.right = s
+      self.__swap_colors( s, r ) 
+      if not s.is_root( ):
+        s.parent( ).left = s
+        
+    #   \           \
+    #   -R          -S
+    #   / \   <=>   / \
+    #  S - O       R - O
+
+    elif node.color == 1 and other.color == 0:
+      '''case 3 - left node in right subtree'''
+      s = node
+      o = s.right
+      r = other
+      
+      # Cut out
+      s.right = None
+      o.right = None
+      r.left  = s.left
+
+      # Sew up
+      s.left  = r
+      s.right = r.right
+      o.right = s
+      r.right = o
+      self.__swap_colors( s, r ) 
+      if not s.is_root( ):
+        s.parent( ).left.right = s
+        
+
+    #   \           \
+    #   -R          -S
+    #   / \   <=>   / \
+    #  O - S       O - R
+
+    elif node.color == 0 and other.color == 0:
+      '''case 4 - right node in right subtree'''
+      s = node
+      o = other.left
+      r = other
+        
+      # Cut out
+      s.right = None
+      o.right = None
+      r.left  = s.left
+
+      # Sew up
+      s.left  = o
+      s.right = r.right
+      o.right = r
+      r.right = s
+      if not s.is_root( ):
+        s.parent( ).left.right = s
+    
   def __splice_left( self, heap ):
     ''' Splice left subtree into heap'''
   
   def __splice_right( self, heap ):
     ''' Splice right subtree into heap'''
 
+  def __swap_colors( self, node, other ):
+    tmp = node.color
+    node.color  = other.color
+    other.color = tmp
+
+
 if __name__ == "__main__":
   import random
   import heap_utils
+
+    
+
+  # H e a p N o d e \ T e s t #
+  # ------------------------- #
+
+
+  # B i n a r y H e a p \ T e s t #
+  # ----------------------------- #
 
   #             
   #    R
@@ -363,9 +401,9 @@ if __name__ == "__main__":
  
 
   '''siftup - random''' 
-  for i in range(0, 100 ):
+  for i in range(0, 1000 ):
     rv    = random.randint( 10, 1000 )
-    lvels = random.randint( 1, 10 )
+    lvels = random.randint( 1, 12 )
 
     bh         = heap_utils.build_heap( lvels, rv  )  
     assert rv == bh.root.element
@@ -379,10 +417,39 @@ if __name__ == "__main__":
   
     assert sp.element == bh.root.element
     
+  '''siftdown'''
+  lvls = 12
+  rv   = 0
+  bh   = heap_utils.build_heap( lvls, rv, False  )  
+  assert rv == bh.root.element
+    
+  s  = heap_utils.request_node( bh, 1, 0 )
+  sp = heap_node( lvls + 1, 0 ) 
+  n  = bh.replace( s, sp )
 
-  # H e a p N o d e \ T e s t #
-  # ------------------------- #
+  assert n.element == s.element
+  assert True == sp.is_root( )
+  
+  bh.siftdown( sp )
+  
+  assert True == sp.is_leaf( )
 
 
-  # B i n a r y H e a p \ T e s t #
-  # ----------------------------- #
+  '''siftdown - random'''
+  for i in range(0, 1000 ):
+    rv    = 0
+    lvels = random.randint( 1, 12 )
+
+    bh         = heap_utils.build_heap( lvels, rv, False  )  
+    assert rv == bh.root.element
+    
+    s  = heap_utils.request_random_node( bh, lvels )
+    sp = heap_node( lvels + 1, 0 ) 
+    n  = bh.replace( s, sp )
+
+    assert n.element == s.element
+    #assert True == sp.is_root( )
+  
+    bh.siftdown( sp )
+  
+    assert True == sp.is_leaf( )
