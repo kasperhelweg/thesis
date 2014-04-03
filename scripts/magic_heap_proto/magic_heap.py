@@ -167,6 +167,7 @@ class magic_heap( object ):
       
       pass
     pass
+
   def __scan( self ):
     head = self.__front( ).head
     while head:
