@@ -18,6 +18,14 @@ def attach_children( r, rand ):
 
   return [s, o]
 
+def print_children( c ):
+  print(c.color)
+  print(c.element)
+  s = c.left
+  o = c.left.right
+
+  return [s, o]
+
 def build_heap( h, rv, rand = True ):
   def rec( n, h, b ):
     if h == b:
@@ -59,8 +67,12 @@ def request_node( bh, node, level ):
 def request_random_node( bh, levels ):
   lvel = random.randint( 0, levels )
   nde  = random.randint( 1, 2**lvel )
-  n    = request_node( bh, nde, lvel )
-  return n
+  return request_node( bh, nde, lvel )
+
+def assert_heap( ):
+  ''' Sould take a heap, and assert that it is indeed a heap ''' 
+  pass
+
 
 if __name__ == "__main__":
 
@@ -75,3 +87,7 @@ if __name__ == "__main__":
 
   bh = build_heap( 4, rv  )
   assert 15 == bh.size()
+
+
+  bh = build_heap( 4, 10  )
+  print_heap(bh)
