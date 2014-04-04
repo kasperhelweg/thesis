@@ -1,13 +1,14 @@
-from binary_heap import *
 import random
+from statistics import mean
+from binary_heap import *
 
 # H e a p U t i l s \ B u i l d H e a p #
 # ------------------------------------- #
 
 def attach_children( r, rand ):
   if rand:
-    s = heap_node( random.randint( r.element + 1, r.element + 2 + 100000 ), 1 )
-    o = heap_node( random.randint( r.element + 1, r.element + 2 + 100000 ), 0 )
+    s = heap_node( random.randint( r.element + 100, r.element + 1000 ), 1 )
+    o = heap_node( random.randint( r.element + 500, r.element + 1000 ), 0 )
   else:
     s = heap_node( r.element + 1, 1 )
     o = heap_node( r.element + 1, 0 )
@@ -42,8 +43,18 @@ def build_heap( h, rv, rand = True ):
 # H e a p U t i l s \ D r a w H e a p #
 # ----------------------------------- #
 
-def draw_heap( bh, f ):
-  pass
+def draw_heap( bh, f = None ):
+  def rec( n ):
+    if n.left == None:
+      return
+    else:
+      lc = n.left
+      rc = n.left.right
+      print("root: " + str(n.element) + " " + "lc: " + str(lc.element) + " " + "rc: " + str(rc.element) )
+      rec( lc )
+      rec( rc )
+  rec( bh.root )
+
 
 # H e a p U t i l s \ M i s c #
 # --------------------------- #
@@ -69,13 +80,39 @@ def request_random_node( bh, levels ):
   nde  = random.randint( 1, 2**lvel )
   return request_node( bh, nde, lvel )
 
-def assert_heap( ):
+def assert_heap( bh ):
   ''' Sould take a heap, and assert that it is indeed a heap ''' 
-  pass
+  def rec( n ):
+    if n.left == None:
+      return
+    else:
+      lc = n.left
+      rc = n.left.right
+      assert n <= lc and n <= rc
+      rec( lc )
+      rec( rc )
+  rec( bh.root )
 
+def heap_mean( bh ):
+  def rec( n ):
+    if n.left == None:
+      return
+    else:
+      lc = n.left
+      rc = n.left.right
+      vals.append(n.element)
+      vals.append(lc.element)
+      vals.append(rc.element)
+      rec( lc )
+      rec( rc )
+  vals = []
+  rec( bh.root )
+  return mean(vals)
+
+  
 
 if __name__ == "__main__":
-
+  
   rv = random.randint( 100, 1000 )
   bh = build_heap( 3, rv  )
 
@@ -88,6 +125,7 @@ if __name__ == "__main__":
   bh = build_heap( 4, rv  )
   assert 15 == bh.size()
 
-
-  bh = build_heap( 4, 10  )
-  print_heap(bh)
+  lvls = 14
+  bh   = build_heap( lvls, random.randint( 0, 100 )  )
+  assert None == assert_heap( bh )  
+  

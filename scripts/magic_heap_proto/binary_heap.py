@@ -19,7 +19,7 @@ class heap_node( object ):
         return self.right
       else:
         return self.right.right
-  
+
   # should be renamed to just left_child / right_child
   def left_subtree( self ):
     if self.left:
@@ -65,7 +65,6 @@ class heap_node( object ):
       return self.element < other.element or self.element == other.element 
     else:
       return self.element < other or self.element == other
-
 
   def __gt__( self, other ):
     if not other == None:
@@ -158,11 +157,12 @@ class binary_heap( object ):
   
     s = node
     p = node.parent( )
+    self.siftup_comps += 1
     while not s.is_root( ) and s < p:
       self.siftup_comps += 1
       self.__swap( s, p)
       p = s.parent( )
-      
+    
       #if DEBUG:
       #  self.siftup_comps += 1
       #  assert s.left_child( ) >= s
@@ -184,13 +184,11 @@ class binary_heap( object ):
     s  = node
     lc = node.left_child( )
     rc = node.right_child( )
-    
     while not s.is_leaf( ):
-      self.siftdown_comps += 1
-      if s > lc:
-        self.__swap( lc, s)
-      elif s > rc:
-        self.__swap( rc, s)
+      self.siftdown_comps += 2
+      e = lc if lc < rc else rc
+      if s > e:
+        self.__swap( e, s )
       else:
         break
 
@@ -460,8 +458,9 @@ if __name__ == "__main__":
   assert sp.element == bh.root.element
  
 
-  '''siftup - random - sift to root''' 
   '''
+  siftup - random - sift to root
+  ''' 
   comps = []
   for i in range(0, 100 ):
     rv    = random.randint( 10, 1000 )
@@ -478,66 +477,34 @@ if __name__ == "__main__":
     bh.siftup( sp )
   
     assert sp.element == bh.root.element
-  
+    heap_utils.assert_heap( bh )
+
     comps.append(bh.siftup_comps)
   
   print(mean(comps))
+
+  '''siftdown - random - sift to bottom
   '''
-
-  '''siftup - more random''' 
-
-  '''
-  comps = []
-  for i in range(0, 10000 ):
-    rv    = random.randint( 10, 1000 )
-    lvels = random.randint( 1, 13 )
-
-    bh         = heap_utils.build_heap( lvels, rv  )  
+  for i in range(0, 100 ):
+    lvls = 12
+    rv   = 0
+    bh   = heap_utils.build_heap( lvls, rv, False  )  
     assert rv == bh.root.element
     
-    s  = heap_utils.request_random_node( bh, lvels )
-    sp = heap_node( random.randint( 1000, 10000 ), s.color ) 
+    s  = heap_utils.request_node( bh, 1, 0 )
+    sp = heap_node( lvls + 1, 0 ) 
     n  = bh.replace( s, sp )
 
     assert n.element == s.element
-
-    if not sp.is_root( ):
-      bh.siftup( sp )
+    assert True == sp.is_root( )
   
-      if not sp.is_root():
-        assert sp.parent() <= sp
-
-      if not sp.is_leaf():
-        assert sp.left_child( ) >= sp
-        assert sp.right_child( ) >= sp
-    
-    comps.append(bh.siftup_comps)
+    bh.siftdown( sp )
   
-  print(mean(comps))
-  '''
+    assert True == sp.is_leaf( )
+    heap_utils.assert_heap( bh )
 
-
-  '''siftdown'''
-  '''
-  lvls = 12
-  rv   = 0
-  bh   = heap_utils.build_heap( lvls, rv, False  )  
-  assert rv == bh.root.element
-    
-  s  = heap_utils.request_node( bh, 1, 0 )
-  sp = heap_node( lvls + 1, 0 ) 
-  n  = bh.replace( s, sp )
-
-  assert n.element == s.element
-  assert True == sp.is_root( )
-  
-  bh.siftdown( sp )
-  
-  assert True == sp.is_leaf( )
-  '''
-  
-  '''siftdown - random'''
-  '''
+  '''siftdown - more random
+  '''      
   comps = []
   for i in range(0, 100 ):
     rv    = 0
@@ -556,62 +523,33 @@ if __name__ == "__main__":
     bh.siftdown( sp )
   
     assert True == sp.is_leaf( )
+    heap_utils.assert_heap( bh )
 
     comps.append(bh.siftdown_comps)
   print(mean(comps))
-  '''
-  '''siftdown - more random'''
-      
-  '''
-  comps = []
-  for i in range(0, 100 ):
-    rv    = random.randint( 1, 10000 )
-    lvels = random.randint( 5, 13 )
-
-    bh         = heap_utils.build_heap( lvels, rv )  
-    assert rv == bh.root.element
-    
-    #s  = heap_utils.request_random_node( bh, lvels )
-    s  = bh.root
-    sp = heap_node( random.randint( 100, 100000 ), 0 ) 
-    n  = bh.replace( s, sp )
-
-    assert n.element == s.element
-      
-    bh.siftdown( sp )
-    
-    if not sp.is_root():
-      assert sp.parent( ) <= sp 
-    if not sp.is_leaf():
-      assert sp.left_child( ) >= sp
-      assert sp.right_child( ) >= sp
-
-    comps.append(bh.siftdown_comps)
-
-  print(mean(comps))
   
-  '''
-
   
-  ''' This works because, inserting a random node might mean a sift in any direction!!! '''
-  comps_up = []
+  ''' Siftup/down
+  This works because, inserting a random node might mean a sift in any direction!!! 
+  '''
+  comps_up   = []
   comps_down = []
   for i in range(0, 100 ):
-    rv    = random.randint( 100, 1000000 )
+    rv    = random.randint( 1000, 10000 )
     lvels = random.randint( 1, 15 )
 
     bh         = heap_utils.build_heap( lvels, rv  )  
     assert rv == bh.root.element
+    heap_utils.assert_heap( bh )
     
     s  = heap_utils.request_random_node( bh, lvels )
-    sp = heap_node( random.randint( 100000, 10000000 ), s.color ) 
+    sp = heap_node( int(heap_utils.heap_mean(bh)), s.color ) 
     n  = bh.replace( s, sp )
 
     assert n.element == s.element
-  
+    
     # try siftup
     bh.siftup( sp )
-  
     # try siftdown
     bh.siftdown( sp )
     
@@ -621,6 +559,8 @@ if __name__ == "__main__":
     if not sp.is_leaf():
       assert sp.left_child( ) >= sp
       assert sp.right_child( ) >= sp
+
+    heap_utils.assert_heap( bh )
     
     comps_up.append(bh.siftup_comps)
     comps_down.append(bh.siftdown_comps)

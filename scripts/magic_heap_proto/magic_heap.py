@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 import random
 from binary_heap import *
-from high_low_stack import *
+from stack import *
+
+import heap_utils
 
 class magical_heap_node( object ):
   def __init__( self ):
@@ -58,7 +60,8 @@ class magic_heap( object ):
     self.first = magical_heap_node( )
 
     self.min_pointer = None
-    self.high_stack  = high_stack( ) # Hi and Lo digits
+    #self.fix_stack   = fix_stack( ) # Hi and Lo digits
+    self.fix_stack   = fix_stack_vector( ) # Hi and Lo digits
     self.statebit    = 0
 
   ## M a g i c H e a p \ P u b l i c ##
@@ -71,9 +74,6 @@ class magic_heap( object ):
     return heap_node( )
 
   def insert( self, node ): # increment
-    #print( self.__get_state( ) )
-    # new, single node b heap
-    #hn = heap_node( element )
     nh = binary_heap( node )
 
     # insert new node at front.
@@ -88,15 +88,15 @@ class magic_heap( object ):
     if node.is_high( ):
       self.__fix( node )
     else:
-      node_to_fix = self.high_stack.pop( )    
+      node_to_fix = self.fix_stack.pop_hi( )    
       if node_to_fix:
         self.__fix( node_to_fix ) 
 
   def delete( self, node ): # decrement    
     pass
 
-  def delete_min( self, node ):
-    pass
+  def delete_min( self ):
+    self.delete( self.min_pointer )
 
   def meld( self, mheap ):
     pass
@@ -156,18 +156,27 @@ class magic_heap( object ):
     node.next.insert( mh )
     # need to fix up this tail too!
     if node.next.is_high( ):
-      self.high_stack.push( node.next )
+      self.fix_stack.push_hi( node.next )
   
     # increase sigma_j-1 by 2
     if not node.is_front( ):
       node.previous.insert( lrh[0] )
       node.previous.insert( lrh[1] )
       if node.previous.is_high( ):
-        self.high_stack.push( node.previous  )
+        self.fix_stack.push_hi( node.previous  )
         
   def __unfix( self, node ):
     if not node.is_front( ):
-      pass
+      
+    pass
+
+  def __borrow( self ):
+    #node_to_unfix = self.low_stack.pop( )    
+    #if node_to_unfix:
+    #  self.__unfix( node_to_unfix )
+ 
+    # bn = self.__front().pop()
+    # return bn
     pass
 
   def __scan( self ):
@@ -196,25 +205,38 @@ class magic_heap( object ):
       i = i.next
     return s
 
+  def assert_magic_heap( self ):
+    miterator = self.__front( )
+    while miterator != None:
+      riterator = miterator.head
+      while riterator != None:
+        heap_utils.assert_heap( riterator )
+        riterator = riterator.right
+      miterator = miterator.next
+    
 
 
 
 if __name__ == "__main__":
+  from time import process_time
+
   def get_random( ):
     return random.randint( 1, 1000000 )
 
   m_heap = magic_heap( )
   print( "size: " + str( m_heap.size( ) ) )
-
+  
+  t = process_time()
   for i in range( 0, 1000000 ):
     node         = m_heap.buy_node( )
     node.element = get_random( )
     m_heap.insert( node  )
     #print( "size: " + str( m_heap.size( ) ) )
     #print( "structure: " + str( m_heap.list( ) ) )
-
+  
+  print( "time: " + str( process_time() - t ) )
   print( "size: " + str( m_heap.size( ) ) )
   print( "structure: " + str( m_heap.list( ) ) )
   print( "min element: " + str( m_heap.find_min( ).element ) )
 
-  #m_heap.__scan()
+  m_heap.assert_magic_heap( )
