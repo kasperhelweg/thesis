@@ -11,36 +11,20 @@ class magical_heap_node( object ):
     self.previous = None
     
     self.head = None
-    self.tail = None
-    
+        
     self.size = 0
 
-  def insert( self, node ):
-    if not self.head or self.head.find_min( ) < node.find_min( ):
-      #insert at tail
-      if not self.tail:
-        self.head = node
-        self.tail = node
-      else:
-        self.tail.right = node
-        self.tail       = node
-    else:
-      #insert at front
-      node.right = self.head 
-      self.head  = node
-      
+  def push_front( self, node ):
+    node.right = self.head 
+    self.head  = node
     self.size += 1
 
-  def pop( self ):
-    t       = self.head.right
-    e       = self.head
-    e.right = None
+  def pop_front( self ):
+    e          = self.head
+    self.head  = e.right
+    e.right    = None
     
     self.size -= 1
-    self.head  = t
-
-    if self.empty( ):
-      self.tail = self.head
     return e
 
   def meld( self, other ):
@@ -78,8 +62,8 @@ class magic_heap( object ):
 
     # insert new node at front.
     node = self.__front( )
-    node.insert( nh )
-
+    node.push_front( nh )
+    
     # update min pointer
     if not self.min_pointer or nh.find_min( ) < self.min_pointer.find_min( ):
       self.min_pointer = nh
@@ -137,37 +121,64 @@ class magic_heap( object ):
     pass
     
   def __fix( self, node ):
-    # Decrease sigma_j by 3
-    mh = node.pop( )
-    lh = node.pop( )
-    rh = node.pop( )
 
-    # Rearrange
-    if not node.is_front( ):
-      lrh = mh.cut_at_root( )
-    mh.root.left  = lh.root
-    lh.root.right = rh.root
-    
     # grow heap if necesary
     if node.next == None:
       self.__grow( node )
-    
-    # increase sigma_j+1 by 1
-    node.next.insert( mh )
-    # need to fix up this tail too!
+
+    # Decrease sigma_j by 3
+    p = node.pop_front( )
+    q = node.pop_front( )
+    r = node.pop_front( )
+
+    if p.root < q.root:
+      if p.root < r.root:
+        if not node.is_front( ):
+          sts = p.cut_at_root( )
+        p.root.left  = q.root
+        q.root.color = 1
+        q.root.right = r.root
+        r.root.right = p.root
+        node.next.push_front( p )
+      else:
+        if not node.is_front( ):
+          sts = r.cut_at_root( )
+        r.root.left  = p.root
+        p.root.color = 1
+        p.root.right = q.root
+        q.root.right = r.root
+        node.next.push_front( r )        
+    else:
+      if q.root < r.root:
+        if not node.is_front( ):
+          sts = q.cut_at_root( )
+        q.root.left  = r.root
+        r.root.color = 1
+        r.root.right = p.root
+        p.root.right = q.root
+        node.next.push_front( q )
+      else:
+        if not node.is_front( ):
+          sts = r.cut_at_root( )
+        r.root.left  = p.root
+        p.root.color = 1
+        p.root.right = q.root
+        q.root.right = r.root
+        node.next.push_front( r )
+
     if node.next.is_high( ):
       self.fix_stack.push_hi( node.next )
   
     # increase sigma_j-1 by 2
     if not node.is_front( ):
-      node.previous.insert( lrh[0] )
-      node.previous.insert( lrh[1] )
+      node.previous.push_front( sts[0] )
+      node.previous.push_front( sts[1] )
       if node.previous.is_high( ):
         self.fix_stack.push_hi( node.previous  )
         
   def __unfix( self, node ):
     if not node.is_front( ):
-      
+      pass
     pass
 
   def __borrow( self ):
@@ -215,8 +226,6 @@ class magic_heap( object ):
       miterator = miterator.next
     
 
-
-
 if __name__ == "__main__":
   from time import process_time
 
@@ -238,5 +247,4 @@ if __name__ == "__main__":
   print( "size: " + str( m_heap.size( ) ) )
   print( "structure: " + str( m_heap.list( ) ) )
   print( "min element: " + str( m_heap.find_min( ).element ) )
-
   m_heap.assert_magic_heap( )

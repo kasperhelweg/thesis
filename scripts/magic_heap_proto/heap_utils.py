@@ -43,17 +43,24 @@ def build_heap( h, rv, rand = True ):
 # H e a p U t i l s \ D r a w H e a p #
 # ----------------------------------- #
 
-def draw_heap( bh, f = None ):
+def draw_heap( bh, node = None, f = None ):
   def rec( n ):
-    if n.left == None:
+    if n == None or n.left == None:
       return
     else:
       lc = n.left
       rc = n.left.right
       print("root: " + str(n.element) + " " + "lc: " + str(lc.element) + " " + "rc: " + str(rc.element) )
+      print("root: " + str(n) )
+      print("lc: " + str(lc) + " " + "rc: " + str(rc) )
+      print("lc right: " + str(lc.right) )
+      print("lc parent: " + str(lc.parent()) + " " + "rc parent: " + str(rc.parent()) )
       rec( lc )
       rec( rc )
-  rec( bh.root )
+  if not node:
+    rec( bh.root )
+  else:
+    rec( node )
 
 
 # H e a p U t i l s \ M i s c #
@@ -80,18 +87,25 @@ def request_random_node( bh, levels ):
   nde  = random.randint( 1, 2**lvel )
   return request_node( bh, nde, lvel )
 
-def assert_heap( bh ):
+def assert_heap( bh, heap_property = True, node = None ):
   ''' Sould take a heap, and assert that it is indeed a heap ''' 
   def rec( n ):
-    if n.left == None:
+    if n == None or n.left == None:
       return
     else:
-      lc = n.left
-      rc = n.left.right
-      assert n <= lc and n <= rc
+      lc = n.left_child( )
+      rc = n.right_child( )    
+      assert lc != None and rc != None
+      if heap_property:
+        assert n <= lc and n <= rc      
+      assert rc.parent() is n
+      assert lc.parent() is n
       rec( lc )
       rec( rc )
-  rec( bh.root )
+  if not node:
+    rec( bh.root )
+  else:
+    rec( node )
 
 def heap_mean( bh ):
   def rec( n ):
@@ -125,7 +139,7 @@ if __name__ == "__main__":
   bh = build_heap( 4, rv  )
   assert 15 == bh.size()
 
-  lvls = 14
+  lvls = 12
   bh   = build_heap( lvls, random.randint( 0, 100 )  )
   assert None == assert_heap( bh )  
   

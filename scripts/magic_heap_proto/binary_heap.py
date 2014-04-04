@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 DEBUG = True
+import heap_utils
 
 class heap_node( object ):
   def __init__( self, element = None, color = 0 ):
@@ -19,15 +20,6 @@ class heap_node( object ):
         return self.right
       else:
         return self.right.right
-
-  # should be renamed to just left_child / right_child
-  def left_subtree( self ):
-    if self.left:
-      return self.left
-
-  def right_subtree( self ):
-    if self.left:
-      return self.left.right
 
   def left_child( self ):
     if self.left:
@@ -79,7 +71,6 @@ class heap_node( object ):
       return self.element > other or self.element == other
 
 
-
 class binary_heap( object ):
   def __init__( self, root = None ):
     self.root  = root
@@ -104,9 +95,9 @@ class binary_heap( object ):
     return self.root
 
   def cut_at_root( self ):
-    lst = binary_heap( self.root.left )
-    rst = binary_heap( self.root.left.right )
-
+    lst = binary_heap( self.root.left_child() )
+    rst = binary_heap( self.root.right_child() )
+      
     self.left      = None
     lst.root.right = None
     rst.root.right = None
@@ -118,21 +109,25 @@ class binary_heap( object ):
     other.left  = node.left
     other.right = node.right
     other.color = node.color
-
+ 
     if not other.is_root( ):
       if node.color == 1:
         node.parent( ).left = other
       else:
         node.parent( ).left.right = other
+    if not node.is_leaf( ):
+      node.right_child( ).right = other
 
     node.left  = None
     node.right = None
-
     return node
 
   def splice( self, heaps ):
     print("wrapper for splice left and right")
     pass
+
+  def buy_node( self ):
+    return heap_node( )
 
   def size( self ):
     lvls = 0
@@ -162,18 +157,6 @@ class binary_heap( object ):
       self.siftup_comps += 1
       self.__swap( s, p)
       p = s.parent( )
-    
-      #if DEBUG:
-      #  self.siftup_comps += 1
-      #  assert s.left_child( ) >= s
-      #  assert s.right_child( ) >= s
-
-    #if DEBUG:
-    #  if not s.is_leaf():
-    #    assert s.left_child( ) >= s
-    #    assert s.right_child( ) >= s
-    #  if not s.is_root( ):
-    #    assert s.parent( ) <= s
 
     if s.is_root( ):
       self.root = s
@@ -191,21 +174,10 @@ class binary_heap( object ):
         self.__swap( e, s )
       else:
         break
-
-      #if DEBUG:
-      #  assert s.parent( ) <= s
         
-      lc = s.left_subtree( )
-      rc = s.right_subtree( )
+      lc = s.left_child( )
+      rc = s.right_child( )
    
-    #if DEBUG:
-    #  if not s.is_leaf() :
-    #    assert s.left_child( ) >= s
-    #    assert s.right_child( ) >= s
-    #  if not s.is_root( ):
-    #    assert s.parent( ) <= s
-
-
   def __swap( self, node, other ):
 
     #             
@@ -216,6 +188,7 @@ class binary_heap( object ):
 
     if other.is_root( ) and node.color == 1:
       '''case 0 - left node, parent is root'''
+      
       s = node
       o = node.right
       r = other
@@ -229,7 +202,11 @@ class binary_heap( object ):
       s.left  = r
       o.right = s
       r.right = o
+      if not r.is_leaf( ):
+        r.left.right.right = r
+
       self.__swap_colors( s, r ) 
+
 
     #               
     #     R           S
@@ -252,6 +229,8 @@ class binary_heap( object ):
       s.left  = o
       o.right = r
       r.right = s
+      if not r.is_leaf( ):
+        r.left.right.right = r
 
     #      /           /
     #     R-          S-
@@ -275,8 +254,10 @@ class binary_heap( object ):
       s.right = r.right
       o.right = s
       r.right = o
+      if not r.is_leaf( ):
+        r.left.right.right = r
       if not s.is_root( ):
-        s.parent( ).left = s
+        s.right.right.left = s
 
     #      /           /
     #     R-          S-
@@ -300,9 +281,12 @@ class binary_heap( object ):
       s.right = r.right
       o.right = r
       r.right = s
-      self.__swap_colors( s, r ) 
+      if not r.is_leaf( ):
+        r.left.right.right = r
       if not s.is_root( ):
-        s.parent( ).left = s
+        s.right.right.left = s
+
+      self.__swap_colors( s, r ) 
         
     #    \           \
     #    -R          -S
@@ -326,9 +310,12 @@ class binary_heap( object ):
       s.right = r.right
       o.right = s
       r.right = o
-      self.__swap_colors( s, r ) 
+      if not r.is_leaf( ):
+        r.left.right.right = r
       if not s.is_root( ):
-        s.parent( ).left.right = s
+        s.right.left.right = s
+      
+      self.__swap_colors( s, r )
 
     #    \           \
     #    -R          -S
@@ -346,14 +333,16 @@ class binary_heap( object ):
       s.right = None
       o.right = None
       r.left  = s.left
-
+      
       # Sew up
       s.left  = o
       s.right = r.right
       o.right = r
       r.right = s
+      if not r.is_leaf( ):
+        r.left.right.right = r
       if not s.is_root( ):
-        s.parent( ).left.right = s
+        s.right.left.right = s  
     
   def __splice_left( self, heap ):
     ''' Splice left subtree into heap'''
@@ -385,7 +374,7 @@ if __name__ == "__main__":
   #   / \
   #  S - O
   '''siftup - case 0'''
-  
+  '''
   rv = random.randint( 100, 1000 )
   bh = heap_utils.build_heap( 1, rv  )  
   assert rv == bh.root.element
@@ -398,13 +387,13 @@ if __name__ == "__main__":
   bh.siftup( sp )
   
   assert sp.element == bh.root.element
-
+  '''
   #             
   #    R
   #   / \
   #  O - S
   '''siftup - case 0-1'''
-  
+  '''
   rv = random.randint( 100, 1000 )
   bh = heap_utils.build_heap( 1, rv  )  
   assert rv == bh.root.element
@@ -417,13 +406,13 @@ if __name__ == "__main__":
   bh.siftup( sp )
   
   assert sp.element == bh.root.element
-
+  '''
   #     /       
   #    R-
   #   / \
   #  S - O
   '''siftup - case 1 '''
- 
+  '''
   rv = random.randint( 100, 1000 )
   bh = heap_utils.build_heap( 2, rv  )  
   assert rv == bh.root.element
@@ -436,14 +425,14 @@ if __name__ == "__main__":
   bh.siftup( sp )
   
   assert sp.element == bh.root.element
-
+  '''
   
   #     /       
   #    R-
   #   / \
   #  O - S
   '''siftup - case 2 '''
- 
+  '''
   rv = random.randint( 100, 1000 )
   bh = heap_utils.build_heap( 2, rv  )  
   assert rv == bh.root.element
@@ -456,7 +445,7 @@ if __name__ == "__main__":
   bh.siftup( sp )
   
   assert sp.element == bh.root.element
- 
+  '''
 
   '''
   siftup - random - sift to root
@@ -467,44 +456,54 @@ if __name__ == "__main__":
     lvels = random.randint( 1, 13 )
 
     bh         = heap_utils.build_heap( lvels, rv  )  
-    assert rv == bh.root.element
+    assert rv == bh.root.element    
+    heap_utils.assert_heap( bh )
     
     s  = heap_utils.request_random_node( bh, lvels )
     sp = heap_node( rv - 1, s.color ) 
     n  = bh.replace( s, sp )
-
     assert n.element == s.element
-    bh.siftup( sp )
-  
-    assert sp.element == bh.root.element
-    heap_utils.assert_heap( bh )
 
+    heap_utils.assert_heap( bh, False )
+    bh.siftup( sp )
+    heap_utils.assert_heap( bh )
+    assert sp.element == bh.root.element
+    
     comps.append(bh.siftup_comps)
   
   print(mean(comps))
 
+
   '''siftdown - random - sift to bottom
   '''
+  comps = []
   for i in range(0, 100 ):
     lvls = 12
     rv   = 0
     bh   = heap_utils.build_heap( lvls, rv, False  )  
     assert rv == bh.root.element
-    
+    heap_utils.assert_heap( bh )
+
     s  = heap_utils.request_node( bh, 1, 0 )
     sp = heap_node( lvls + 1, 0 ) 
     n  = bh.replace( s, sp )
 
     assert n.element == s.element
     assert True == sp.is_root( )
-  
-    bh.siftdown( sp )
-  
+    heap_utils.assert_heap( bh, False )
+
+    bh.siftdown( sp )  
     assert True == sp.is_leaf( )
     heap_utils.assert_heap( bh )
 
+    comps.append(bh.siftdown_comps)
+  
+  print(mean(comps))
+
+
   '''siftdown - more random
   '''      
+  '''
   comps = []
   for i in range(0, 100 ):
     rv    = 0
@@ -527,10 +526,9 @@ if __name__ == "__main__":
 
     comps.append(bh.siftdown_comps)
   print(mean(comps))
+  '''
   
-  
-  ''' Siftup/down
-  This works because, inserting a random node might mean a sift in any direction!!! 
+  '''siftup / down
   '''
   comps_up   = []
   comps_down = []
@@ -543,11 +541,11 @@ if __name__ == "__main__":
     heap_utils.assert_heap( bh )
     
     s  = heap_utils.request_random_node( bh, lvels )
-    sp = heap_node( int(heap_utils.heap_mean(bh)), s.color ) 
+    sp = heap_node( int(heap_utils.heap_mean(bh) - random.randint(1000,5000)), s.color ) 
     n  = bh.replace( s, sp )
-
     assert n.element == s.element
-    
+    heap_utils.assert_heap( bh, False )
+
     # try siftup
     bh.siftup( sp )
     # try siftdown
