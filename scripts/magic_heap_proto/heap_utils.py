@@ -7,8 +7,14 @@ from binary_heap import *
 
 def attach_children( r, rand ):
   if rand:
-    s = heap_node( random.randint( r.element + 100, r.element + 1000 ), 1 )
-    o = heap_node( random.randint( r.element + 500, r.element + 1000 ), 0 )
+    s = heap_node( random.randint( 0, 100000000 ), 1 )
+    if s < r:
+      s.element = s.element + r.element + random.randint(0, 1000 )
+    o = heap_node( random.randint( 0, 100000000 ), 0 )
+    if o < r:
+      o.element = o.element + r.element + random.randint(0, 1000 )
+    #s = heap_node( random.randint( r.element + 100, r.element + 1000 ), 1 )
+    #o = heap_node( random.randint( r.element + 500, r.element + 100000 ), 0 )
   else:
     s = heap_node( r.element + 1, 1 )
     o = heap_node( r.element + 1, 0 )
@@ -16,14 +22,6 @@ def attach_children( r, rand ):
   r.left  = s
   s.right = o
   o.right = r
-
-  return [s, o]
-
-def print_children( c ):
-  print(c.color)
-  print(c.element)
-  s = c.left
-  o = c.left.right
 
   return [s, o]
 

@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-DEBUG = True
-import heap_utils
 
 class heap_node( object ):
   def __init__( self, element = None, color = 0 ):
@@ -12,7 +10,6 @@ class heap_node( object ):
 
   # H e a p N o d e \ P u b l i c #
   # ----------------------------- #
-
 
   def parent( self ):
     if not self.is_root( ):
@@ -76,7 +73,7 @@ class binary_heap( object ):
     self.root  = root
     self.right = None
 
-    #stats
+    # stats
     self.siftup_comps = 0
     self.siftdown_comps = 0
     
@@ -120,6 +117,10 @@ class binary_heap( object ):
 
     node.left  = None
     node.right = None
+
+    self.siftup( other )
+    self.siftdown( other )
+
     return node
 
   def splice( self, heaps ):
@@ -149,11 +150,12 @@ class binary_heap( object ):
     3 temporary pointer variables + 2 cuts + at most 6 sews + at most 1 color-bit flip
     = at most 12 operations 
     = O(1) operations'''
-  
+    
     s = node
     p = node.parent( )
     self.siftup_comps += 1
     while not s.is_root( ) and s < p:
+      #print("up")
       self.siftup_comps += 1
       self.__swap( s, p)
       p = s.parent( )
@@ -163,7 +165,6 @@ class binary_heap( object ):
 
   def siftdown( self, node ):
     '''siftup procedure. complexity is 2 O(lg n)'''
-    
     s  = node
     lc = node.left_child( )
     rc = node.right_child( )
@@ -171,13 +172,20 @@ class binary_heap( object ):
       self.siftdown_comps += 2
       e = lc if lc < rc else rc
       if s > e:
+        #print("down")
         self.__swap( e, s )
       else:
         break
-        
       lc = s.left_child( )
       rc = s.right_child( )
-   
+
+    if not self.root.is_root( ):
+      r = self.root
+      while not r.right == None:
+        r = r.right
+      self.root = r
+
+
   def __swap( self, node, other ):
 
     #             
@@ -358,10 +366,18 @@ class binary_heap( object ):
 
 if __name__ == "__main__":
   import random
+  from time import process_time
   from statistics import mean
   import heap_utils
+  import heapq
 
-  
+  #t  = process_time()
+  #pq = []
+  #for i in range(0, 2097152):
+  #  heapq.heappush(pq, random.randint(0,100000))
+    
+  #heapq.heapify( pq )
+  #print("build_: " + str( t ) )
   # H e a p N o d e \ T e s t #
   # ------------------------- #
 
@@ -449,7 +465,8 @@ if __name__ == "__main__":
 
   '''
   siftup - random - sift to root
-  ''' 
+  '''
+  '''
   comps = []
   for i in range(0, 100 ):
     rv    = random.randint( 10, 1000 )
@@ -472,9 +489,10 @@ if __name__ == "__main__":
     comps.append(bh.siftup_comps)
   
   print(mean(comps))
-
+  '''
 
   '''siftdown - random - sift to bottom
+  '''
   '''
   comps = []
   for i in range(0, 100 ):
@@ -494,63 +512,51 @@ if __name__ == "__main__":
 
     bh.siftdown( sp )  
     assert True == sp.is_leaf( )
+    assert False == sp.is_root( )
+    assert bh.root != sp
+    assert bh.root != None
     heap_utils.assert_heap( bh )
 
     comps.append(bh.siftdown_comps)
   
   print(mean(comps))
-
-
-  '''siftdown - more random
-  '''      
   '''
-  comps = []
-  for i in range(0, 100 ):
-    rv    = 0
-    lvels = random.randint( 1, 13 )
-
-    bh         = heap_utils.build_heap( lvels, rv, False  )  
-    assert rv == bh.root.element
-    
-    s  = heap_utils.request_random_node( bh, lvels )
-    sp = heap_node( lvels + 1, 0 ) 
-    n  = bh.replace( s, sp )
-
-    assert n.element == s.element
-    #assert True == sp.is_root( )
-  
-    bh.siftdown( sp )
-  
-    assert True == sp.is_leaf( )
-    heap_utils.assert_heap( bh )
-
-    comps.append(bh.siftdown_comps)
-  print(mean(comps))
-  '''
-  
+   
   '''siftup / down
   '''
+
   comps_up   = []
   comps_down = []
-  for i in range(0, 100 ):
-    rv    = random.randint( 1000, 10000 )
-    lvels = random.randint( 1, 15 )
 
-    bh         = heap_utils.build_heap( lvels, rv  )  
-    assert rv == bh.root.element
-    heap_utils.assert_heap( bh )
+  tv = []
+  rv    = random.randint( 1, 1 )
+  lvels = random.randint( 18, 18 )
+
+  t  = process_time()
+  bh = heap_utils.build_heap( lvels, rv, False )
+  print("build: " + str(process_time() - t))
+  for i in range(0, 1 ):
+  
+
+    #bh         = heap_utils.build_heap( lvels, rv  )  
+    #assert rv == bh.root.element
+    #heap_utils.assert_heap( bh )
     
     s  = heap_utils.request_random_node( bh, lvels )
-    sp = heap_node( int(heap_utils.heap_mean(bh) - random.randint(1000,5000)), s.color ) 
+    sp = heap_node( int(heap_utils.heap_mean(bh) - 1000), s.color ) 
     n  = bh.replace( s, sp )
-    assert n.element == s.element
-    heap_utils.assert_heap( bh, False )
+    #assert n.element == s.element
+    #heap_utils.assert_heap( bh, False )
 
+    #t  = process_time()
     # try siftup
-    bh.siftup( sp )
+    #bh.siftup( sp )
     # try siftdown
-    bh.siftdown( sp )
-    
+    #bh.siftdown( sp )
+    #tv.append((process_time() - t))
+    #tv.append( t )
+
+
     if not sp.is_root():
       assert sp.parent() <= sp
 
@@ -558,10 +564,11 @@ if __name__ == "__main__":
       assert sp.left_child( ) >= sp
       assert sp.right_child( ) >= sp
 
-    heap_utils.assert_heap( bh )
-    
     comps_up.append(bh.siftup_comps)
     comps_down.append(bh.siftdown_comps)
-    
-  print(mean(comps_up))
-  print(mean(comps_down))
+
+  #heap_utils.assert_heap( bh )
+        
+  #print("time: " + str(mean(tv)))
+  print("siftup compares: " + str(mean(comps_up)))
+  print("siftdown compares: " + str(mean(comps_down)))

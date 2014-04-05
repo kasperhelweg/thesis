@@ -77,10 +77,13 @@ class magic_heap( object ):
         self.__fix( node_to_fix ) 
 
   def delete( self, node ): # decrement    
-    pass
+    bn = self.__borrow( )
+    node.head.replace( node, bn  )
 
   def delete_min( self ):
     self.delete( self.min_pointer )
+    #scan roots to find new minimum
+
 
   def meld( self, mheap ):
     pass
@@ -121,7 +124,6 @@ class magic_heap( object ):
     pass
     
   def __fix( self, node ):
-
     # grow heap if necesary
     if node.next == None:
       self.__grow( node )
@@ -131,6 +133,7 @@ class magic_heap( object ):
     q = node.pop_front( )
     r = node.pop_front( )
 
+    # increase sigma_j-1 by 2
     if p.root < q.root:
       if p.root < r.root:
         if not node.is_front( ):
@@ -178,14 +181,33 @@ class magic_heap( object ):
         
   def __unfix( self, node ):
     if not node.is_front( ):
-      pass
-    pass
-
+      p = node.next.pop_front( )
+      q = node.previous.pop_front( )
+      r = node.previous.pop_front( )
+      
+      sts          = p.cut_at_root( )
+      p.root.left  = q.root
+      q.root.color = 1
+      q.root.right = r
+      r.root.right = p
+      
+      p.siftdown( p.root  )
+      node.push_front( p )
+      node.push_front( sts[0] )
+      node.push_front( sts[1] )
+    else:
+      p   = node.next.pop_front( )
+      sts = p.cut_at_root( )
+      
+      node.push_front( p )
+      node.push_front( sts[0] )
+      node.push_front( sts[1] )
+   
   def __borrow( self ):
     #node_to_unfix = self.low_stack.pop( )    
     #if node_to_unfix:
     #  self.__unfix( node_to_unfix )
- 
+    
     # bn = self.__front().pop()
     # return bn
     pass
@@ -236,12 +258,10 @@ if __name__ == "__main__":
   print( "size: " + str( m_heap.size( ) ) )
   
   t = process_time()
-  for i in range( 0, 1000000 ):
+  for i in range( 0, 2**21 ):
     node         = m_heap.buy_node( )
     node.element = get_random( )
     m_heap.insert( node  )
-    #print( "size: " + str( m_heap.size( ) ) )
-    #print( "structure: " + str( m_heap.list( ) ) )
   
   print( "time: " + str( process_time() - t ) )
   print( "size: " + str( m_heap.size( ) ) )
