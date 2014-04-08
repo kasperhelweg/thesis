@@ -114,7 +114,7 @@ def fix( D, j ):
 def decrement( D ):
   if not is_idle( D ):
     if get_state( D ) == '22':
-      if not hi.empty and hi.peak( 1 ) == 3:
+      if not hi.empty() and D[hi.peak( 1 )] == 3:
         j = lo.pop( )
         D = unfix( D, j )
     else:
@@ -122,27 +122,44 @@ def decrement( D ):
       if not j == None:
         D = unfix( D, j  )
   
+  #--------------------
   if D[0] == 3:
     hi.pop( )
-
   D[0] -= 1
+  if D[0] <= 1 and lo.peak( 1 ) != 0:
+    lo.append( 0 )
+
   return D
+  #--------------------
 
 def unfix( D, j ):
 
-  
+  #--------------------
+  if D[j+1] == 3:
+    hi.pop( )
+
+  l = len( D )
+  if j + 1 == l - 1 and D[l-1] == 1: 
+    lo.pop()
+    D.pop()
+  else:
+    D[j+1] -= 1
+    if D[j+1] == 1:
+      lo.append( j + 1 )
+  #--------------------
+
+  #--------------------
+  if j != 0: 
+    if D[j-1] >= 3:
+      hi.pop( )
+    D[j-1] -= 2
+    if D[j-1] <= 1 and not j - 1 == 0:
+      lo.append( j - 1 )
+  #--------------------
+    
   D[j] += 3
   # always True - Thus, the check is obsolete
   if D[j] >= 3: hi.append( j )
-
-  D[j+1] -= 1
-
-  if j != 0: D[j+1] -= 2
-  
-
-  
-
-  #if len( D ) - 1 <= j: D.append( 0 )
   
   return D
 
@@ -184,47 +201,35 @@ def to_binary( D ):
     B.append(int(bin(d)[2:]))
   return B
 
-D = [0]
+D = [2,1]
+n = 300
 print("------------------------------------ INC")
-for i in range( 0, 100 ):
+print( str( value_of(D) ) + ": " + str(D) )
+  #print("is idle: " + str( is_idle( D ) ))
+for i in range( 0, n - 5 ):
   D = increment( D )
   print( str( value_of(D) ) + ": " + str(D) )
-  print("is idle: " + str( is_idle( D ) ))
-  '''
-  print("------------------------------------")
-  print( str( value_of(D) ) + ": " + str(D) )
-  print(hi.p())
-  print(lo.p())
-  print("------------------------------------INC")
-  D = increment( D )
-  print( str( value_of(D) ) + ": " + str(D) )
-  print(hi.p())
-  print(lo.p())
-  print("------------------------------------")
-  '''
+  #print("is idle: " + str( is_idle( D ) ))
 
 print("------------------------------------")
 print( str( value_of(D) ) + ": " + str(D) )
 print(hi.p())
 print(lo.p())
+
 
 print("------------------------------------ DEC")
-D = decrement( D )
+for i in range( 0, n - 5 ):
+  D = decrement( D )
+  print( str( value_of(D) ) + ": " + str(D) )
+  #print("is idle: " + str( is_idle( D ) ))
+  #print(hi.p())
+  #print(lo.p())
+
 print("------------------------------------")
 print( str( value_of(D) ) + ": " + str(D) )
 print(hi.p())
 print(lo.p())
 
-
-  #print( str( value_of(D) ) + ": " + str(D) )
-  
-  #for index,value in enumerate(D):
-  #  if d >= 3:
-  #   hi.append(index)
-  #  elif d <= 1:
-  #    lo.append(index)
-  #print( "hi:" + str(hi) )
-  #print( "lo:" + str(lo) )
 print( "--Program magic_skew--" )
 
 
