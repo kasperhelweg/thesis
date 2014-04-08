@@ -53,63 +53,54 @@ class linked_list( object ):
 hi = linked_list( )
 lo = linked_list( )
 
-def increment( D ): 
-  # maintain lo list -----------------------------------
-  if D[0] == 1:
-    lo.pop()
-  elif D[0] == 0:
-    if not lo.head or lo.head.element != 0: lo.append( 0 )
-  
-  # maintain hi list and increment -----------------------------------
-  D[0] += 1  
-  if D[0] >= 3:
-    if not hi.head or hi.head.element != 0:
-      hi.append( 0 )
-      #print("append front: " + str(0))
 
-  # Fix -----------------------------------
-  j = hi.pop( )
-  if not j == None:
-    D = fix( D, j  )
+'''
+277: [0, 4, 0, 3, 3, 0, 1]
+[1, 3, 4]
+[0, 2, 5, 6]
+'''
+
+def increment( D ): 
+  D[0] += 1  
+  if D[0] == 2: lo.pop( )
+  elif D[0] == 1 and lo.peak( 1 ) != 0: lo.append( 0 ) 
+    
+  if D[0] == 3: D = fix( D, 0 )
+  else:
+    j = hi.pop( )
+    if not j == None:
+      D = fix( D, j  )
     
   return D
 
 def fix( D, j ):
-
-  # decrement and grow -----------------------------------
   D[j] -= 3
-  if len( D ) - 1 <= j: D.append( 0 )
-  
-  # maintain lo list -----------------------------------
-  # sigma(+1) + 1
+  #--------------------
   if j != 0:
-    if D[j-1] <= 1:
-      lo.pop()
-
-  if D[j+1] == 1:
-    lo.pop()
-  elif D[j+1] == 0:
-    if not lo.head or not lo.head.element == j+1:
-      lo.append(j+1)
-
-  if not lo.head or not lo.head.element == j:
-    lo.append( j )
-
-
-  # maintain hi list and increment -----------------------------------
-  D[j+1] += 1  
-  if D[j+1] >= 3:
-    if not hi.head or not hi.head.element == j + 1:
-      hi.append( j + 1  )
-      #print("append: " + str(j+1))
- 
-  # sigma(-1) + 2
-  if j != 0: 
+    if D[j-1] <= 1: lo.pop()
     D[j-1] += 2  
+  #--------------------
+
+  #--------------------
+  if len( D ) - 1 <= j: D.append( 0 ) # grow list
+
+  D[j+1] += 1  
+  #--------------------
+  if D[j+1] == 1 and not lo.peak( 1 ) == j + 1:
+    lo.append( j + 1 )
+  elif D[j+1] == 2:
+    lo.pop()
+  elif D[j+1] == 3:
+    hi.append( j + 1  )
+  #--------------------
+ 
+  if j != 0:
     if D[j-1] >= 3: 
       hi.append( j-1 )
-  return D
 
+  if D[j] <= 1: lo.append( j )
+  
+  return D
 
 def decrement( D ):
   if not is_idle( D ):
@@ -123,21 +114,19 @@ def decrement( D ):
         D = unfix( D, j  )
   
   #--------------------
-  if D[0] == 3:
-    hi.pop( )
   D[0] -= 1
-  if D[0] <= 1 and lo.peak( 1 ) != 0:
-    lo.append( 0 )
+  if D[0] == 2: hi.pop( )
+  elif D[0] <= 1 and lo.peak( 1 ) != 0: lo.append( 0 )
 
   return D
   #--------------------
 
 def unfix( D, j ):
-
   #--------------------
   if D[j+1] == 3:
     hi.pop( )
 
+  # shrink list
   l = len( D )
   if j + 1 == l - 1 and D[l-1] == 1: 
     lo.pop()
@@ -156,11 +145,12 @@ def unfix( D, j ):
     if D[j-1] <= 1 and not j - 1 == 0:
       lo.append( j - 1 )
   #--------------------
-    
+
+  #--------------------
   D[j] += 3
-  # always True - Thus, the check is obsolete
   if D[j] >= 3: hi.append( j )
-  
+  #--------------------
+
   return D
 
 def get_state( D ):
@@ -209,6 +199,8 @@ print( str( value_of(D) ) + ": " + str(D) )
 for i in range( 0, n - 5 ):
   D = increment( D )
   print( str( value_of(D) ) + ": " + str(D) )
+  print(hi.p())
+  print(lo.p())
   #print("is idle: " + str( is_idle( D ) ))
 
 print("------------------------------------")
@@ -222,8 +214,8 @@ for i in range( 0, n - 5 ):
   D = decrement( D )
   print( str( value_of(D) ) + ": " + str(D) )
   #print("is idle: " + str( is_idle( D ) ))
-  #print(hi.p())
-  #print(lo.p())
+  print(hi.p())
+  print(lo.p())
 
 print("------------------------------------")
 print( str( value_of(D) ) + ": " + str(D) )
@@ -231,6 +223,5 @@ print(hi.p())
 print(lo.p())
 
 print( "--Program magic_skew--" )
-
 
 
