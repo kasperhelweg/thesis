@@ -83,7 +83,6 @@ def fix( D, j ):
 
   #--------------------
   if len( D ) - 1 <= j: D.append( 0 ) # grow list
-
   D[j+1] += 1  
   #--------------------
   if D[j+1] == 1 and not lo.peak( 1 ) == j + 1:
@@ -95,11 +94,9 @@ def fix( D, j ):
   #--------------------
  
   if j != 0:
-    if D[j-1] >= 3: 
-      hi.append( j-1 )
+    if D[j-1] >= 3: hi.append( j-1 )
 
   if D[j] <= 1: lo.append( j )
-  
   return D
 
 def decrement( D ):
@@ -192,15 +189,15 @@ def to_binary( D ):
   return B
 
 D = [2,1]
-n = 300
+n = 100000
 print("------------------------------------ INC")
 print( str( value_of(D) ) + ": " + str(D) )
   #print("is idle: " + str( is_idle( D ) ))
 for i in range( 0, n - 5 ):
   D = increment( D )
-  print( str( value_of(D) ) + ": " + str(D) )
-  print(hi.p())
-  print(lo.p())
+  #print( str( value_of(D) ) + ": " + str(D) )
+  #print(hi.p())
+  #print(lo.p())
   #print("is idle: " + str( is_idle( D ) ))
 
 print("------------------------------------")
@@ -212,10 +209,10 @@ print(lo.p())
 print("------------------------------------ DEC")
 for i in range( 0, n - 5 ):
   D = decrement( D )
-  print( str( value_of(D) ) + ": " + str(D) )
+  #print( str( value_of(D) ) + ": " + str(D) )
   #print("is idle: " + str( is_idle( D ) ))
-  print(hi.p())
-  print(lo.p())
+  #print(hi.p())
+  #print(lo.p())
 
 print("------------------------------------")
 print( str( value_of(D) ) + ": " + str(D) )
