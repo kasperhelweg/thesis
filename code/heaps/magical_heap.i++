@@ -1,0 +1,108 @@
+namespace KHJ  {
+  namespace thesis  {
+    namespace heaps  {
+      /*********************************************************************
+       *                                                                   *
+       *           M a g i c H e a p S t o r e \ P u b l i c               *
+       *                                                                   *
+       *********************************************************************/
+      
+      /**
+       * Constructor.
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      
+      template <typename N, typename S, typename V, typename C, typename A>
+      magical_heap<N, S, V, C, A>::magical_heap( ) : alloc_( A( ) ) 
+      { 
+        
+      }
+
+      /**
+       * De-Constructor.
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      
+      template <typename N, typename S, typename V, typename C, typename A>
+      magical_heap<N, S, V, C, A>::~magical_heap( ) 
+      { 
+        
+      }
+
+      template <typename N, typename S, typename V, typename C, typename A>
+      void magical_heap<N, S, V, C, A>::print( ) 
+      { 
+        heap_store_.print( );
+      }
+
+
+      /**
+       * Push( ).
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      
+      template <typename N, typename S, typename V, typename C, typename A>
+      N* magical_heap<N, S, V, C, A>::push( const V& v ) 
+      { 
+        N* n = buy_node_( v );
+        heap_store_.push( n );
+
+        // temp compiler warning fix
+        return n;
+      }
+      
+      /**
+       * Size( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      
+      template <typename N, typename S, typename V, typename C, typename A>
+      int magical_heap<N, S, V, C, A>::size( ) 
+      { 
+        // temp compiler warning fix
+        return 0;
+      }
+      
+      /*********************************************************************
+       *                                                                   *
+       *           M a g i c H e a p S t o r e \ P u b l i c               *
+       *                                                                   *
+       *********************************************************************/
+
+  
+      // Buy a node. Heap memory is the currency.
+      template <typename N, typename S, typename V, typename C, typename A>
+      N* magical_heap<N, S, V, C, A>::buy_node_( const V& val ) 
+      {
+        N* n = alloc_.allocate( 1 );
+        try {
+          alloc_.construct( n, N( val ) );
+        }
+        catch(...) {
+          alloc_.deallocate( n, 1 );
+          throw;
+        }
+        return n;
+      }
+         
+      // Sell a node. Heap memory is the currency.
+      template <typename N, typename S, typename V, typename C, typename A>
+      void magical_heap<N, S, V, C, A>::sell_node_( N* n ) 
+      {
+        alloc_.destroy( n ); alloc_.deallocate( n, 1 );
+      }
+    }
+  }
+}

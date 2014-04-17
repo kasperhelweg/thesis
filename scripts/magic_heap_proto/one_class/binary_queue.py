@@ -10,7 +10,7 @@ class binary_queue( object ):
     self.heap_modifier = heap_modifier( ) 
     #self.size       = 0    #useful for constant time size()
 
-    self.digits = 0
+    self.length = 1
 
   # \\ capacity 
 
@@ -76,16 +76,19 @@ class binary_queue( object ):
     n.east   = bqn
     bqn.west = n
 
-    self.digits += 1
+    self.length += 1
 
   def _shrink( self, node ):
     node.east.west = None
     node.east      = None
 
-    self.digits -= 1
+    self.length -= 1
 
   def _empty( self, node ):
     return self.size == 0
+
+  def _len( self ):
+    return self.length
 
   def _value_of( self, S ):
     v = 0

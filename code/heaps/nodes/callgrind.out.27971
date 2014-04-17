@@ -1,0 +1,5617 @@
+version: 1
+creator: callgrind-3.9.0
+pid: 27971
+cmd:  ./heap_node.out
+part: 1
+
+
+desc: I1 cache: 
+desc: D1 cache: 
+desc: LL cache: 
+
+desc: Timerange: Basic block 0 - 1400626657
+desc: Trigger: Program termination
+
+positions: line
+events: Ir
+summary: 9566000434
+
+
+ob=(1) /usr/lib/ld-2.19.so
+fl=(1) ???
+fn=(8) brk
+0 12
+
+fn=(16) _dl_next_ld_env_entry
+0 428
+
+fn=(24) calloc
+0 136
+cfn=(28) malloc
+calls=17 0 
+0 646
+0 17
+
+fn=(28)
+0 108
+cfn=(32) __libc_memalign
+calls=36 0 
+0 1148
+0 36
+
+fn=(48) _dl_init_paths
+0 14
+cfn=(50) _dl_important_hwcaps
+calls=1 0 
+0 329
+0 3
+cfn=(28)
+calls=1 0 
+0 34
+0 1
+0 13
+cfn=(28)
+calls=1 0 
+0 34
+0 1
+0 61
+
+fn=(56) _dl_debug_state
+0 2
+
+fn=(70) _dl_map_object
+0 969
+cfn=(72) _dl_name_match_p
+calls=56 0 
+0 3547
+0 270
+cfn=(74) index
+calls=5 0 
+0 115
+0 16
+cfn=(76) expand_dynamic_string_token
+calls=1 0 
+0 247
+0 11
+cfn=(80) open_verify
+calls=1 0 
+0 446
+0 88
+cfn=(86) _dl_map_object_from_fd
+calls=5 0 
+0 12467
+0 13
+cfn=(10) strlen
+calls=4 0 
+0 218
+0 164
+cfn=(104) _dl_load_cache_lookup
+calls=4 0 
+0 4741
+0 72
+cfn=(80)
+calls=4 0 
+0 2037
+0 24
+cfn=(78) local_strdup
+calls=4 0 
+0 561
+0 499
+cfn=(42) strcmp
+calls=28 0 
+0 637
+0 84
+
+fn=(88) _fxstat
+0 60
+
+fn=(120) match_symbol
+0 1637
+cfn=(42)
+calls=21 0 
+0 1659
+0 210
+
+fn=(124) _dl_determine_tlsoffset
+0 107
+
+fn=(132) _dl_lookup_symbol_x
+0 480922
+cfn=(134) do_lookup_x
+calls=1326 0 
+0 556698
+0 44846
+
+fn=(152) _dl_protect_relro
+0 75
+cfn=(92) mprotect
+calls=5 0 
+0 25
+0 20
+
+fn=(10)
+0 1239
+
+fn=(60) do_preload
+0 17
+cfn=(62) _dl_catch_error
+calls=1 0 
+0 2526
+0 11
+
+fn=(72)
+0 2380
+cfn=(42)
+calls=340 0 
+0 2387
+0 4110
+cfn=(42)
+calls=354 0 
+0 7267
+0 2748
+
+fn=(74)
+0 463
+
+fn=(76)
+0 11
+cfn=(74)
+calls=1 0 
+0 47
+0 9
+cfn=(78)
+calls=1 0 
+0 180
+
+fn=(108) _dl_cache_libcmp
+0 884
+cfn=(109) _dl_cache_libcmp'2
+calls=4 0 
+0 24
+0 2379
+
+fn=(109)
+0 24
+
+fn=(134)
+0 243846
+cfn=(72)
+calls=225 0 
+0 11535
+0 37807
+cfn=(38) rtld_lock_default_lock_recursive
+calls=50 0 
+0 100
+0 5867
+cfn=(196) _dl_higher_prime_number
+calls=2 0 
+0 144
+0 8
+cfn=(24)
+calls=2 0 
+0 86
+0 2
+0 2384
+cfn=(198) free
+calls=2 0 
+0 12
+0 462
+cfn=(40) rtld_lock_default_unlock_recursive
+calls=50 0 
+0 100
+0 2421
+cfn=(24)
+calls=1 0 
+0 43
+0 1
+0 61191
+cfn=(136) check_match.9450
+calls=1308 0 
+0 184141
+0 6548
+
+fn=(136)
+0 27698
+cfn=(42)
+calls=60 0 
+0 5307
+0 35390
+cfn=(42)
+calls=1304 0 
+0 113138
+0 2608
+
+fn=(154) _dl_add_to_slotinfo
+0 40
+
+fn=(204) _dl_unload_cache
+0 7
+cfn=(206) munmap
+calls=1 0 
+0 5
+0 3
+
+fn=(1334) _dl_fini
+0 23
+cfn=(38)
+calls=1 0 
+0 2
+0 129
+cfn=(1336) _dl_sort_fini
+calls=1 0 
+0 669
+0 2
+cfn=(40)
+calls=1 0 
+0 2
+0 139
+cob=(6) /usr/lib/libgcc_s.so.1
+cfi=(6) ???
+cfn=(1428) 0x0000000000002f40
+calls=1 0 
+0 1386
+cob=(4) /usr/lib/libm-2.19.so
+cfi=(4) ???
+cfn=(1408) 0x0000000000005900
+calls=1 0 
+0 1386
+cob=(7) /usr/lib/libstdc++.so.6.0.19
+cfi=(7) ???
+cfn=(1376) 0x000000000005bc10
+calls=1 0 
+0 2254
+cob=(5) /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+cfi=(5) ???
+cfn=(1350) 0x0000000000000640
+calls=1 0 
+0 947
+cob=(8) /home/kasper/Development/workspace/thesis/code/heaps/nodes/heap_node.out
+cfi=(8) ???
+cfn=(1338) 0x0000000000400d20
+calls=1 0 
+0 16
+0 45
+cob=(2) ???
+cfi=(2) ???
+cfn=(1448) 0x000000000523c238
+calls=1 0 
+0 3
+cob=(2)
+cfi=(2)
+cfn=(1426) 0x0000000004f99ed8
+calls=1 0 
+0 3
+cob=(2)
+cfi=(2)
+cfn=(1406) 0x0000000004ce3a2c
+calls=1 0 
+0 3
+cob=(2)
+cfi=(2)
+cfn=(1374) 0x0000000004a237f8
+calls=1 0 
+0 3
+cob=(2)
+cfi=(2)
+cfn=(1348) 0x0000000000404be4
+calls=1 0 
+0 3
+0 93
+
+fn=(12) sbrk
+0 17
+
+fn=(62)
+0 156
+cfn=(64) _dl_initial_error_catch_tsd
+calls=12 0 
+0 24
+0 96
+cfn=(66) __sigsetjmp
+calls=12 0 
+0 228
+0 72
+cfn=(102) openaux
+calls=11 0 
+0 24960
+cfn=(68) map_doit
+calls=1 0 
+0 2465
+0 156
+
+fn=(64)
+0 26
+
+fn=(92)
+0 50
+
+fn=(100) _dl_map_object_deps
+0 1121
+cfn=(74)
+calls=11 0 
+0 301
+0 99
+cfn=(62)
+calls=11 0 
+0 25631
+0 218
+cfn=(28)
+calls=5 0 
+0 170
+0 5
+0 50
+cfn=(34) memcpy
+calls=5 0 
+0 129
+0 25
+cfn=(34)
+calls=5 0 
+0 129
+0 237
+cfn=(28)
+calls=1 0 
+0 34
+0 1
+0 121
+cfn=(94) memset
+calls=1 0 
+0 20
+0 443
+cfn=(94)
+calls=5 0 
+0 60
+0 417
+cfn=(34)
+calls=1 0 
+0 51
+0 4
+
+fn=(106) _dl_sysdep_read_whole_file
+0 11
+cfn=(82) open
+calls=1 0 
+0 5
+0 7
+cfn=(88)
+calls=1 0 
+0 10
+0 8
+cfn=(96) close
+calls=1 0 
+0 5
+0 13
+cfn=(90) mmap
+calls=1 0 
+0 6
+0 2
+
+fn=(112) _dl_receive_error
+0 11
+cfn=(64)
+calls=1 0 
+0 2
+0 7
+cfn=(114) version_check_doit
+calls=1 0 
+0 11796
+0 10
+
+fn=(114)
+0 6
+cfn=(116) _dl_check_all_versions
+calls=1 0 
+0 11786
+0 4
+
+fn=(198)
+0 12
+
+fn=(200) _dl_allocate_tls_init
+0 66
+cfn=(52) mempcpy
+calls=2 0 
+0 37
+0 10
+cfn=(94)
+calls=2 0 
+0 156
+0 47
+
+fn=(212) call_init.part.0
+0 180
+cob=(2)
+cfi=(2)
+cfn=(274) 0x0000000004c7dbb0
+calls=1 0 
+0 6
+cob=(2)
+cfi=(2)
+cfn=(262) 0x0000000004f2e390
+calls=1 0 
+0 6
+cob=(2)
+cfi=(2)
+cfn=(240) 0x000000000522c7c0
+calls=1 0 
+0 6
+cob=(3) /usr/lib/libc-2.19.so
+cfi=(3) ???
+cfn=(226) _init
+calls=1 0 
+0 181
+cob=(2)
+cfi=(2)
+cfn=(214) 0x0000000004a23570
+calls=1 0 
+0 6
+0 85
+cob=(7)
+cfi=(7)
+cfn=(278) 0x000000000005bc50
+calls=1 0 
+0 16
+cob=(4)
+cfi=(4)
+cfn=(266) 0x0000000000005940
+calls=1 0 
+0 16
+cob=(6)
+cfi=(6)
+cfn=(244) __cpu_indicator_init
+calls=1 0 
+0 182
+cob=(3)
+cfi=(3)
+cfn=(234) init_cacheinfo
+calls=1 0 
+0 1092
+cob=(5)
+cfi=(5)
+cfn=(218) 0x0000000000000680
+calls=1 0 
+0 16
+0 32
+cob=(7)
+cfi=(7)
+cfn=(406) 0x000000000005bb20
+calls=1 0 
+0 166
+cob=(7)
+cfi=(7)
+cfn=(404) 0x000000000005b8f0
+calls=1 0 
+0 54
+cob=(7)
+cfi=(7)
+cfn=(378) 0x000000000005b830
+calls=1 0 
+0 49
+cob=(7)
+cfi=(7)
+cfn=(352) 0x000000000005b770
+calls=1 0 
+0 49
+cob=(7)
+cfi=(7)
+cfn=(326) 0x000000000005b660
+calls=1 0 
+0 73
+cob=(7)
+cfi=(7)
+cfn=(324) 0x000000000005b620
+calls=1 0 
+0 6
+cob=(7)
+cfi=(7)
+cfn=(286) 0x000000000005b600
+calls=1 0 
+0 4437
+cob=(6)
+cfi=(6)
+cfn=(254) 0x0000000000002f80
+calls=1 0 
+0 16
+0 86
+
+fn=(1318) __tls_get_addr
+0 11
+
+fn=(0) 0x0000000000001270
+0 2
+cfn=(2) _dl_start
+calls=1 0 
+0 1264944
+0 14
+cfn=(210) _dl_init
+calls=1 0 
+0 6882
+0 3
+cob=(8)
+cfi=(8)
+cfn=(416) 0x0000000000400c80
+calls=1 0 
+0 9564728589
+
+fn=(38)
+0 116
+
+fn=(68)
+0 9
+cfn=(70)
+calls=1 0 
+0 2453
+0 3
+
+fn=(86)
+0 90
+cfn=(54) _dl_debug_initialize
+calls=5 0 
+0 40
+0 25
+cfn=(88)
+calls=5 0 
+0 50
+0 300
+cfn=(20) _dl_new_object
+calls=5 0 
+0 2326
+0 1356
+cfn=(110) _dl_next_tls_modid
+calls=2 0 
+0 16
+0 167
+cfn=(90)
+calls=5 0 
+0 30
+0 280
+cfn=(94)
+calls=5 0 
+0 5138
+0 160
+cfn=(90)
+calls=5 0 
+0 30
+0 40
+cfn=(92)
+calls=5 0 
+0 25
+0 1611
+cfn=(96)
+calls=2 0 
+0 10
+0 6
+cfn=(96)
+calls=3 0 
+0 15
+0 75
+cfn=(4) _dl_setup_hash
+calls=5 0 
+0 125
+0 76
+cfn=(36) _dl_add_to_namespace_list
+calls=5 0 
+0 240
+0 204
+cfn=(90)
+calls=2 0 
+0 12
+0 20
+
+fn=(98) access
+0 9
+
+fn=(164) _dl_runtime_resolve
+0 1023
+cfn=(166) _dl_fixup
+calls=93 0 
+0 93656
+0 930
+
+fn=(166)
+0 5105
+cfn=(132)
+calls=93 0 
+0 85810
+0 2612
+cob=(3)
+cfi=(3)
+cfn=(1246) bcmp
+calls=1 0 
+0 8
+cob=(3)
+cfi=(3)
+cfn=(1238) memcpy@@GLIBC_2.14
+calls=1 0 
+0 7
+cob=(4)
+cfi=(4)
+cfn=(188) floor
+calls=1 0 
+0 12
+cob=(3)
+cfi=(3)
+cfn=(150) memcpy@GLIBC_2.2.5
+calls=1 0 
+0 13
+cob=(3)
+cfi=(3)
+cfn=(142) time
+calls=1 0 
+0 68
+cob=(3)
+cfi=(3)
+cfn=(706) strcmp
+calls=1 0 
+0 9
+0 12
+
+fn=(2)
+0 372
+cfn=(4)
+calls=1 0 
+0 25
+0 17
+cfn=(6) _dl_sysdep_start
+calls=1 0 
+0 1264090
+0 440
+
+fn=(6)
+0 428
+cfn=(8)
+calls=1 0 
+0 12
+0 7
+cfn=(12)
+calls=1 0 
+0 17
+0 12
+cfn=(14) dl_main
+calls=1 0 
+0 1263542
+0 28
+cfn=(10)
+calls=1 0 
+0 42
+0 2
+
+fn=(32)
+0 778
+cfn=(90)
+calls=4 0 
+0 24
+0 397
+
+fn=(42)
+0 12768
+cfn=(43) strcmp'2
+calls=1611 0 
+0 115646
+0 1988
+
+fn=(43)
+0 112008
+cfn=(43)
+calls=14509 0 
+0 610157
+0 3638
+
+fn=(44) _dl_discover_osversion
+0 21
+cfn=(46) uname
+calls=1 0 
+0 5
+0 67
+
+fn=(52)
+0 251
+
+fn=(110)
+0 16
+
+fn=(84) read
+0 25
+
+fn=(128) allocate_dtv
+0 9
+cfn=(24)
+calls=1 0 
+0 43
+0 1
+0 10
+
+fn=(130) _dl_relocate_object
+0 11501
+cob=(4)
+cfi=(4)
+cfn=(194) sin
+calls=1 0 
+0 16
+cob=(4)
+cfi=(4)
+cfn=(192) __atan2_finite
+calls=1 0 
+0 16
+cob=(4)
+cfi=(4)
+cfn=(190) __asin_finite
+calls=1 0 
+0 13
+cob=(4)
+cfi=(4)
+cfn=(188)
+calls=1 0 
+0 12
+cob=(4)
+cfi=(4)
+cfn=(186) floorf
+calls=1 0 
+0 12
+cob=(4)
+cfi=(4)
+cfn=(184) __acos_finite
+calls=1 0 
+0 13
+cob=(4)
+cfi=(4)
+cfn=(182) rintf
+calls=1 0 
+0 12
+cob=(4)
+cfi=(4)
+cfn=(180) __log_finite
+calls=1 0 
+0 16
+cob=(4)
+cfi=(4)
+cfn=(178) __pow_finite
+calls=1 0 
+0 13
+cob=(4)
+cfi=(4)
+cfn=(176) ceil
+calls=1 0 
+0 12
+cob=(4)
+cfi=(4)
+cfn=(174) ceilf
+calls=1 0 
+0 12
+cob=(4)
+cfi=(4)
+cfn=(172) rint
+calls=1 0 
+0 12
+cob=(4)
+cfi=(4)
+cfn=(170) cos
+calls=1 0 
+0 16
+cob=(4)
+cfi=(4)
+cfn=(156) __exp_finite
+calls=1 0 
+0 1390
+0 159
+cfn=(152)
+calls=5 0 
+0 120
+0 126604
+cfn=(132)
+calls=1228 0 
+0 993343
+0 55475
+cob=(3)
+cfi=(3)
+cfn=(150)
+calls=1 0 
+0 13
+cob=(3)
+cfi=(3)
+cfn=(148) gettimeofday
+calls=1 0 
+0 68
+cob=(3)
+cfi=(3)
+cfn=(146) strncasecmp
+calls=1 0 
+0 6
+cob=(3)
+cfi=(3)
+cfn=(142)
+calls=1 0 
+0 68
+cob=(3)
+cfi=(3)
+cfn=(138) strcasecmp
+calls=1 0 
+0 85
+0 250
+cfn=(34)
+calls=1 0 
+0 132
+0 298
+cfn=(132)
+calls=5 0 
+0 3313
+0 22059
+
+fn=(206)
+0 5
+
+fn=(1336)
+0 27
+cfn=(94)
+calls=1 0 
+0 20
+0 59
+cfn=(94)
+calls=5 0 
+0 60
+0 503
+
+fn=(14)
+0 39
+cfn=(16)
+calls=1 0 
+0 422
+0 2
+cfn=(16)
+calls=1 0 
+0 6
+0 67
+cfn=(18) bcmp
+calls=1 0 
+0 26
+0 19
+cfn=(20)
+calls=1 0 
+0 248
+0 12
+cfn=(36)
+calls=1 0 
+0 34
+0 128
+cfn=(42)
+calls=1 0 
+0 7
+0 262
+cfn=(4)
+calls=1 0 
+0 25
+0 7
+cfn=(44)
+calls=1 0 
+0 93
+0 77
+cfn=(18)
+calls=1 0 
+0 80
+0 7
+cfn=(48)
+calls=1 0 
+0 490
+0 3
+cfn=(54)
+calls=1 0 
+0 17
+0 63
+cfn=(56)
+calls=1 0 
+0 1
+0 12
+cfn=(98)
+calls=1 0 
+0 9
+0 19
+cfn=(100)
+calls=1 0 
+0 29266
+0 148
+cfn=(112)
+calls=1 0 
+0 11826
+0 5
+cfn=(122) init_tls
+calls=1 0 
+0 704
+0 172
+cfn=(130)
+calls=6 0 
+0 1207201
+0 58
+cfn=(200)
+calls=1 0 
+0 316
+0 8
+cfn=(202) _dl_sysdep_start_cleanup
+calls=1 0 
+0 1
+0 6
+cfn=(54)
+calls=1 0 
+0 8
+0 2
+cfn=(56)
+calls=1 0 
+0 1
+0 1
+cfn=(204)
+calls=1 0 
+0 15
+0 12
+cfn=(154)
+calls=2 0 
+0 40
+0 19
+cfn=(130)
+calls=1 0 
+0 7858
+0 14
+cfn=(10)
+calls=1 0 
+0 95
+0 8
+cfn=(34)
+calls=1 0 
+0 72
+0 11
+cfn=(58) strsep
+calls=1 0 
+0 907
+0 3
+cfn=(58)
+calls=1 0 
+0 7
+0 15
+cfn=(60)
+calls=1 0 
+0 2554
+0 14
+
+fn=(20)
+0 90
+cfn=(10)
+calls=6 0 
+0 309
+0 120
+cfn=(24)
+calls=6 0 
+0 305
+0 6
+0 72
+cfn=(34)
+calls=6 0 
+0 169
+0 360
+cfn=(10)
+calls=5 0 
+0 268
+0 139
+cfn=(52)
+calls=5 0 
+0 170
+0 366
+cfn=(28)
+calls=5 0 
+0 170
+0 5
+0 25
+
+fn=(50)
+0 79
+cfn=(28)
+calls=1 0 
+0 34
+0 1
+0 162
+cfn=(52)
+calls=1 0 
+0 22
+0 5
+cfn=(52)
+calls=1 0 
+0 22
+0 4
+
+fn=(90)
+0 102
+
+fn=(102)
+0 154
+cfn=(70)
+calls=11 0 
+0 24773
+0 33
+
+fn=(104)
+0 712
+cfn=(108)
+calls=37 0 
+0 2975
+0 183
+cfn=(106)
+calls=1 0 
+0 67
+0 10
+cfn=(18)
+calls=1 0 
+0 112
+0 15
+cfn=(18)
+calls=1 0 
+0 111
+0 60
+cfn=(108)
+calls=4 0 
+0 312
+0 184
+
+fn=(116)
+0 61
+cfn=(118) _dl_check_map_versions
+calls=7 0 
+0 11669
+0 56
+
+fn=(122)
+0 10
+cfn=(24)
+calls=1 0 
+0 64
+0 1
+0 65
+cfn=(124)
+calls=1 0 
+0 107
+0 1
+cfn=(126) _dl_allocate_tls_storage
+calls=1 0 
+0 440
+0 16
+
+fn=(126)
+0 7
+cfn=(32)
+calls=1 0 
+0 51
+0 1
+0 312
+cfn=(128)
+calls=1 0 
+0 63
+0 6
+
+fn=(196)
+0 144
+
+fn=(202)
+0 1
+
+fn=(210)
+0 103
+cfn=(212)
+calls=6 0 
+0 6683
+0 17
+cfn=(212)
+calls=1 0 
+0 77
+0 2
+
+fn=(4)
+0 175
+
+fn=(18)
+0 1795
+
+fn=(34)
+0 856
+
+fn=(54)
+0 65
+
+fn=(58)
+0 914
+
+fn=(78)
+0 25
+cfn=(10)
+calls=5 0 
+0 307
+0 15
+cfn=(28)
+calls=5 0 
+0 170
+0 5
+0 45
+cfn=(34)
+calls=5 0 
+0 174
+
+fn=(82)
+0 30
+
+fn=(94)
+0 5454
+
+fn=(96)
+0 30
+
+fn=(846) _dl_find_dso_for_object
+0 67
+
+fn=(36)
+0 42
+cfn=(38)
+calls=6 0 
+0 12
+0 193
+cfn=(40)
+calls=5 0 
+0 10
+0 13
+cfn=(40)
+calls=1 0 
+0 2
+0 2
+
+fn=(40)
+0 116
+
+fn=(46)
+0 5
+
+fn=(66)
+0 228
+
+fn=(80)
+0 95
+cfn=(82)
+calls=5 0 
+0 25
+0 60
+cfn=(84)
+calls=5 0 
+0 25
+0 70
+cfn=(18)
+calls=5 0 
+0 437
+0 45
+cfn=(18)
+calls=5 0 
+0 400
+0 566
+cfn=(18)
+calls=2 0 
+0 146
+0 20
+cfn=(18)
+calls=5 0 
+0 395
+0 109
+cfn=(18)
+calls=1 0 
+0 88
+0 2
+
+fn=(118)
+0 635
+cfn=(72)
+calls=59 0 
+0 3810
+0 520
+cfn=(120)
+calls=5 0 
+0 810
+0 48
+cfn=(120)
+calls=16 0 
+0 2696
+0 923
+cfn=(24)
+calls=6 0 
+0 258
+0 6
+0 1963
+
+ob=(8)
+fl=(8)
+fn=(794) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::deque()
+0 77056
+cfn=(796) std::_Deque_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_Deque_base()
+calls=11008 0 
+0 8662433
+0 22016
+
+fn=(804) std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::_Deque_iterator()
+0 286208
+
+fn=(812) std::_Deque_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_allocate_map(unsigned long)
+0 418308
+cfn=(814) std::_Deque_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_get_map_allocator() const
+calls=38028 0 
+0 1407036
+0 228168
+cfn=(822) __gnu_cxx::new_allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::allocate(unsigned long, void const*)
+calls=38028 0 
+0 9088526
+0 152112
+cfn=(862) std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::~allocator()
+calls=38028 0 
+0 532392
+0 228168
+
+fn=(820) __gnu_cxx::new_allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::new_allocator()
+0 380280
+
+fn=(822)
+0 342252
+cfn=(824) __gnu_cxx::new_allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::max_size() const
+calls=38028 0 
+0 228168
+0 304224
+cob=(7)
+cfi=(7)
+cfn=(830) operator new(unsigned long)
+calls=38028 0 
+0 8099035
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 759
+0 38032
+0 76056
+
+fn=(868) std::_Deque_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_allocate_node()
+0 2119548
+cfn=(808) std::__deque_buf_size(unsigned long)
+calls=353258 0 
+0 3885838
+0 2119548
+cfn=(870) __gnu_cxx::new_allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*>::allocate(unsigned long, void const*)
+calls=353258 0 
+0 74439299
+0 706516
+
+fn=(874) std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::_M_set_node(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***)
+0 10839552
+cfn=(876) std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::_S_buffer_size()
+calls=677472 0 
+0 11517024
+0 5419776
+
+fn=(1000) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::front()
+0 55323855
+cfn=(1002) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::begin()
+calls=6147095 0 
+0 221295420
+0 18441285
+cfn=(1006) std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::operator*() const
+calls=6147095 0 
+0 43029665
+0 12294190
+
+fn=(1012) void __gnu_cxx::new_allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*>::destroy<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*>(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**)
+0 49152846
+
+fn=(1050) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*** std::copy<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***>(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***)
+0 330240
+cfn=(1052) std::_Miter_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***>::iterator_type std::__miter_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***>(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***)
+calls=33024 0 
+0 495360
+0 132096
+cfn=(1052)
+calls=33024 0 
+0 495360
+0 132096
+cfn=(1056) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*** std::__copy_move_a2<false, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***>(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***)
+calls=33024 0 
+0 4750019
+0 132096
+
+fn=(1078) std::_Deque_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_get_Tp_allocator()
+0 102072
+
+fn=(1106) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >::siftup()
+0 14350329
+cfn=(1108) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >::parent() const
+calls=2050047 0 
+0 51257160
+0 8347919
+cfn=(1116) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >::swap(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*)
+calls=849565 0 
+0 111356255
+0 2548695
+cfn=(1108)
+calls=849565 0 
+0 21364555
+0 3398260
+cfn=(1110) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >::is_root() const
+calls=849565 0 
+0 7646085
+0 6150141
+cfn=(1110)
+calls=2050047 0 
+0 18450423
+0 39721885
+
+fn=(800) std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*>::allocator()
+0 77056
+cfn=(802) __gnu_cxx::new_allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*>::new_allocator()
+calls=11008 0 
+0 55040
+0 22016
+
+fn=(816) std::_Deque_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_get_Tp_allocator() const
+0 456336
+
+fn=(862)
+0 532392
+cfn=(864) __gnu_cxx::new_allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::~new_allocator()
+calls=76056 0 
+0 380280
+0 152112
+
+fn=(866) std::_Deque_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_create_nodes(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***)
+0 143104
+cfn=(868)
+calls=11008 0 
+0 2789905
+0 154112
+
+fn=(876)
+0 27322240
+cfn=(808)
+calls=6830560 0 
+0 75136160
+0 13661120
+
+fn=(1002)
+0 135456750
+cfn=(1004) std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::_Deque_iterator(std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**> const&)
+calls=12314250 0 
+0 270913500
+0 36942750
+
+fn=(1006)
+0 186412800
+
+fn=(1074) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::clear()
+0 54036
+cfn=(1002)
+calls=6004 0 
+0 216144
+0 30020
+cfn=(1076) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_erase_at_end(std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>)
+calls=6004 0 
+0 17340727
+0 12008
+
+fn=(1090) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >::is_leaf() const
+0 26645616
+
+fn=(1108)
+0 30469755
+cfn=(1110)
+calls=1457749 0 
+0 13119741
+0 29032219
+
+fn=(1118) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >::swap_colors(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*)
+0 6787712
+
+fn=(798) std::_Deque_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_Deque_impl::_Deque_impl()
+0 77056
+cfn=(800)
+calls=11008 0 
+0 154112
+0 88064
+cfn=(804)
+calls=11008 0 
+0 143104
+0 44032
+cfn=(804)
+calls=11008 0 
+0 143104
+0 22016
+
+fn=(806) std::_Deque_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_initialize_map(unsigned long)
+0 88064
+cfn=(808)
+calls=11008 0 
+0 121088
+0 165120
+cfn=(810) unsigned long const& std::max<unsigned long>(unsigned long const&, unsigned long const&)
+calls=11008 0 
+0 143104
+0 99072
+cfn=(812)
+calls=11008 0 
+0 2438032
+0 242176
+cfn=(866)
+calls=11008 0 
+0 3087121
+0 66048
+cfn=(874)
+calls=11008 0 
+0 451328
+0 77056
+cfn=(874)
+calls=11008 0 
+0 451328
+0 88064
+cfn=(808)
+calls=11008 0 
+0 121088
+0 165120
+
+fn=(814)
+0 608448
+cfn=(816)
+calls=76056 0 
+0 456336
+0 380280
+cfn=(818) std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*>(std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> const&)
+calls=76056 0 
+0 1140840
+0 228168
+
+fn=(818)
+0 608448
+cfn=(820)
+calls=76056 0 
+0 380280
+0 152112
+
+fn=(884) main
+0 5
+cob=(9) /usr/lib/valgrind/callgrind-amd64-linux
+cfi=(9) ???
+cfn=(890) 0x0000000038050c4d
+calls=1 0 
+0 3
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1193
+0 5
+0 2
+cob=(3)
+cfi=(3)
+cfn=(898) srand
+calls=1 0 
+0 10537
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1136
+0 5
+0 2002
+cfn=(904) KHJ::thesis::utils::pfb<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >, int>::build_and_inject(int)
+calls=1000 0 
+0 3124621277
+0 3000
+cfn=(1132) KHJ::thesis::utils::pfb<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >, int>::assert_heap(bool)
+calls=1000 0 
+0 1680226792
+0 1000
+cfn=(1152) KHJ::thesis::utils::pfb<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >, int>::clear_heap()
+calls=1000 0 
+0 2314310417
+0 3005
+cob=(7)
+cfi=(7)
+cfn=(1168) std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)
+calls=1 0 
+0 5349
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1516
+0 5
+0 3
+cob=(7)
+cfi=(7)
+cfn=(1218) std::ostream::operator<<(std::ostream& (*)(std::ostream&))
+calls=1 0 
+0 10093
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 923
+0 5
+0 2
+cfn=(904)
+calls=1 0 
+0 3118846
+0 3
+cfn=(1132)
+calls=1 0 
+0 1680371
+0 1002
+cfn=(1294) KHJ::thesis::utils::pfb<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >, int>::replace_rand()
+calls=1000 0 
+0 756843792
+0 4000
+cfn=(1302) KHJ::thesis::utils::pfb<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >, int>::siftup(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*)
+calls=1000 0 
+0 496108
+0 3000
+cfn=(1304) KHJ::thesis::utils::pfb<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >, int>::siftdown(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*)
+calls=1000 0 
+0 70572
+0 2000
+cfn=(1132)
+calls=1000 0 
+0 1680822002
+0 3005
+cob=(7)
+cfi=(7)
+cfn=(1168)
+calls=1 0 
+0 322
+0 1
+0 3
+cob=(7)
+cfi=(7)
+cfn=(1218)
+calls=1 0 
+0 340
+0 1
+0 1
+cfn=(1152)
+calls=1 0 
+0 2314947
+0 3
+cob=(7)
+cfi=(7)
+cfn=(1168)
+calls=1 0 
+0 317
+0 1
+0 3
+cob=(7)
+cfi=(7)
+cfn=(1218)
+calls=1 0 
+0 340
+0 1
+0 3
+
+fn=(984) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::push_front(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >* const&)
+0 29812
+cfn=(992) _ZN9__gnu_cxx13new_allocatorIPN3KHJ6thesis9heap_node11heap_a_nodeIiSt4lessIiESaIiEEEE9constructIS9_IRKS9_EEEvPT_DpOT0_
+calls=971 0 
+0 33985
+0 10991
+cfn=(986) void std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_push_front_aux<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >* const&>(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >* const&)
+calls=1033 0 
+0 391321
+0 4008
+
+fn=(1060) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*** std::__copy_move_a<false, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***>(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***)
+0 429312
+cfn=(1062) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*** std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >** const*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >** const*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***)
+calls=33024 0 
+0 1843907
+0 66048
+
+fn=(1082) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_destroy_data(std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>, std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> const&)
+0 136096
+
+fn=(1084) std::_Deque_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_destroy_nodes(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***)
+0 1540104
+cfn=(1014) std::_Deque_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_deallocate_node(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**)
+calls=231166 0 
+0 39958961
+0 1009724
+
+fn=(1086) KHJ::thesis::utils::pfb<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >, int>::breadth_traverse()
+0 40024
+cfn=(794)
+calls=5003 0 
+0 4075242
+0 15009
+cfn=(794)
+calls=5003 0 
+0 3848771
+0 10006
+cfn=(1000)
+calls=5003 0 
+0 285171
+0 35021
+cfn=(1038) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::push_back(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >* const&)
+calls=5003 0 
+0 310186
+0 25015
+cfn=(1038)
+calls=5003 0 
+0 310186
+0 15009
+cfn=(1088) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >::height() const
+calls=5003 0 
+0 1150690
+0 15469276
+cfn=(1000)
+calls=5118069 0 
+0 291729933
+0 71652966
+cfn=(1038)
+calls=5118069 0 
+0 380053632
+0 25590345
+cfn=(1038)
+calls=5118069 0 
+0 386585789
+0 25590345
+cfn=(1038)
+calls=5118069 0 
+0 317320278
+0 25590345
+cfn=(1038)
+calls=5118069 0 
+0 317320278
+0 15354207
+cfn=(1008) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::pop_front()
+calls=5118069 0 
+0 175357496
+0 46062621
+cob=(4)
+cfi=(4)
+cfn=(910) pow
+calls=5118069 0 
+0 1567519948
+0 5118069
+0 400240
+cob=(4)
+cfi=(4)
+cfn=(910)
+calls=50030 0 
+0 11631975
+0 50030
+0 41574930
+cfn=(1074)
+calls=5003 0 
+0 14586091
+0 20012
+cfn=(1092) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::~deque()
+calls=5003 0 
+0 2856775
+0 30018
+
+fn=(1112) std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::operator++(int)
+0 67596034
+cfn=(1004)
+calls=6145094 0 
+0 135192068
+0 18435282
+cfn=(1114) std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::operator++()
+calls=6145094 0 
+0 115450916
+0 24580376
+
+fn=(1128) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&& std::forward<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*>(std::remove_reference<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*>::type&)
+0 24012
+
+fn=(1130) _ZN9__gnu_cxx13new_allocatorIPN3KHJ6thesis9heap_node11heap_a_nodeIiSt4lessIiESaIiEEEE9constructIS9_IS9_EEEvPT_DpOT0_
+0 20010
+cfn=(1128)
+calls=2001 0 
+0 12006
+0 10005
+cfn=(994) operator new(unsigned long, void*)
+calls=2001 0 
+0 14007
+0 14007
+
+fn=(1132)
+0 18009
+cfn=(1086)
+calls=2001 0 
+0 1498843361
+0 6003
+cfn=(1134) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::size() const
+calls=2001 0 
+0 134067
+0 12006
+cob=(4)
+cfi=(4)
+cfn=(1142) log2
+calls=2001 0 
+0 144072
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 869
+0 2005
+0 10005
+cob=(4)
+cfi=(4)
+cfn=(1150) 0x000000000001aeb0
+calls=2001 0 
+0 4002
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 899
+0 2005
+0 16008
+cfn=(1002)
+calls=2001 0 
+0 72036
+0 16434213
+cfn=(1006)
+calls=2001 0 
+0 14007
+0 6003
+cfn=(1110)
+calls=2001 0 
+0 18009
+0 10005
+cfn=(1006)
+calls=2001 0 
+0 14007
+0 10243119
+cfn=(1006)
+calls=2047023 0 
+0 14329161
+0 12282138
+cfn=(1006)
+calls=2047023 0 
+0 14329161
+0 14329161
+cfn=(1006)
+calls=2047023 0 
+0 14329161
+0 14329161
+cfn=(1006)
+calls=2047023 0 
+0 14329161
+0 14329161
+cfn=(1006)
+calls=2047023 0 
+0 14329161
+0 16376184
+cfn=(1006)
+calls=2047023 0 
+0 14329161
+0 18429210
+cfn=(1006)
+calls=2049024 0 
+0 14343168
+0 6147072
+cfn=(1090)
+calls=2049024 0 
+0 18441216
+0 28674330
+cfn=(1112)
+calls=4096047 0 
+0 240796338
+0 36864423
+cob=(4)
+cfi=(4)
+cfn=(910)
+calls=4096047 0 
+0 1258044708
+0 4096047
+0 176088
+cob=(4)
+cfi=(4)
+cfn=(910)
+calls=22011 0 
+0 5268633
+0 22011
+0 33076530
+cfn=(1080) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::end()
+calls=22011 0 
+0 792396
+0 10005
+cfn=(1080)
+calls=2001 0 
+0 72036
+0 120060
+cfn=(1102) bool std::operator!=<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>(std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**> const&, std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**> const&)
+calls=24012 0 
+0 600300
+0 54027
+cfn=(1092)
+calls=2001 0 
+0 13065081
+0 10005
+
+fn=(1156) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::erase(std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>)
+0 24588564
+cfn=(1004)
+calls=2049047 0 
+0 45079034
+0 6147141
+cfn=(1114)
+calls=2049047 0 
+0 38496458
+0 10245235
+cfn=(1002)
+calls=2049047 0 
+0 73765692
+0 10245235
+cfn=(1136) std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::difference_type std::operator-<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>(std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**> const&, std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**> const&)
+calls=2049047 0 
+0 110648538
+0 10245235
+cfn=(1134)
+calls=2049047 0 
+0 137286149
+0 20485465
+cfn=(1002)
+calls=2048046 0 
+0 73729656
+0 10240230
+cfn=(1102)
+calls=2048046 0 
+0 51201150
+0 10240230
+cfn=(1008)
+calls=2048046 0 
+0 71043536
+0 2053051
+cfn=(1080)
+calls=1001 0 
+0 36036
+0 5005
+cfn=(1102)
+calls=1001 0 
+0 25025
+0 5005
+cfn=(1162) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::pop_back()
+calls=1001 0 
+0 30030
+0 10245235
+cfn=(1002)
+calls=2049047 0 
+0 73765692
+0 12294282
+cfn=(1158) std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::operator+(long) const
+calls=2049047 0 
+0 258179922
+0 12294282
+
+fn=(1158)
+0 22550517
+cfn=(1004)
+calls=2050047 0 
+0 45101034
+0 10250235
+cfn=(1160) std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::operator+=(long)
+calls=2050047 0 
+0 116945114
+0 10250235
+cfn=(1004)
+calls=2050047 0 
+0 45101034
+0 8200188
+
+fn=(1304)
+0 7000
+cfn=(1110)
+calls=1000 0 
+0 9000
+0 4000
+cfn=(1306) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >::siftdown()
+calls=1000 0 
+0 43542
+0 2006
+cfn=(1110)
+calls=2 0 
+0 18
+0 5006
+
+fn=(426) __libc_csu_init
+0 16
+cob=(2)
+cfi=(2)
+cfn=(428) 0x0000000000400ac8
+calls=1 0 
+0 6
+0 7
+cfn=(432) 0x0000000000400d40
+calls=1 0 
+0 15
+0 4
+cfn=(440) _GLOBAL__sub_I__ZN3KHJ6thesis5utils3pfbINS0_9heap_node11heap_a_nodeIiSt4lessIiESaIiEEEiE4heapE
+calls=1 0 
+0 151629
+0 14
+
+fn=(442) __static_initialization_and_destruction_0(int, int)
+0 11
+cob=(7)
+cfi=(7)
+cfn=(448) std::ios_base::Init::Init()
+calls=1 0 
+0 88817
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1053
+0 5
+0 4
+cob=(3)
+cfi=(3)
+cfn=(318) __cxa_atexit
+calls=1 0 
+0 66
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1250
+0 5
+0 2
+cfn=(794)
+calls=1 0 
+0 60336
+0 4
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 66
+0 1
+0 2
+
+fn=(796)
+0 88064
+cfn=(798)
+calls=11008 0 
+0 671488
+0 44032
+cfn=(806)
+calls=11008 0 
+0 7803809
+0 55040
+
+fn=(1016) __gnu_cxx::new_allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*>::deallocate(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**, unsigned long)
+0 3179322
+cob=(7)
+cfi=(7)
+cfn=(1022) operator delete(void*)
+calls=353258 0 
+0 46766970
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 782
+0 353262
+0 706516
+
+fn=(1044) void std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_push_back_aux<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >* const&>(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >* const&)
+0 3412170
+cfn=(1046) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_reserve_map_at_back(unsigned long)
+calls=341217 0 
+0 35780927
+0 2047302
+cfn=(868)
+calls=341217 0 
+0 80241895
+0 1364868
+cfn=(990) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >* const& std::forward<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >* const&>(std::remove_reference<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >* const&>::type&)
+calls=341217 0 
+0 2047302
+0 2388519
+cfn=(992)
+calls=341217 0 
+0 11942595
+0 2729736
+cfn=(874)
+calls=341217 0 
+0 13989897
+0 3070953
+
+fn=(1056)
+0 363264
+cfn=(1058) std::_Niter_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***>::iterator_type std::__niter_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***>(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***)
+calls=33024 0 
+0 495360
+0 132096
+cfn=(1058)
+calls=33024 0 
+0 495360
+0 132096
+cfn=(1058)
+calls=33024 0 
+0 495360
+0 132096
+cfn=(1060)
+calls=33024 0 
+0 2339267
+0 165120
+
+fn=(1080)
+0 45563331
+cfn=(1004)
+calls=4142121 0 
+0 91126662
+0 12426363
+
+fn=(1100) __gnu_cxx::new_allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*>::~new_allocator()
+0 55040
+
+fn=(1126) void std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::emplace_front<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*>(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&&)
+0 28014
+cfn=(1128)
+calls=2001 0 
+0 12006
+0 16008
+cfn=(1130)
+calls=2001 0 
+0 70035
+0 16008
+
+fn=(1134)
+0 22572528
+cfn=(1136)
+calls=2052048 0 
+0 110810592
+0 4104096
+
+fn=(1136)
+0 24606570
+cfn=(876)
+calls=4101095 0 
+0 69718615
+0 127133945
+
+fn=(1154) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >::~heap_a_node()
+0 10250235
+
+fn=(1298) std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::operator[](long) const
+0 11000
+cfn=(1158)
+calls=1000 0 
+0 218435
+0 3000
+cfn=(1006)
+calls=1000 0 
+0 7000
+0 2000
+
+fn=(810)
+0 494364
+
+fn=(904)
+0 9009
+cfn=(794)
+calls=1001 0 
+0 777156
+0 8008
+cob=(4)
+cfi=(4)
+cfn=(910)
+calls=1001 0 
+0 308308
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 862
+0 1005
+0 5005
+cob=(3)
+cfi=(3)
+cfn=(978) rand
+calls=1001 0 
+0 47015
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1122
+0 1005
+0 12012
+cob=(7)
+cfi=(7)
+cfn=(830)
+calls=1001 0 
+0 112204
+0 1001
+0 5005
+cfn=(982) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >::heap_a_node(int const&)
+calls=1001 0 
+0 16016
+0 6006
+cfn=(984)
+calls=1001 0 
+0 390969
+0 3094091
+cfn=(1000)
+calls=1024023 0 
+0 58369311
+0 5120115
+cfn=(1008)
+calls=1024023 0 
+0 35295549
+0 1024023
+cob=(3)
+cfi=(3)
+cfn=(978)
+calls=1024023 0 
+0 48096048
+0 1024023
+0 11264253
+cob=(4)
+cfi=(4)
+cfn=(910)
+calls=1024023 0 
+0 313629316
+0 1024023
+0 5120115
+cob=(3)
+cfi=(3)
+cfn=(978)
+calls=1024023 0 
+0 48096048
+0 1024023
+0 10240230
+cob=(7)
+cfi=(7)
+cfn=(830)
+calls=1024023 0 
+0 114784503
+0 1024023
+0 5120115
+cfn=(1034) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >::heap_a_node(int const&, bool)
+calls=1024023 0 
+0 19456437
+0 2048046
+cob=(3)
+cfi=(3)
+cfn=(978)
+calls=1024023 0 
+0 48096048
+0 1024023
+0 11264253
+cob=(4)
+cfi=(4)
+cfn=(910)
+calls=1024023 0 
+0 313629316
+0 1024023
+0 5120115
+cob=(3)
+cfi=(3)
+cfn=(978)
+calls=1024023 0 
+0 48096048
+0 1024023
+0 10240230
+cob=(7)
+cfi=(7)
+cfn=(830)
+calls=1024023 0 
+0 114783674
+0 1024023
+0 5120115
+cfn=(1034)
+calls=1024023 0 
+0 19456437
+0 7168161
+cfn=(1036) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >::join(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*)
+calls=1024023 0 
+0 16384368
+0 5120115
+cfn=(1038)
+calls=1024023 0 
+0 63489426
+0 5120115
+cfn=(1038)
+calls=1024023 0 
+0 75834394
+0 9216207
+cob=(4)
+cfi=(4)
+cfn=(910)
+calls=1024023 0 
+0 313629316
+0 1024023
+0 80080
+cob=(4)
+cfi=(4)
+cfn=(910)
+calls=10010 0 
+0 2327325
+0 10010
+0 8318310
+cfn=(1074)
+calls=1001 0 
+0 3066844
+0 4004
+cfn=(984)
+calls=1001 0 
+0 79024
+0 3003
+cfn=(1086)
+calls=1001 0 
+0 749934845
+0 5005
+cfn=(1002)
+calls=1001 0 
+0 36036
+0 6148142
+cfn=(1006)
+calls=2049047 0 
+0 14343329
+0 6147141
+cfn=(1106)
+calls=2049047 0 
+0 284118797
+0 12294282
+cfn=(1112)
+calls=2049047 0 
+0 120458338
+0 10250240
+cfn=(1080)
+calls=2050048 0 
+0 73801728
+0 10250240
+cfn=(1102)
+calls=2050048 0 
+0 51251200
+0 4103099
+cfn=(1120) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >::find_root() const
+calls=1001 0 
+0 68292
+0 5005
+cfn=(1122) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::push_front(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&&)
+calls=1001 0 
+0 92092
+0 4004
+cfn=(1092)
+calls=1001 0 
+0 6513307
+0 3003
+cfn=(1092)
+calls=1001 0 
+0 571938
+0 7007
+
+fn=(988) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_reserve_map_at_front(unsigned long)
+0 15513
+cfn=(1048) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_reallocate_map(unsigned long, bool)
+calls=3 0 
+0 3602
+0 2066
+
+fn=(994)
+0 157740331
+
+fn=(1014)
+0 2472806
+cfn=(808)
+calls=353258 0 
+0 3885838
+0 2119548
+cfn=(1016)
+calls=353258 0 
+0 51006852
+0 706516
+
+fn=(1048)
+0 1080776
+cfn=(1050)
+calls=6004 0 
+0 1128752
+0 222164
+cfn=(810)
+calls=27020 0 
+0 351260
+0 243180
+cfn=(812)
+calls=27020 0 
+0 9616678
+0 621427
+cfn=(1050)
+calls=27017 0 
+0 5337898
+0 39
+cfn=(1050)
+calls=3 0 
+0 617
+0 216160
+cfn=(1070) std::_Deque_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_deallocate_map(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***, unsigned long)
+calls=27020 0 
+0 5388893
+0 324240
+cfn=(874)
+calls=27020 0 
+0 1107820
+0 36024
+cfn=(874)
+calls=6004 0 
+0 246164
+0 330240
+cfn=(874)
+calls=33024 0 
+0 1353984
+0 132096
+
+fn=(1062)
+0 693504
+cob=(3)
+cfi=(3)
+cfn=(1068) __memmove_ssse3_back
+calls=33024 0 
+0 918048
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1183
+0 33028
+0 198144
+
+fn=(1076)
+0 54036
+cfn=(1078)
+calls=6004 0 
+0 36024
+0 36024
+cfn=(1080)
+calls=6004 0 
+0 216144
+0 30020
+cfn=(1004)
+calls=6004 0 
+0 132088
+0 36024
+cfn=(1082)
+calls=6004 0 
+0 48032
+0 60040
+cfn=(1084)
+calls=6004 0 
+0 16608239
+0 84056
+
+fn=(1122)
+0 16008
+cfn=(1124) std::remove_reference<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&>::type&& std::move<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&>(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&)
+calls=2001 0 
+0 12006
+0 10005
+cfn=(1126)
+calls=2001 0 
+0 142071
+0 4002
+
+fn=(1306)
+0 29542
+cfn=(1090)
+calls=1000 0 
+0 9000
+0 5000
+
+fn=(440)
+0 5
+cfn=(442)
+calls=1 0 
+0 151622
+0 2
+
+fn=(802)
+0 55040
+
+fn=(864)
+0 380280
+
+fn=(982)
+0 32016
+
+fn=(1010) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_M_pop_front_aux()
+0 1220920
+cfn=(1012)
+calls=122092 0 
+0 732552
+0 732552
+cfn=(1014)
+calls=122092 0 
+0 20232599
+0 976736
+cfn=(874)
+calls=122092 0 
+0 5005772
+0 732552
+
+fn=(1054) std::_Iter_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***, false>::_S_base(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***)
+0 990720
+
+fn=(1070)
+0 418308
+cfn=(814)
+calls=38028 0 
+0 1407036
+0 228168
+cfn=(1072) __gnu_cxx::new_allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>::deallocate(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >***, unsigned long)
+calls=38028 0 
+0 4967686
+0 114084
+cfn=(862)
+calls=38028 0 
+0 532392
+0 76056
+
+fn=(1096) std::_Deque_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::_Deque_impl::~_Deque_impl()
+0 77056
+cfn=(1098) std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*>::~allocator()
+calls=11008 0 
+0 154112
+0 22016
+
+fn=(1120)
+0 163009
+cfn=(1110)
+calls=2001 0 
+0 18009
+0 10005
+
+fn=(1152)
+0 7007
+cfn=(1086)
+calls=1001 0 
+0 749485226
+0 5005
+cfn=(1002)
+calls=1001 0 
+0 36036
+0 6148142
+cfn=(1006)
+calls=2049047 0 
+0 14343329
+0 10245235
+cfn=(1154)
+calls=2049047 0 
+0 10245235
+0 4098094
+cob=(7)
+cfi=(7)
+cfn=(1022)
+calls=2049047 0 
+0 190557367
+0 2049047
+0 6147141
+cfn=(1006)
+calls=2049047 0 
+0 14343329
+0 12294282
+cfn=(1004)
+calls=2049047 0 
+0 45079034
+0 12294282
+cfn=(1156)
+calls=2049047 0 
+0 1072621113
+0 26637611
+cfn=(1080)
+calls=2049047 0 
+0 73765692
+0 5005
+cfn=(1080)
+calls=1001 0 
+0 36036
+0 10250240
+cfn=(1102)
+calls=2050048 0 
+0 51251200
+0 4103099
+cfn=(1092)
+calls=1001 0 
+0 572572
+0 5005
+
+fn=(416)
+0 11
+cob=(3)
+cfi=(3)
+cfn=(424) (below main)
+calls=1 0 
+0 9564727256
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1317
+0 5
+
+fn=(808)
+0 83150012
+
+fn=(824)
+0 228168
+
+fn=(870)
+0 3179322
+cfn=(872) __gnu_cxx::new_allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*>::max_size() const
+calls=353258 0 
+0 2119548
+0 2826064
+cob=(7)
+cfi=(7)
+cfn=(830)
+calls=353258 0 
+0 65254591
+0 353258
+0 706516
+
+fn=(990)
+0 137247492
+
+fn=(992)
+0 225323320
+cfn=(990)
+calls=22532332 0 
+0 135193992
+0 112661660
+cfn=(994)
+calls=22532332 0 
+0 157726324
+0 157726324
+
+fn=(1036)
+0 16384368
+
+fn=(1058)
+0 693504
+cfn=(1054)
+calls=99072 0 
+0 594432
+0 198144
+
+fn=(1092)
+0 88064
+cfn=(1078)
+calls=11008 0 
+0 66048
+0 66048
+cfn=(1080)
+calls=11008 0 
+0 396288
+0 55040
+cfn=(1002)
+calls=11008 0 
+0 396288
+0 66048
+cfn=(1082)
+calls=11008 0 
+0 88064
+0 33024
+cfn=(1094) std::_Deque_base<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::~_Deque_base()
+calls=11008 0 
+0 28838811
+0 44032
+
+fn=(1094)
+0 187136
+cfn=(1084)
+calls=11008 0 
+0 25900550
+0 88064
+cfn=(1070)
+calls=11008 0 
+0 2354837
+0 33024
+cfn=(1096)
+calls=11008 0 
+0 253184
+0 22016
+
+fn=(1124)
+0 12006
+
+fn=(1294)
+0 7000
+cfn=(1086)
+calls=1000 0 
+0 749322497
+0 1000
+cob=(3)
+cfi=(3)
+cfn=(978)
+calls=1000 0 
+0 46968
+0 1000
+0 4000
+cfn=(1134)
+calls=1000 0 
+0 67000
+0 9000
+cob=(7)
+cfi=(7)
+cfn=(830)
+calls=1000 0 
+0 112948
+0 1000
+0 5000
+cfn=(982)
+calls=1000 0 
+0 16000
+0 7000
+cfn=(1296) std::deque<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, std::allocator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*> >::operator[](unsigned long)
+calls=1000 0 
+0 254435
+0 7000
+cfn=(1300) KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >::replace(KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*)
+calls=1000 0 
+0 60202
+0 3000
+cfn=(1008)
+calls=1000 0 
+0 31000
+0 3000
+cfn=(1120)
+calls=1000 0 
+0 122731
+0 5000
+cfn=(1122)
+calls=1000 0 
+0 92000
+0 5000
+cfn=(1154)
+calls=1000 0 
+0 5000
+0 2000
+cob=(7)
+cfi=(7)
+cfn=(1022)
+calls=1000 0 
+0 89000
+0 1000
+0 5000
+cfn=(1092)
+calls=1000 0 
+0 6552011
+0 6000
+
+fn=(1300)
+0 25497
+cfn=(1110)
+calls=499 0 
+0 4491
+0 2498
+cfn=(1090)
+calls=498 0 
+0 4482
+0 6717
+cfn=(1090)
+calls=501 0 
+0 4509
+0 12008
+
+fn=(1302)
+0 7000
+cfn=(1106)
+calls=1000 0 
+0 472910
+0 3000
+cfn=(1110)
+calls=1000 0 
+0 9000
+0 2004
+cfn=(1008)
+calls=2 0 
+0 62
+0 8
+cfn=(984)
+calls=2 0 
+0 124
+0 2000
+
+fn=(1342) 0x0000000000400cb0
+0 8
+
+fn=(432)
+0 15
+
+fn=(1004)
+0 677724454
+
+fn=(1104) bool std::operator==<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**>(std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**> const&, std::_Deque_iterator<KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >*&, KHJ::thesis::heap_node::heap_a_node<int, std::less<int>, std::allocator<int> >**> const&)
+0 74077860
+
+fn=(1110)
+0 62197893
+
+fn=(1160)
+0 43050987
+cfn=(876)
+calls=2050047 0 
+0 34850799
+0 28694820
+cfn=(876)
+calls=973 0 
+0 16541
+0 14595
+cfn=(874)
+calls=973 0 
+0 39893
+0 2919
+cfn=(876)
+calls=973 0 
+0 16541
+0 10258019
+
+fn=(1162)
+0 21021
+cfn=(1012)
+calls=1001 0 
+0 6006
+0 3003
+
+fn=(1296)
+0 11000
+cfn=(1298)
+calls=1000 0 
+0 241435
+0 2000
+
+fn=(872)
+0 2119548
+
+fn=(986)
+0 10330
+cfn=(988)
+calls=1033 0 
+0 21181
+0 6198
+cfn=(868)
+calls=1033 0 
+0 238949
+0 9297
+cfn=(874)
+calls=1033 0 
+0 42353
+0 8264
+cfn=(990)
+calls=1033 0 
+0 6198
+0 7231
+cfn=(992)
+calls=1033 0 
+0 36155
+0 5165
+
+fn=(1008)
+0 138516828
+cfn=(1012)
+calls=8069048 0 
+0 48414288
+0 48780564
+cfn=(1010)
+calls=122092 0 
+0 29633683
+0 16382280
+
+fn=(1034)
+0 38912874
+
+fn=(1038)
+0 425687713
+cfn=(992)
+calls=22189111 0 
+0 776618885
+0 134840751
+cfn=(1044)
+calls=341217 0 
+0 159016164
+0 45060656
+
+fn=(1046)
+0 7363683
+cfn=(1048)
+calls=33021 0 
+0 27734810
+0 682434
+
+fn=(1052)
+0 462336
+cfn=(1054)
+calls=66048 0 
+0 396288
+0 132096
+
+fn=(1072)
+0 342252
+cob=(7)
+cfi=(7)
+cfn=(1022)
+calls=38028 0 
+0 4511350
+0 38028
+0 76056
+
+fn=(1088)
+0 390234
+cfn=(1090)
+calls=50030 0 
+0 450270
+0 15009
+cfn=(1090)
+calls=5003 0 
+0 45027
+0 180108
+cfn=(1090)
+calls=5003 0 
+0 45027
+0 25015
+
+fn=(1098)
+0 77056
+cfn=(1100)
+calls=11008 0 
+0 55040
+0 22016
+
+fn=(1102)
+0 61731550
+cfn=(1104)
+calls=6173155 0 
+0 74077860
+0 18519465
+
+fn=(1114)
+0 123780766
+cfn=(874)
+calls=124093 0 
+0 5087813
+0 25078795
+
+fn=(1116)
+0 6796520
+cfn=(1110)
+calls=849565 0 
+0 7646085
+0 4305812
+cfn=(1090)
+calls=1682 0 
+0 15138
+0 18502
+cfn=(1110)
+calls=1682 0 
+0 15138
+0 2555423
+cfn=(1110)
+calls=847883 0 
+0 7630947
+0 4274485
+cfn=(1090)
+calls=1169 0 
+0 10521
+0 15197
+cfn=(1118)
+calls=1169 0 
+0 18704
+0 3507
+cfn=(1110)
+calls=1169 0 
+0 10521
+0 12104778
+cfn=(1110)
+calls=228646 0 
+0 2057814
+0 2515106
+cfn=(1090)
+calls=228646 0 
+0 2057814
+0 10619235
+cfn=(1110)
+calls=200729 0 
+0 1806561
+0 2208019
+cfn=(1090)
+calls=200729 0 
+0 1806561
+0 2005837
+cfn=(1118)
+calls=140365 0 
+0 2245840
+0 301820
+cfn=(1118)
+calls=60364 0 
+0 965824
+0 9515130
+cfn=(1110)
+calls=222334 0 
+0 2001006
+0 2445674
+cfn=(1090)
+calls=222334 0 
+0 2001006
+0 2205172
+cfn=(1118)
+calls=153817 0 
+0 2461072
+0 342585
+cfn=(1118)
+calls=68517 0 
+0 1096272
+0 6657499
+cfn=(1110)
+calls=195005 0 
+0 1755045
+0 2145055
+cfn=(1090)
+calls=195005 0 
+0 1755045
+0 2963985
+
+fn=(1338)
+0 5
+cfn=(1342)
+calls=1 0 
+0 8
+0 3
+
+ob=(2)
+fl=(2)
+fn=(428)
+0 6
+
+fn=(1374)
+0 3
+
+fn=(214)
+0 6
+
+fn=(1406)
+0 3
+
+fn=(240)
+0 6
+
+fn=(262)
+0 6
+
+fn=(274)
+0 6
+
+fn=(1426)
+0 3
+
+fn=(1348)
+0 3
+
+fn=(1448)
+0 3
+
+ob=(3)
+fl=(3)
+fn=(572) uselocale
+0 42
+
+fn=(600) wctype_l
+0 99
+cfn=(602) strlen
+calls=9 0 
+0 144
+0 276
+cfn=(602)
+calls=40 0 
+0 640
+0 18
+cfn=(602)
+calls=9 0 
+0 144
+0 311
+cfn=(604) __GI_memcmp
+calls=41 0 
+0 857
+0 172
+
+fn=(850) _int_malloc
+0 117745472
+cfn=(852) malloc_consolidate
+calls=1 0 
+0 666
+0 46179705
+cfn=(856) __default_morecore
+calls=1 0 
+0 62
+0 44
+cfn=(856)
+calls=1 0 
+0 26
+0 7165
+
+fn=(852)
+0 18
+cfn=(854) malloc_init_state
+calls=1 0 
+0 648
+
+fn=(860) brk
+0 26
+
+fn=(980) random
+0 40980930
+cfn=(902) random_r
+calls=4098093 0 
+0 106418222
+0 28686651
+
+fn=(1204) _fxstat
+0 10
+
+fn=(1210) _IO_do_write@@GLIBC_2.2.5
+0 25
+cfn=(1270) new_do_write
+calls=3 0 
+0 243
+0 18
+
+fn=(1248) __memcmp_sse4_1
+0 111
+
+fn=(1362) __cxa_finalize
+0 190
+cob=(7)
+cfi=(7)
+cfn=(1396) 0x00000000000b0bd0
+calls=1 0 
+0 8
+cob=(7)
+cfi=(7)
+cfn=(1394) 0x00000000000b18c0
+calls=1 0 
+0 8
+cob=(7)
+cfi=(7)
+cfn=(1386) 0x00000000000b18b0
+calls=1 0 
+0 806
+0 124
+cfn=(1364) __unregister_atfork
+calls=4 0 
+0 52
+
+fn=(1450) _IO_cleanup
+0 8
+cfn=(1452) _IO_flush_all_lockp
+calls=1 0 
+0 88
+0 49
+cfn=(1454) _IO_file_setbuf@@GLIBC_2.2.5
+calls=1 0 
+0 78
+0 43
+
+fn=(1458) _Exit
+0 5
+
+fn=(144) _dl_vdso_vsym
+0 35
+
+fn=(168) __get_cpu_features
+0 75
+
+fn=(236) handle_intel
+0 44
+cfn=(238) intel_check_word
+calls=2 0 
+0 636
+0 14
+cfn=(238)
+calls=2 0 
+0 214
+0 40
+
+fn=(706)
+0 9
+
+fn=(836) malloc
+0 51267980
+cfn=(850)
+calls=2441332 0 
+0 163932122
+0 48826645
+cfn=(838) malloc_hook_ini
+calls=1 0 
+0 57665
+
+fn=(837) malloc'2
+0 21
+cfn=(850)
+calls=1 0 
+0 1018
+0 20
+
+fn=(858) sbrk
+0 67
+cfn=(860)
+calls=1 0 
+0 13
+0 29
+cfn=(860)
+calls=1 0 
+0 13
+0 4
+
+fn=(882) __sigjmp_save
+0 9
+
+fn=(1202) _IO_file_stat
+0 4
+cfn=(1204)
+calls=1 0 
+0 10
+
+fn=(1310) exit
+0 4
+cfn=(1312) __run_exit_handlers
+calls=1 0 
+0 16147
+
+fn=(138)
+0 3
+cfn=(140) __init_cpu_features
+calls=1 0 
+0 78
+0 4
+
+fn=(148)
+0 55
+cfn=(144)
+calls=1 0 
+0 7
+0 6
+
+fn=(150)
+0 26
+
+fn=(232) __ctype_init
+0 16
+
+fn=(238)
+0 850
+
+fn=(878) _setjmp
+0 2
+cfn=(880) __sigsetjmp
+calls=1 0 
+0 27
+
+fn=(1238)
+0 7
+
+fn=(1266) putc
+0 111
+cfn=(1268) __overflow
+calls=3 0 
+0 414
+0 6
+
+fn=(1268)
+0 18
+cfn=(1196) _IO_file_overflow@@GLIBC_2.2.5
+calls=3 0 
+0 396
+
+fn=(1274) write
+0 6
+cfn=(1276) __write_nocancel
+calls=3 0 
+0 15
+
+fn=(1364)
+0 52
+
+fn=(1452)
+0 88
+
+fn=(230) rindex
+0 24
+
+fn=(318)
+0 48
+cfn=(320) __new_exitfn
+calls=6 0 
+0 258
+0 84
+
+fn=(320)
+0 258
+
+fn=(578) wctob
+0 2432
+
+fn=(604)
+0 857
+
+fn=(842) _dl_addr
+0 14
+cob=(1)
+cfi=(1)
+cfn=(38)
+calls=1 0 
+0 2
+0 2
+cob=(1)
+cfi=(1)
+cfn=(846)
+calls=1 0 
+0 67
+0 1
+0 56016
+cob=(1)
+cfi=(1)
+cfn=(40)
+calls=1 0 
+0 2
+0 13
+
+fn=(1200) _IO_file_doallocate
+0 11
+cfn=(1202)
+calls=1 0 
+0 14
+0 15
+cfn=(1206) mmap
+calls=1 0 
+0 6
+0 7
+cfn=(1208) _IO_setb
+calls=1 0 
+0 19
+0 20
+
+fn=(1240) __memcpy_sse2_unaligned
+0 80
+
+fn=(1290) fflush
+0 198
+cfn=(1292) _IO_file_sync@@GLIBC_2.2.5
+calls=9 0 
+0 117
+0 162
+
+fn=(1454)
+0 3
+cfn=(1456) _IO_default_setbuf
+calls=1 0 
+0 63
+0 12
+
+fn=(146)
+0 6
+
+fn=(586) _dl_mcount_wrapper_check
+0 512
+
+fn=(708) __strcmp_ssse3
+0 392
+
+fn=(848) __linkin_atfork
+0 9
+
+fn=(898)
+0 11
+cfn=(900) srandom_r
+calls=1 0 
+0 10520
+0 6
+
+fn=(1030) _int_free
+0 193636699
+cfn=(1032) systrim.isra.1
+calls=1 0 
+0 136
+0 1901391
+
+fn=(1032)
+0 30
+cfn=(856)
+calls=1 0 
+0 26
+0 14
+cfn=(856)
+calls=1 0 
+0 26
+0 9
+cfn=(856)
+calls=1 0 
+0 26
+0 5
+
+fn=(1068)
+0 918048
+
+fn=(1196)
+0 562
+cfn=(1210)
+calls=3 0 
+0 279
+0 13
+cfn=(1210)
+calls=1 0 
+0 7
+0 2
+cfn=(1198) _IO_doallocbuf
+calls=1 0 
+0 105
+0 6
+
+fn=(1212) _IO_default_xsputn
+0 162
+cfn=(1196)
+calls=13 0 
+0 416
+0 73
+
+fn=(1246)
+0 8
+
+fn=(140)
+0 78
+
+fn=(500) newlocale
+0 40
+
+fn=(840) ptmalloc_init.part.7
+0 24
+cfn=(848)
+calls=1 0 
+0 9
+0 431
+cfn=(842)
+calls=1 0 
+0 56117
+0 14
+
+fn=(900)
+0 608
+cfn=(902)
+calls=1 0 
+0 26
+0 1236
+cfn=(902)
+calls=309 0 
+0 8024
+0 626
+
+fn=(1292)
+0 130
+
+fn=(1312)
+0 9
+cfn=(1314) __call_tls_dtors
+calls=1 0 
+0 24
+0 95
+cfn=(1450)
+calls=1 0 
+0 266
+0 5
+cfn=(1458)
+calls=1 0 
+0 5
+0 18
+cob=(1)
+cfi=(1)
+cfn=(1334)
+calls=1 0 
+0 7108
+cob=(7)
+cfi=(7)
+cfn=(1324) std::ios_base::Init::~Init()
+calls=1 0 
+0 1418
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1120
+cob=(8)
+cfi=(8)
+cfn=(1092)
+calls=1 0 
+0 6071
+0 5
+0 3
+
+fn=(142)
+0 110
+cfn=(144)
+calls=2 0 
+0 14
+0 12
+
+fn=(226)
+0 70
+cfn=(144)
+calls=1 0 
+0 7
+0 8
+cfn=(144)
+calls=1 0 
+0 7
+0 10
+cfn=(228) __init_misc
+calls=1 0 
+0 48
+0 1
+cfn=(232)
+calls=1 0 
+0 16
+0 14
+
+fn=(234)
+0 11
+cfn=(236)
+calls=1 0 
+0 430
+0 4
+cfn=(236)
+calls=1 0 
+0 518
+0 129
+
+fn=(424)
+0 21
+cfn=(318)
+calls=1 0 
+0 66
+0 13
+cob=(8)
+cfi=(8)
+cfn=(426)
+calls=1 0 
+0 151691
+0 8
+cfn=(878)
+calls=1 0 
+0 29
+0 14
+cob=(8)
+cfi=(8)
+cfn=(884)
+calls=1 0 
+0 9564559259
+0 2
+cfn=(1310)
+calls=1 0 
+0 16151
+0 2
+
+fn=(584) btowc
+0 6912
+cfn=(586)
+calls=128 0 
+0 512
+0 384
+cfn=(588) __gconv_btwoc_ascii
+calls=128 0 
+0 640
+0 768
+
+fn=(838)
+0 8
+cfn=(840)
+calls=1 0 
+0 56595
+0 3
+cfn=(837)
+calls=1 0 
+0 1059
+
+fn=(856)
+0 10
+cfn=(858)
+calls=5 0 
+0 126
+0 30
+
+fn=(1028) free
+0 36619995
+cfn=(1030)
+calls=2441333 0 
+0 195538226
+
+fn=(1192) fwrite
+0 124
+cfn=(1194) _IO_file_xsputn@@GLIBC_2.2.5
+calls=1 0 
+0 870
+0 10
+cfn=(1194)
+calls=2 0 
+0 281
+0 51
+
+fn=(1194)
+0 59
+cfn=(1308) __GI_mempcpy
+calls=2 0 
+0 54
+0 49
+cfn=(1196)
+calls=1 0 
+0 162
+0 19
+cfn=(1212)
+calls=1 0 
+0 651
+0 157
+
+fn=(1206)
+0 6
+
+fn=(1270)
+0 39
+cfn=(1272) _IO_file_write@@GLIBC_2.2.5
+calls=3 0 
+0 129
+0 75
+
+fn=(1276)
+0 15
+
+fn=(902)
+0 106426272
+
+fn=(978)
+0 8196186
+cfn=(980)
+calls=4098093 0 
+0 176085803
+0 8196186
+
+fn=(1198)
+0 11
+cfn=(1200)
+calls=1 0 
+0 92
+0 2
+
+fn=(1208)
+0 40
+
+fn=(1272)
+0 66
+cfn=(1274)
+calls=3 0 
+0 21
+0 42
+
+fn=(1314)
+0 5
+cob=(1)
+cfi=(1)
+cfn=(1318)
+calls=1 0 
+0 11
+0 1
+0 7
+
+fn=(1456)
+0 8
+cfn=(1292)
+calls=1 0 
+0 13
+0 10
+cfn=(1208)
+calls=1 0 
+0 21
+0 11
+
+fn=(228)
+0 12
+cfn=(230)
+calls=1 0 
+0 24
+0 12
+
+fn=(588)
+0 640
+
+fn=(602)
+0 976
+
+fn=(854)
+0 648
+
+fn=(880)
+0 18
+cfn=(882)
+calls=1 0 
+0 9
+
+fn=(1308)
+0 54
+
+ob=(7)
+fl=(7)
+fn=(324)
+0 6
+
+fn=(454) std::locale::locale()
+0 132
+cfn=(456) 0x0000000000070dd0
+calls=22 0 
+0 57325
+0 330
+
+fn=(488) 0x000000000006ed30
+0 4
+cfn=(494) std::locale::facet::_S_create_c_locale(__locale_struct*&, char const*, __locale_struct*)
+calls=1 0 
+0 1297
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1085
+0 5
+
+fn=(506) std::locale::_Impl::_M_install_facet(std::locale::id const*, std::locale::facet const*)
+0 364
+cfn=(512) std::locale::id::_M_id() const
+calls=28 0 
+0 420
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 765
+0 32
+0 7084
+
+fn=(530) std::moneypunct<char, false>::_M_initialize_moneypunct(__locale_struct*, char const*)
+0 112
+
+fn=(656) std::ios_base::ios_base()
+0 472
+cfn=(454)
+calls=8 0 
+0 232
+0 8
+
+fn=(1218)
+0 3
+cfn=(1224) std::basic_ostream<char, std::char_traits<char> >& std::endl<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&)
+calls=3 0 
+0 9135
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1628
+0 7
+
+fn=(1224)
+0 41
+cfn=(1256) std::ostream::put(char)
+calls=2 0 
+0 492
+0 2
+0 3
+cfn=(1256)
+calls=1 0 
+0 1395
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 668
+0 5
+0 15
+cfn=(1282) std::ostream::flush()
+calls=3 0 
+0 1365
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 676
+0 7
+0 2
+cfn=(1230) std::ctype<char>::_M_widen_init() const
+calls=1 0 
+0 3610
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 842
+0 5
+0 4
+cfn=(1250) std::ctype<char>::do_widen(char) const
+calls=1 0 
+0 2
+0 1
+
+fn=(1232) std::ctype<char>::do_widen(char const*, char const*, char*) const
+0 5
+cob=(3)
+cfi=(3)
+cfn=(1240)
+calls=1 0 
+0 80
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1182
+0 5
+0 3
+
+fn=(1258) 0x000000000005b574
+0 12
+cfn=(1260) __gnu_cxx::stdio_sync_filebuf<char, std::char_traits<char> >::overflow(int)
+calls=3 0 
+0 1701
+
+fn=(1376)
+0 8
+cob=(3)
+cfi=(3)
+cfn=(1362)
+calls=1 0 
+0 948
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1280
+0 5
+0 1
+cfn=(1400) 0x000000000005bba0
+calls=1 0 
+0 9
+0 3
+
+fn=(278)
+0 16
+
+fn=(286)
+0 2
+cfn=(294) std::future_category()
+calls=1 0 
+0 3664
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 762
+0 5
+0 4
+
+fn=(306) std::error_category::error_category()
+0 12
+
+fn=(662) std::basic_ios<char, std::char_traits<char> >::init(std::basic_streambuf<char, std::char_traits<char> >*)
+0 24
+cfn=(668) std::ios_base::_M_init()
+calls=4 0 
+0 1806
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 797
+0 8
+0 12
+cfn=(686) std::basic_ios<char, std::char_traits<char> >::_M_cache_locale(std::locale const&)
+calls=4 0 
+0 11965
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1100
+0 8
+0 52
+
+fn=(700) __cxxabiv1::__vmi_class_type_info::__do_dyncast(long, __cxxabiv1::__class_type_info::__sub_kind, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info::__dyncast_result&) const
+0 440
+cob=(3)
+cfi=(3)
+cfn=(708)
+calls=8 0 
+0 392
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1172
+0 12
+0 24
+
+fn=(722) __cxxabiv1::__si_class_type_info::__do_dyncast(long, __cxxabiv1::__class_type_info::__sub_kind, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info::__dyncast_result&) const
+0 1400
+
+fn=(776) std::num_put<wchar_t, std::ostreambuf_iterator<wchar_t, std::char_traits<wchar_t> > > const& std::use_facet<std::num_put<wchar_t, std::ostreambuf_iterator<wchar_t, std::char_traits<wchar_t> > > >(std::locale const&)
+0 16
+cfn=(512)
+calls=4 0 
+0 20
+0 4
+0 44
+cfn=(698) __dynamic_cast
+calls=4 0 
+0 304
+0 4
+0 16
+
+fn=(1324)
+0 7
+cfn=(1282)
+calls=1 0 
+0 70
+0 1
+0 2
+cfn=(1282)
+calls=1 0 
+0 70
+0 1
+0 2
+cfn=(1282)
+calls=1 0 
+0 70
+0 1
+0 2
+cfn=(1330) std::basic_ostream<wchar_t, std::char_traits<wchar_t> >::flush()
+calls=1 0 
+0 70
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 964
+0 5
+0 2
+cfn=(1330)
+calls=1 0 
+0 70
+0 1
+0 2
+cfn=(1330)
+calls=1 0 
+0 70
+0 1
+0 7
+
+fn=(1332) __gnu_cxx::stdio_sync_filebuf<wchar_t, std::char_traits<wchar_t> >::sync()
+0 6
+cob=(3)
+cfi=(3)
+cfn=(1290)
+calls=3 0 
+0 159
+0 3
+
+fn=(1396)
+0 3
+cfn=(1392) std::error_category::~error_category()
+calls=1 0 
+0 4
+0 1
+
+fn=(352)
+0 49
+
+fn=(474) std::locale::facet::_S_get_c_name()
+0 10
+
+fn=(512)
+0 700
+
+fn=(524) std::numpunct<char>::_M_initialize_numpunct(__locale_struct*)
+0 413
+
+fn=(536) std::moneypunct<char, true>::_M_initialize_moneypunct(__locale_struct*, char const*)
+0 112
+
+fn=(610) std::codecvt<wchar_t, char, __mbstate_t>::codecvt(unsigned long)
+0 12
+cfn=(486) std::locale::facet::_S_get_c_locale()
+calls=1 0 
+0 9
+0 1
+0 5
+
+fn=(622) std::moneypunct<wchar_t, false>::_M_initialize_moneypunct(__locale_struct*, char const*)
+0 108
+
+fn=(646) std::messages<wchar_t>::messages(unsigned long)
+0 12
+cfn=(486)
+calls=1 0 
+0 9
+0 1
+0 2
+cfn=(474)
+calls=1 0 
+0 2
+0 1
+0 5
+
+fn=(680) std::locale::~locale()
+0 96
+
+fn=(740) std::num_get<char, std::istreambuf_iterator<char, std::char_traits<char> > > const& std::use_facet<std::num_get<char, std::istreambuf_iterator<char, std::char_traits<char> > > >(std::locale const&)
+0 16
+cfn=(512)
+calls=4 0 
+0 20
+0 4
+0 44
+cfn=(698)
+calls=4 0 
+0 304
+0 4
+0 16
+
+fn=(770) bool std::has_facet<std::num_put<wchar_t, std::ostreambuf_iterator<wchar_t, std::char_traits<wchar_t> > > >(std::locale const&)
+0 16
+cfn=(512)
+calls=4 0 
+0 20
+0 4
+0 52
+cfn=(698)
+calls=4 0 
+0 304
+0 4
+0 16
+
+fn=(830)
+0 21971997
+cob=(3)
+cfi=(3)
+cfn=(836)
+calls=2441333 0 
+0 264084412
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1211
+0 2441337
+0 14647998
+
+fn=(1168)
+0 27
+cob=(3)
+cfi=(3)
+cfn=(602)
+calls=3 0 
+0 48
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1152
+0 7
+0 12
+cfn=(1178) std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)
+calls=3 0 
+0 3510
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1210
+0 7
+0 15
+
+fn=(326)
+0 73
+
+fn=(404)
+0 54
+
+fn=(456)
+0 4
+cfn=(468) std::locale::_Impl::_Impl(unsigned long)
+calls=1 0 
+0 56384
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 749
+0 5
+0 183
+
+fn=(548) std::__timepunct<char>::_M_initialize_timepunct(__locale_struct*)
+0 10
+cfn=(486)
+calls=1 0 
+0 9
+0 1
+0 97
+
+fn=(560) std::ctype<wchar_t>::ctype(unsigned long)
+0 12
+cfn=(486)
+calls=1 0 
+0 9
+0 1
+0 7
+cfn=(566) std::ctype<wchar_t>::_M_initialize_ctype()
+calls=1 0 
+0 23295
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 861
+0 5
+
+fn=(668)
+0 72
+cfn=(454)
+calls=8 0 
+0 232
+0 8
+0 24
+cfn=(674) std::locale::operator=(std::locale const&)
+calls=8 0 
+0 136
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 757
+0 12
+0 16
+cfn=(680)
+calls=8 0 
+0 96
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 725
+0 12
+0 32
+
+fn=(692) bool std::has_facet<std::ctype<char> >(std::locale const&)
+0 16
+cfn=(512)
+calls=4 0 
+0 20
+0 4
+0 52
+cfn=(698)
+calls=4 0 
+0 1772
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 686
+0 8
+0 16
+
+fn=(714) std::ctype<char> const& std::use_facet<std::ctype<char> >(std::locale const&)
+0 16
+cfn=(512)
+calls=4 0 
+0 20
+0 4
+0 44
+cfn=(698)
+calls=4 0 
+0 596
+0 4
+0 16
+
+fn=(734) bool std::has_facet<std::num_get<char, std::istreambuf_iterator<char, std::char_traits<char> > > >(std::locale const&)
+0 16
+cfn=(512)
+calls=4 0 
+0 20
+0 4
+0 52
+cfn=(698)
+calls=4 0 
+0 304
+0 4
+0 16
+
+fn=(746) std::basic_ios<wchar_t, std::char_traits<wchar_t> >::init(std::basic_streambuf<wchar_t, std::char_traits<wchar_t> >*)
+0 24
+cfn=(668)
+calls=4 0 
+0 316
+0 4
+0 12
+cfn=(752) std::basic_ios<wchar_t, std::char_traits<wchar_t> >::_M_cache_locale(std::locale const&)
+calls=4 0 
+0 9520
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1092
+0 8
+0 52
+
+fn=(758) bool std::has_facet<std::ctype<wchar_t> >(std::locale const&)
+0 16
+cfn=(512)
+calls=4 0 
+0 20
+0 4
+0 52
+cfn=(698)
+calls=4 0 
+0 304
+0 4
+0 16
+
+fn=(788) std::num_get<wchar_t, std::istreambuf_iterator<wchar_t, std::char_traits<wchar_t> > > const& std::use_facet<std::num_get<wchar_t, std::istreambuf_iterator<wchar_t, std::char_traits<wchar_t> > > >(std::locale const&)
+0 16
+cfn=(512)
+calls=4 0 
+0 20
+0 4
+0 44
+cfn=(698)
+calls=4 0 
+0 304
+0 4
+0 16
+
+fn=(1178)
+0 42
+cfn=(1184) std::ostream::sentry::sentry(std::ostream&)
+calls=3 0 
+0 69
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 764
+0 7
+0 99
+cfn=(1186) __gnu_cxx::stdio_sync_filebuf<char, std::char_traits<char> >::xsputn(char const*, long)
+calls=3 0 
+0 2517
+0 12
+
+fn=(1260)
+0 18
+cob=(3)
+cfi=(3)
+cfn=(1266)
+calls=3 0 
+0 531
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1145
+0 7
+
+fn=(1400)
+0 9
+
+fn=(468)
+0 218
+cfn=(474)
+calls=1 0 
+0 2
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 867
+0 5
+0 64
+cfn=(480) std::ctype<char>::ctype(unsigned short const*, bool, unsigned long)
+calls=1 0 
+0 3445
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 741
+0 5
+0 4
+cfn=(506)
+calls=1 0 
+0 1051
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1061
+0 5
+0 3
+cfn=(518) std::codecvt<char, char, __mbstate_t>::codecvt(unsigned long)
+calls=1 0 
+0 27
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 845
+0 5
+0 4
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 23
+cfn=(524)
+calls=1 0 
+0 413
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1045
+0 5
+0 5
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 8
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 8
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 5
+cfn=(486)
+calls=1 0 
+0 9
+0 1
+0 5
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 35
+cfn=(530)
+calls=1 0 
+0 112
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1141
+0 5
+0 5
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 35
+cfn=(536)
+calls=1 0 
+0 112
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1173
+0 5
+0 5
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 8
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 8
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 56
+cfn=(542) std::__timepunct<char>::__timepunct(std::__timepunct_cache<char>*, unsigned long)
+calls=1 0 
+0 1232
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 996
+0 5
+0 5
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 8
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 8
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 3
+cfn=(554) std::messages<char>::messages(unsigned long)
+calls=1 0 
+0 32
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 756
+0 5
+0 4
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 3
+cfn=(560)
+calls=1 0 
+0 24190
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 709
+0 5
+0 4
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 3
+cfn=(610)
+calls=1 0 
+0 27
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 837
+0 5
+0 4
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 23
+cfn=(616) std::numpunct<wchar_t>::_M_initialize_numpunct(__locale_struct*)
+calls=1 0 
+0 349
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1061
+0 5
+0 4
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 8
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 8
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 5
+cfn=(486)
+calls=1 0 
+0 9
+0 1
+0 5
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 35
+cfn=(622)
+calls=1 0 
+0 108
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1149
+0 5
+0 4
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 35
+cfn=(628) std::moneypunct<wchar_t, true>::_M_initialize_moneypunct(__locale_struct*, char const*)
+calls=1 0 
+0 108
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1173
+0 5
+0 4
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 8
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 8
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 56
+cfn=(634) std::__timepunct<wchar_t>::__timepunct(std::__timepunct_cache<wchar_t>*, unsigned long)
+calls=1 0 
+0 1246
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 988
+0 5
+0 4
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 8
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 8
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 3
+cfn=(646)
+calls=1 0 
+0 32
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 748
+0 5
+0 4
+cfn=(506)
+calls=1 0 
+0 282
+0 1
+0 3
+cfn=(512)
+calls=1 0 
+0 5
+0 1
+0 5
+cfn=(512)
+calls=1 0 
+0 5
+0 1
+0 5
+cfn=(512)
+calls=1 0 
+0 5
+0 1
+0 5
+cfn=(512)
+calls=1 0 
+0 5
+0 1
+0 5
+cfn=(512)
+calls=1 0 
+0 5
+0 1
+0 5
+cfn=(512)
+calls=1 0 
+0 5
+0 1
+0 5
+cfn=(512)
+calls=1 0 
+0 5
+0 1
+0 5
+cfn=(512)
+calls=1 0 
+0 5
+0 1
+0 10
+
+fn=(566)
+0 9
+cob=(3)
+cfi=(3)
+cfn=(572)
+calls=1 0 
+0 21
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1229
+0 5
+0 770
+cob=(3)
+cfi=(3)
+cfn=(578)
+calls=128 0 
+0 2432
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1153
+0 132
+0 260
+cob=(3)
+cfi=(3)
+cfn=(584)
+calls=1 0 
+0 19
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1136
+0 5
+0 510
+cob=(3)
+cfi=(3)
+cfn=(584)
+calls=255 0 
+0 9197
+0 255
+0 1067
+cfn=(594) std::ctype<wchar_t>::_M_convert_to_wmask(unsigned short) const
+calls=8 0 
+0 2892
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 877
+0 12
+0 16
+cfn=(594)
+calls=4 0 
+0 1147
+0 4
+0 123
+cob=(3)
+cfi=(3)
+cfn=(572)
+calls=1 0 
+0 21
+0 1
+0 2
+
+fn=(728) std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > > const& std::use_facet<std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > > >(std::locale const&)
+0 16
+cfn=(512)
+calls=4 0 
+0 20
+0 4
+0 44
+cfn=(698)
+calls=4 0 
+0 304
+0 4
+0 16
+
+fn=(764) std::ctype<wchar_t> const& std::use_facet<std::ctype<wchar_t> >(std::locale const&)
+0 16
+cfn=(512)
+calls=4 0 
+0 20
+0 4
+0 44
+cfn=(698)
+calls=4 0 
+0 304
+0 4
+0 16
+
+fn=(782) bool std::has_facet<std::num_get<wchar_t, std::istreambuf_iterator<wchar_t, std::char_traits<wchar_t> > > >(std::locale const&)
+0 16
+cfn=(512)
+calls=4 0 
+0 20
+0 4
+0 52
+cfn=(698)
+calls=4 0 
+0 304
+0 4
+0 16
+
+fn=(1184)
+0 138
+
+fn=(1392)
+0 12
+
+fn=(300) __cxa_guard_acquire
+0 26
+
+fn=(406)
+0 5
+cfn=(306)
+calls=1 0 
+0 4
+0 1
+0 7
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 66
+0 1
+0 3
+cfn=(306)
+calls=1 0 
+0 4
+0 1
+0 7
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 66
+0 1
+
+fn=(542)
+0 14
+cfn=(474)
+calls=1 0 
+0 2
+0 1
+0 4
+cfn=(548)
+calls=1 0 
+0 117
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1085
+0 5
+0 4
+
+fn=(616)
+0 349
+
+fn=(628)
+0 108
+
+fn=(640) std::__timepunct<wchar_t>::_M_initialize_timepunct(__locale_struct*)
+0 9
+cfn=(486)
+calls=1 0 
+0 9
+0 1
+0 96
+
+fn=(674)
+0 136
+
+fn=(1250)
+0 2
+
+fn=(1386)
+0 3
+cfn=(1392)
+calls=1 0 
+0 4
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 794
+0 5
+
+fn=(294)
+0 5
+cfn=(300)
+calls=1 0 
+0 26
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 750
+0 5
+0 5
+cfn=(306)
+calls=1 0 
+0 4
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 802
+0 5
+0 4
+cfn=(312) __cxa_guard_release
+calls=1 0 
+0 5
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 726
+0 5
+0 4
+cob=(3)
+cfi=(3)
+cfn=(318)
+calls=1 0 
+0 60
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1250
+0 5
+0 3
+
+fn=(486)
+0 91
+cfn=(488)
+calls=1 0 
+0 2391
+0 1
+
+fn=(634)
+0 14
+cfn=(474)
+calls=1 0 
+0 2
+0 1
+0 4
+cfn=(640)
+calls=1 0 
+0 115
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1101
+0 5
+0 4
+
+fn=(686)
+0 28
+cfn=(692)
+calls=4 0 
+0 2574
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 892
+0 8
+0 16
+cfn=(714)
+calls=4 0 
+0 700
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 927
+0 8
+0 12
+cfn=(720) bool std::has_facet<std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > > >(std::locale const&)
+calls=4 0 
+0 416
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1276
+0 8
+0 16
+cfn=(728)
+calls=4 0 
+0 408
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1268
+0 8
+0 12
+cfn=(734)
+calls=4 0 
+0 416
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1244
+0 8
+0 16
+cfn=(740)
+calls=4 0 
+0 408
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1268
+0 8
+0 20
+
+fn=(720)
+0 16
+cfn=(512)
+calls=4 0 
+0 20
+0 4
+0 52
+cfn=(698)
+calls=4 0 
+0 304
+0 4
+0 16
+
+fn=(752)
+0 28
+cfn=(758)
+calls=4 0 
+0 416
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 884
+0 8
+0 16
+cfn=(764)
+calls=4 0 
+0 408
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 900
+0 8
+0 12
+cfn=(770)
+calls=4 0 
+0 416
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1244
+0 8
+0 16
+cfn=(776)
+calls=4 0 
+0 408
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1300
+0 8
+0 12
+cfn=(782)
+calls=4 0 
+0 416
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1252
+0 8
+0 16
+cfn=(788)
+calls=4 0 
+0 408
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1300
+0 8
+0 20
+
+fn=(312)
+0 5
+
+fn=(448)
+0 35
+cfn=(454)
+calls=1 0 
+0 57178
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 709
+0 5
+0 16
+cfn=(454)
+calls=1 0 
+0 29
+0 1
+0 14
+cfn=(454)
+calls=1 0 
+0 29
+0 1
+0 6
+cfn=(656)
+calls=1 0 
+0 89
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 717
+0 5
+0 15
+cfn=(662)
+calls=1 0 
+0 13063
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1116
+0 5
+0 3
+cfn=(656)
+calls=1 0 
+0 89
+0 1
+0 16
+cfn=(662)
+calls=1 0 
+0 903
+0 1
+0 3
+cfn=(656)
+calls=1 0 
+0 89
+0 1
+0 14
+cfn=(662)
+calls=1 0 
+0 903
+0 1
+0 3
+cfn=(656)
+calls=1 0 
+0 89
+0 1
+0 14
+cfn=(662)
+calls=1 0 
+0 903
+0 1
+0 16
+cfn=(454)
+calls=1 0 
+0 29
+0 1
+0 16
+cfn=(454)
+calls=1 0 
+0 29
+0 1
+0 14
+cfn=(454)
+calls=1 0 
+0 29
+0 1
+0 6
+cfn=(656)
+calls=1 0 
+0 89
+0 1
+0 15
+cfn=(746)
+calls=1 0 
+0 8757
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1132
+0 5
+0 3
+cfn=(656)
+calls=1 0 
+0 89
+0 1
+0 16
+cfn=(746)
+calls=1 0 
+0 757
+0 1
+0 3
+cfn=(656)
+calls=1 0 
+0 89
+0 1
+0 14
+cfn=(746)
+calls=1 0 
+0 757
+0 1
+0 3
+cfn=(656)
+calls=1 0 
+0 89
+0 1
+0 14
+cfn=(746)
+calls=1 0 
+0 757
+0 1
+0 11
+
+fn=(594)
+0 64
+cob=(3)
+cfi=(3)
+cfn=(600)
+calls=1 0 
+0 195
+0 1
+0 24
+cob=(3)
+cfi=(3)
+cfn=(600)
+calls=1 0 
+0 367
+0 1
+0 17
+cob=(3)
+cfi=(3)
+cfn=(600)
+calls=1 0 
+0 583
+0 1
+0 3
+cob=(3)
+cfi=(3)
+cfn=(600)
+calls=1 0 
+0 97
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1236
+0 5
+0 3
+cob=(3)
+cfi=(3)
+cfn=(600)
+calls=1 0 
+0 318
+0 1
+0 9
+cob=(3)
+cfi=(3)
+cfn=(600)
+calls=1 0 
+0 514
+0 1
+0 3
+cob=(3)
+cfi=(3)
+cfn=(600)
+calls=1 0 
+0 244
+0 1
+0 3
+cob=(3)
+cfi=(3)
+cfn=(600)
+calls=1 0 
+0 146
+0 1
+0 3
+cob=(3)
+cfi=(3)
+cfn=(600)
+calls=1 0 
+0 197
+0 1
+
+fn=(698)
+0 1296
+cfn=(722)
+calls=40 0 
+0 1400
+cfn=(700)
+calls=8 0 
+0 2040
+0 672
+
+fn=(1022)
+0 7323999
+cob=(3)
+cfi=(3)
+cfn=(1028)
+calls=2441333 0 
+0 232158221
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1130
+0 2441337
+
+fn=(1186)
+0 15
+cob=(3)
+cfi=(3)
+cfn=(1192)
+calls=3 0 
+0 1336
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1159
+0 7
+
+fn=(1230)
+0 1041
+cfn=(1232)
+calls=1 0 
+0 1275
+0 5
+cob=(3)
+cfi=(3)
+cfn=(1248)
+calls=1 0 
+0 111
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1163
+0 5
+0 10
+
+fn=(1282)
+0 54
+cfn=(1284) __gnu_cxx::stdio_sync_filebuf<char, std::char_traits<char> >::sync()
+calls=6 0 
+0 1491
+0 30
+
+fn=(1284)
+0 12
+cob=(3)
+cfi=(3)
+cfn=(1290)
+calls=6 0 
+0 318
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1151
+0 10
+
+fn=(1330)
+0 27
+cfn=(1332)
+calls=3 0 
+0 168
+0 15
+
+fn=(1394)
+0 3
+cfn=(1392)
+calls=1 0 
+0 4
+0 1
+
+fn=(378)
+0 49
+
+fn=(480)
+0 14
+cfn=(486)
+calls=1 0 
+0 2402
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 877
+0 5
+0 147
+
+fn=(494)
+0 4
+cob=(3)
+cfi=(3)
+cfn=(500)
+calls=1 0 
+0 40
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1243
+0 5
+0 5
+
+fn=(518)
+0 12
+cfn=(486)
+calls=1 0 
+0 9
+0 1
+0 5
+
+fn=(554)
+0 12
+cfn=(486)
+calls=1 0 
+0 9
+0 1
+0 2
+cfn=(474)
+calls=1 0 
+0 2
+0 1
+0 5
+
+fn=(1256)
+0 30
+cfn=(1184)
+calls=3 0 
+0 69
+0 3
+0 66
+cfn=(1258)
+calls=3 0 
+0 1713
+0 6
+
+ob=(9)
+fl=(9)
+fn=(890)
+0 3
+
+ob=(6)
+fl=(6)
+fn=(1428)
+0 8
+cob=(3)
+cfi=(3)
+cfn=(1362)
+calls=1 0 
+0 80
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1280
+0 5
+0 1
+cfn=(1442) 0x0000000000002ed0
+calls=1 0 
+0 9
+0 3
+
+fn=(254)
+0 16
+
+fn=(250) 0x0000000000002b20
+0 53
+
+fn=(244)
+0 32
+cfn=(246) 0x0000000000002bf0
+calls=1 0 
+0 20
+0 13
+cfn=(246)
+calls=1 0 
+0 20
+0 34
+cfn=(250)
+calls=1 0 
+0 53
+0 10
+
+fn=(246)
+0 40
+
+fn=(1442)
+0 9
+
+ob=(4)
+fl=(4)
+fn=(170)
+0 2
+cob=(3)
+cfi=(3)
+cfn=(168)
+calls=1 0 
+0 5
+0 1
+0 8
+
+fn=(178)
+0 2
+cob=(3)
+cfi=(3)
+cfn=(168)
+calls=1 0 
+0 5
+0 1
+0 5
+
+fn=(172)
+0 1
+cob=(3)
+cfi=(3)
+cfn=(168)
+calls=1 0 
+0 5
+0 1
+0 5
+
+fn=(190)
+0 2
+cob=(3)
+cfi=(3)
+cfn=(168)
+calls=1 0 
+0 5
+0 1
+0 5
+
+fn=(266)
+0 16
+
+fn=(184)
+0 2
+cob=(3)
+cfi=(3)
+cfn=(168)
+calls=1 0 
+0 5
+0 1
+0 5
+
+fn=(910)
+0 74215422
+cfn=(914) 0x0000000000014b50
+calls=12369237 0 
+0 3526234868
+0 12369237
+0 173169318
+
+fn=(1420) 0x0000000000005890
+0 9
+
+fn=(176)
+0 1
+cob=(3)
+cfi=(3)
+cfn=(168)
+calls=1 0 
+0 5
+0 1
+0 5
+
+fn=(958) 0x0000000000010560
+0 1092490397
+
+fn=(1144) __log2_finite
+0 136068
+
+fn=(1150)
+0 4002
+
+fn=(180)
+0 2
+cob=(3)
+cfi=(3)
+cfn=(168)
+calls=1 0 
+0 5
+0 1
+0 8
+
+fn=(188)
+0 2
+cob=(3)
+cfi=(3)
+cfn=(168)
+calls=2 0 
+0 10
+0 2
+0 10
+
+fn=(1142)
+0 8004
+cfn=(1144)
+calls=2001 0 
+0 136068
+
+fn=(156)
+0 2
+cob=(3)
+cfi=(3)
+cfn=(168)
+calls=1 0 
+0 5
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1370
+0 5
+0 8
+
+fn=(182)
+0 1
+cob=(3)
+cfi=(3)
+cfn=(168)
+calls=1 0 
+0 5
+0 1
+0 5
+
+fn=(192)
+0 2
+cob=(3)
+cfi=(3)
+cfn=(168)
+calls=1 0 
+0 5
+0 1
+0 8
+
+fn=(194)
+0 2
+cob=(3)
+cfi=(3)
+cfn=(168)
+calls=1 0 
+0 5
+0 1
+0 8
+
+fn=(174)
+0 1
+cob=(3)
+cfi=(3)
+cfn=(168)
+calls=1 0 
+0 5
+0 1
+0 5
+
+fn=(914)
+0 443034996
+
+ob=(5)
+fl=(5)
+fn=(1350)
+0 2
+
+ob=(4)
+fl=(4)
+fn=(914)
+0 1497571106
+cfn=(958)
+calls=12275173 0 
+0 1092490397
+0 493138369
+
+fn=(1408)
+0 6
+
+ob=(5)
+fl=(5)
+fn=(1350)
+0 6
+cob=(3)
+cfi=(3)
+cfn=(1362)
+calls=1 0 
+0 80
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 841
+0 5
+0 1
+cfn=(1368) 0x00000000000005d0
+calls=1 0 
+0 9
+0 3
+
+fn=(218)
+0 16
+
+fn=(1368)
+0 9
+
+ob=(4)
+fl=(4)
+fn=(1408)
+0 2
+cob=(3)
+cfi=(3)
+cfn=(1362)
+calls=1 0 
+0 80
+cob=(1)
+cfi=(1)
+cfn=(164)
+calls=1 0 
+0 1280
+0 5
+0 1
+cfn=(1420)
+calls=1 0 
+0 9
+0 3
+
+fn=(186)
+0 1
+cob=(3)
+cfi=(3)
+cfn=(168)
+calls=1 0 
+0 5
+0 1
+0 5
+
+totals: 9566000434

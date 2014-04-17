@@ -1,0 +1,202 @@
+namespace KHJ {
+  namespace thesis {
+    namespace stores {
+
+      template <typename N, typename C>
+      constexpr C magical_heap_store<N, C>::magical_heap_store::compare_;
+
+      /**
+       * Constructor.
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      
+      template <typename N, typename C>
+      magical_heap_store<N, C>::magical_heap_store( ) : top_( nullptr )
+      { 
+        store_.emplace_back( ); lo_.push_back( store_.begin( ) );
+        state_ = { store_.begin( ) };
+      }
+      
+
+      /**
+       * De-Constructor.
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      
+      
+      template <typename N, typename C>
+      magical_heap_store<N, C>::~magical_heap_store( ) 
+      { 
+        
+      }
+
+      /**
+       * Print the numeral
+       * 
+       * @author KHJ
+       *
+       */
+      
+      template <typename N, typename C>
+      void magical_heap_store<N, C>::print( ) 
+      { 
+        std::cout << "-----------------" << std::endl ;
+        for( store_iterator_type it = store_.begin(); it != store_.end(); ++it) {
+          std::cout << (*it).size( ) << " " ;
+        } 
+        std::cout << std::endl;
+        std::cout << "-----------------" << std::endl ; 
+        std::cout << "hi: ";
+        if( !hi_.empty( )) {
+          for( auto it = hi_.begin(); it != hi_.end(); ++it) {
+            std::cout << (*(*it)).size( ) << " " ;
+          }
+        } else {
+          std::cout << "empty";
+        }
+        
+        std::cout << std::endl;
+        std::cout << "-----------------" << std::endl ; 
+        std::cout << "lo: ";
+        if( !lo_.empty( )) {
+          for( auto it = lo_.begin(); it != lo_.end(); ++it) {
+            std::cout << (*(*it)).size( ) << " " ;
+          }
+         
+        } else {
+          std::cout << "empty";
+        }
+        std::cout << std::endl;
+        std::cout << "-----------------" << std::endl ; 
+        std::cout << "min: " << (*top_).element_;
+
+        std::cout << std::endl << std::endl ;
+      }
+      
+
+      template<typename N, typename C>
+      void magical_heap_store<N, C>::push( N* n ) 
+      { 
+        store_.front( ).push_back( n );
+        if( top_ == nullptr || compare_( *n, *top_ ) ) { top_ = n; }
+    
+        if( store_.front( ).size( ) == 2 ) { lo_.pop_back( ); } 
+        
+        if( store_.front( ).size( ) == 3 ) { 
+          fix_( store_.begin( ) );  
+        } else {
+          if( !hi_.empty( ) ) {
+            store_iterator_type J = hi_.back( ); hi_.pop_back( ); 
+            fix_( J );
+          }
+        }
+        //print();
+      }
+
+      /**
+       * Fix( ).
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      
+      template <typename N, typename C>
+      void magical_heap_store<N, C>::fix_( store_iterator_type I ) 
+      { 
+        //std::cout << "-----------------" << std::endl ;
+        //std::cout << "fix" << std::endl ;
+        if( std::next( I ) == store_.end( ) ) { grow_( std::next( I ) ); } 
+        store_iterator_type E = std::next( I );
+        store_iterator_type W = std::prev( I );
+        
+
+        // decrement by 3
+        N* P = I->back( ); I->pop_back( );
+        N* Q = I->back( ); I->pop_back( );
+        N* R = I->back( ); I->pop_back( );
+       
+        // Fairly silly function here
+        N* M;
+        N* o [2];
+        if( compare_( (*P), (*Q) ) ) {
+          if( compare_( (*P), (*R) ) ) {
+            M = P; o[0] = Q; o[1] = R;
+            assert( compare_( *P, *Q  ) );
+            assert( compare_( *P, *R  ) );
+          } else {
+            M = R; o[0] = P; o[1] = Q;
+            assert( compare_( *R, *P  ) );
+            assert( compare_( *R, *Q  ) );
+          }
+        } else {
+          if( compare_( (*Q), (*R) ) ) {
+            M = Q; o[0] = R; o[1] = P;
+            assert( compare_( *Q, *P  ) );
+            assert( compare_( *Q, *R  ) );
+          } else {
+            M = R; o[0] = P; o[1] = Q;
+            assert( compare_( *R, *P  ) );
+            assert( compare_( *R, *Q  ) );
+          }
+        }
+
+        if( W == store_.end( ) ) {
+          M->join_heaps( o[0], o[1] ); E->push_back( M );
+          if( E->size( ) == 1 && lo_.empty( ) ) { lo_.push_back( E ); }
+          else if( E->size( ) == 2 ) { lo_.pop_back(  ); }
+          else if( E->size( ) == 3 ) { hi_.push_back( E ); }
+        } else {
+          N** st = M->split( );
+          M->join_heaps( o[0], o[1] ); E->push_back( M );
+                    
+          if( W->size( ) <= 1 ) { lo_.pop_back( ); }
+          
+          if( E->size( ) == 1 && lo_.empty( )  ) { lo_.push_back( E ); }
+          else if( E->size( ) == 2 ) { lo_.pop_back( ); }
+          else if( E->size( ) == 3 ) { hi_.push_back( E ); }
+          
+          W->push_back(st[0]); W->push_back(st[1]);
+          if( W->size( ) >= 3 ) { hi_.push_back( W ); }
+          // if smart pointer is used, this is not necesary!
+          delete st;
+        }
+        lo_.push_back( I );
+      }
+
+      /**
+       * Unfix( ).
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      
+      template <typename N, typename C>
+      void magical_heap_store<N, C>::unfix_( ) 
+      { 
+      }
+      
+      /**
+       * Grow_( ).
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      
+      template <typename N, typename C>
+      void magical_heap_store<N, C>::grow_( store_iterator_type I ) 
+      { 
+        store_.emplace( I ); 
+        if( state_.size( ) == 1) { state_.push_back( std::prev( I ) ); }
+      }
+    }
+  }
+}

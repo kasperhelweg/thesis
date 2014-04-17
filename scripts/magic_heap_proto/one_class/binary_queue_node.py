@@ -8,9 +8,6 @@ class binary_queue_node( object ):
         
     self.size  = 0 # size of list
     
-    self.marked_for_fix   = False
-    self.marked_for_unfix = False
-
   def push( self, n ):
     ''' pushes a heap node onto root_node_list '''
     rln        = root_list_node( n ) # create new root list node pointing to n

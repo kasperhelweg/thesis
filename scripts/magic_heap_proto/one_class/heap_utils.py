@@ -100,9 +100,10 @@ def assert_heap( r, heap_property = True, node = None ):
       rec( lc )
       rec( rc )
   if not node:
+    assert True == r.is_root()
     rec( r )
   else:
-    rec( node )
+    print("yo")#rec( node )
 
 def heap_mean( r ):
   def rec( n ):

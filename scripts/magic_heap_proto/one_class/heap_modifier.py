@@ -7,6 +7,7 @@ class heap_modifier( object ):
 
   @staticmethod
   def replace( node, other ):
+    
     other.left  = node.left
     other.right = node.right
     other.color = node.color
@@ -16,25 +17,35 @@ class heap_modifier( object ):
         node.parent( ).left = other
       else:
         node.parent( ).left.right = other
-    else:
-      pass
 
     if not node.is_leaf( ):
       node.right_child( ).right = other
 
+    if node.is_root():
+      assert other.right == None
     node.left  = None
     node.right = None
     
-    if not other.is_root():
-      heap_modifier.siftup( other )
-    if not other.is_leaf( ):
-      heap_modifier.siftdown( other )
+    #heap_modifier.siftup( other )
+    #heap_modifier.siftdown( other )
     
   @staticmethod
   def cut_at_root( r ):
+    if not r.right == None:
+      #print(r.parent())
+      heap_utils.draw_heap(r)
+    assert True == r.is_root()
+
     lst = r.left_child( )
     rst = r.right_child( )
-      
+
+    print("----")
+    print(r)
+    print("----")
+    heap_utils.draw_heap(r.find_root())
+    print("----------------------------")
+
+
     r.left    = None
     lst.right = None
     rst.right = None
@@ -50,11 +61,19 @@ class heap_modifier( object ):
 
   @staticmethod
   def join( r, lst, rst ):
+    assert True == r.is_root( )
+    assert True == lst.is_root( )
+    assert True == rst.is_root( )
     r.left    = lst
     lst.color = 1
     lst.right = rst
     rst.right = r
-    
+    assert True == r.is_root( )
+    assert False == lst.is_root( )
+    assert False == rst.is_root( )
+    assert lst.parent( ) is r
+    assert rst.parent( ) is r
+      
   @staticmethod
   def siftup( node ):
     '''procedure __siftup. complexity is O(lg n)
@@ -74,7 +93,6 @@ class heap_modifier( object ):
   @staticmethod
   def siftdown( node ):
     '''siftup procedure. complexity is 2 O(lg n)'''
-        
     s  = node
     lc = node.left_child( )
     rc = node.right_child( )
@@ -87,7 +105,7 @@ class heap_modifier( object ):
         break
       lc = s.left_child( )
       rc = s.right_child( )
-
+        
   @staticmethod
   def _swap( node, other ):
     #             
@@ -98,7 +116,7 @@ class heap_modifier( object ):
 
     if other.is_root( ) and node.color == 1:
       '''case 0 - left node, parent is root'''
-
+      
       s = node
       o = node.right
       r = other

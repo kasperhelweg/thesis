@@ -53,18 +53,11 @@ class linked_list( object ):
 hi = linked_list( )
 lo = linked_list( )
 
-
-'''
-277: [0, 4, 0, 3, 3, 0, 1]
-[1, 3, 4]
-[0, 2, 5, 6]
-'''
-
 def increment( D ): 
   D[0] += 1  
-  if D[0] == 2: lo.pop( )
-  elif D[0] == 1 and lo.peak( 1 ) != 0: lo.append( 0 ) 
-    
+  if D[0]   == 1 and lo.peak( 1 ) != 0: lo.append( 0 ) 
+  elif D[0] == 2: lo.pop( )
+  
   if D[0] == 3: D = fix( D, 0 )
   else:
     j = hi.pop( )
@@ -120,18 +113,19 @@ def decrement( D ):
 
 def unfix( D, j ):
   #--------------------
-  if D[j+1] == 3:
-    hi.pop( )
+  
 
   # shrink list
+  D[j+1] -= 1
   l = len( D )
-  if j + 1 == l - 1 and D[l-1] == 1: 
+  if j + 1 == l - 1 and D[l-1] == 0: 
     lo.pop()
     D.pop()
   else:
-    D[j+1] -= 1
     if D[j+1] == 1:
       lo.append( j + 1 )
+    elif D[j+1] == 2:
+      hi.pop( )
   #--------------------
 
   #--------------------
@@ -189,13 +183,13 @@ def to_binary( D ):
   return B
 
 D = [2,1]
-n = 100000
+n = 1000
 print("------------------------------------ INC")
 print( str( value_of(D) ) + ": " + str(D) )
   #print("is idle: " + str( is_idle( D ) ))
 for i in range( 0, n - 5 ):
   D = increment( D )
-  #print( str( value_of(D) ) + ": " + str(D) )
+  print( str( value_of(D) ) + ": " + str(D) )
   #print(hi.p())
   #print(lo.p())
   #print("is idle: " + str( is_idle( D ) ))
@@ -209,7 +203,7 @@ print(lo.p())
 print("------------------------------------ DEC")
 for i in range( 0, n - 5 ):
   D = decrement( D )
-  #print( str( value_of(D) ) + ": " + str(D) )
+  print( str( value_of(D) ) + ": " + str(D) )
   #print("is idle: " + str( is_idle( D ) ))
   #print(hi.p())
   #print(lo.p())
@@ -220,5 +214,3 @@ print(hi.p())
 print(lo.p())
 
 print( "--Program magic_skew--" )
-
-
