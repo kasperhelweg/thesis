@@ -50,9 +50,9 @@ namespace KHJ {
               
               
               /*
-              std::stringstream ssl; ssl << (*n)->left_;
-              std::stringstream ssr; ssr << (*n)->right_;
-              std::stringstream sp; 
+                std::stringstream ssl; ssl << (*n)->left_;
+                std::stringstream ssr; ssr << (*n)->right_;
+                std::stringstream sp; 
               
               std::string le = ssl.str( );
               std::string ri = ssr.str( );
@@ -87,7 +87,8 @@ namespace KHJ {
         
         static void assert_heap( bool assert_heap_prop = true )
         {
-          std::deque<N*> bf = breadth_traverse( );
+          N* R = heap.front( );
+          std::deque<N*> bf = breadth_traverse( R );
           int l = floor( log2( bf.size( ) - 1 ) );
           int h = 0;
 
@@ -108,6 +109,38 @@ namespace KHJ {
                 assert((*n)->left_->right_->color_ == 1 );
 
                 
+              } else {
+                assert((*n)->is_leaf());
+              }
+              n++;
+            }
+            h++;
+          }
+        }
+
+
+        static void assert_heap( N* R  )
+        {
+          std::deque<N*> bf = breadth_traverse( R );
+          assert( bf.size( ) == (pow( 2, (*R).height( ) + 1 ) - 1) );
+          //std::cout << bf.size( ) << std::endl;
+          int l = floor( log2( bf.size( ) - 1 ) );
+          int h = 0;
+          
+          for (auto n = bf.begin( ); n != bf.end( );) {
+            for( int i = 0; i != pow(2,h); i++ ) {
+              if( h != l) {
+                if( h == 0 ){
+                  assert((*n)->is_root());
+                  assert((*n)->color_ == 0);
+                } else {
+                  // assert heap prop here.
+                  assert((*n)->left_->element_ >= (*n)->element_ );
+                  assert((*n)->left_->right_->element_ >= (*n)->element_ );
+                  
+                  assert((*n)->left_->color_ == 0 );
+                  assert((*n)->left_->right_->color_ == 1 );
+                }
               } else {
                 assert((*n)->is_leaf());
               }
@@ -149,7 +182,7 @@ namespace KHJ {
           heap.push_front( R );
           
           // Restore heap property
-          std::deque<N*> bh = breadth_traverse( );
+          std::deque<N*> bh = breadth_traverse( heap.front() );
           for (auto n = bh.begin(); n != bh.end(); n++) {
             (*n)->siftup( );
           }
@@ -157,11 +190,11 @@ namespace KHJ {
           return R;
         }
 
-        static std::deque<N*> breadth_traverse( )
+        static std::deque<N*> breadth_traverse( N* R )
         {
           std::deque<N*> aux;
           std::deque<N*> b;
-          N* R  = heap.front( );
+          //N* R  = heap.front( );
           aux.push_back( R ); b.push_back( R );
             
           int l = (*R).height( );
@@ -184,7 +217,7 @@ namespace KHJ {
         // this should maybe return something usefull
         static N* replace_rand( )
         {
-          std::deque<N*> bf = breadth_traverse( );
+          std::deque<N*> bf = breadth_traverse( heap.front( ) );
         
           int r = rand( ) % bf.size( ) + 0;
           node_type* O = new node_type( r );
@@ -217,7 +250,7 @@ namespace KHJ {
           
         static void clear_heap( )
         {
-          std::deque<N*> bh = breadth_traverse( );
+          std::deque<N*> bh = breadth_traverse( heap.front( ) );
           for (auto n = bh.begin(); n != bh.end();) {
             delete *n; *n = nullptr;
             n = bh.erase( ( n ) );            

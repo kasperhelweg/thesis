@@ -1,3 +1,4 @@
+#include <memory>
 /**
  * Desc : A two-pointer basic heap node used in a perfect binary heap.
  * Auth : KHJ
@@ -42,8 +43,8 @@ namespace KHJ {
           ~heap_a_node( ); 
 
           // Operators
-          inline bool operator<( const N& )  const;
-          inline bool operator>( const N& )  const;
+          inline bool  operator<( const N& ) const;
+          inline bool  operator>( const N& ) const;
           inline bool operator==( const N& ) const;
           inline bool operator!=( const N& ) const;
           inline bool operator<=( const N& ) const;
@@ -62,7 +63,7 @@ namespace KHJ {
           // Modifiers
           void       join( N*, N* );
           void join_heaps( N*, N* );
-           N**      split( );
+          std::unique_ptr<N*[]>      split( );
             N*    replace( N* );
           void       swap( N* o );
 

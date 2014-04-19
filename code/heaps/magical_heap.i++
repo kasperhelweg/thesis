@@ -16,7 +16,7 @@ namespace KHJ  {
        */
       
       template <typename N, typename S, typename V, typename C, typename A>
-      magical_heap<N, S, V, C, A>::magical_heap( ) : alloc_( A( ) ) 
+      magical_heap<N, S, V, C, A>::magical_heap( ) : alloc_( A( ) ), top_( nullptr ) 
       { 
         
       }
@@ -32,13 +32,44 @@ namespace KHJ  {
       template <typename N, typename S, typename V, typename C, typename A>
       magical_heap<N, S, V, C, A>::~magical_heap( ) 
       { 
-        
+        std::cout << "Heap dies" << std::endl;
+        for( auto it = heap_store_.begin( ) ; it != heap_store_.end( ) ; it++ ) {
+          for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
+            std::deque<N*> aux; std::deque<N*> b;
+            aux.push_back( *vit ); b.push_back( *vit );
+            
+            int l = (*(*vit)).height( );
+            for( int i = 0; i != l; i++ ) {
+              for( int j = 0; j != pow( 2, i ); j++ ) {
+                N* T = aux.front( );
+                N* P = (*T).left_;
+                N* Q = (*(*T).left_).right_;
+          
+                aux.push_back( P ); b.push_back( P );
+                aux.push_back( Q ); b.push_back( Q );
+                
+                aux.pop_front( );
+              }
+            }
+            aux.clear( );
+            for( auto dit = b.begin( ); dit != b.end( ); dit++) {
+              sell_node_( *dit );
+            }
+            b.clear( );
+          }
+        }
       }
 
       template <typename N, typename S, typename V, typename C, typename A>
       void magical_heap<N, S, V, C, A>::print( ) 
       { 
         heap_store_.print( );
+      }
+
+      template <typename N, typename S, typename V, typename C, typename A>
+      V magical_heap<N, S, V, C, A>::top( ) 
+      { 
+        return (*top_).element_;
       }
 
 
@@ -54,11 +85,62 @@ namespace KHJ  {
       N* magical_heap<N, S, V, C, A>::push( const V& v ) 
       { 
         N* n = buy_node_( v );
-        heap_store_.push( n );
+        heap_store_.inject( n );
 
+        if( top_ == nullptr || ((*n).element_ < (*top_).element_ ) ) { top_ = n; }
+        
         // temp compiler warning fix
         return n;
       }
+
+      /**
+       * Pop( ).
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      
+      template <typename N, typename S, typename V, typename C, typename A>
+      V magical_heap<N, S, V, C, A>::pop( ) 
+      { 
+        N* T = top_;
+        N* B = heap_store_.eject( );
+        
+        if( *B != *T ) { T->replace( B ); B->siftdown( ); 
+          for( auto it = heap_store_.begin( ) ; it != heap_store_.end( ) ; it++ ) {
+            for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
+              if( *vit == T   ) {
+                *vit = B->find_root( ); 
+              }
+            }
+          }
+        }
+                
+        V e  = T->element_; sell_node_( T ); top_ = nullptr;
+        
+        for( auto it = heap_store_.begin( ) ; it != heap_store_.end( ) ; it++ ) {
+          for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
+            if( top_ == nullptr || (*(*vit)).element_ <  (*top_).element_  )  {
+              top_ = (*vit);
+            }
+          }
+        }
+        return e;
+      }
+
+      template <typename N, typename S, typename V, typename C, typename A>
+      typename magical_heap<N, S, V, C, A>::iterator_type magical_heap<N, S, V, C, A>::begin( ) 
+      { 
+        return heap_store_.begin( );
+      }
+
+      template <typename N, typename S, typename V, typename C, typename A>
+      typename magical_heap<N, S, V, C, A>::iterator_type magical_heap<N, S, V, C, A>::end( ) 
+      { 
+        return heap_store_.end( );
+      }
+
       
       /**
        * Size( )
@@ -101,7 +183,7 @@ namespace KHJ  {
       template <typename N, typename S, typename V, typename C, typename A>
       void magical_heap<N, S, V, C, A>::sell_node_( N* n ) 
       {
-        alloc_.destroy( n ); alloc_.deallocate( n, 1 );
+        alloc_.destroy( n ); alloc_.deallocate( n, 1 ); 
       }
     }
   }

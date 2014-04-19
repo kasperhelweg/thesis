@@ -174,7 +174,7 @@ namespace KHJ  {
           r = (*r).right_; 
         }
         
-        assert((*r).is_root( ));
+        //assert((*r).is_root( ));
         return r;
       }
 
@@ -195,7 +195,7 @@ namespace KHJ  {
           r = (*r).left_; h++;
         }
         
-        assert((*r).is_leaf( ));
+        //assert((*r).is_leaf( ));
         return h;
       }
 
@@ -209,8 +209,9 @@ namespace KHJ  {
       template <typename V, typename C, typename A>
       void heap_a_node<V, C, A>::join( N* l, N* r )
       {        
-        (*l).right_ = r;
-        (*r).right_ = (N*)this;
+        (*l).right_ = r; 
+        (*r).right_ = this;
+        (*r).color_ = 1;
         left_       = l;
       }
 
@@ -225,7 +226,7 @@ namespace KHJ  {
       template <typename V, typename C, typename A>
       void heap_a_node<V, C, A>::join_heaps( N* l, N* r )
       {
-        assert(is_root( ) && (*l).is_root( ) && (*r).is_root( ));
+        //assert(is_root( ) && (*l).is_root( ) && (*r).is_root( ));
         join( l, r );
       }
       
@@ -245,47 +246,46 @@ namespace KHJ  {
         (*O).right_ = (*P).right_;
         (*O).color_ = (*P).color_;
         
-        if( (*O).color_ == 0) {
-          if( (*O).is_root( )  ) {
-            (*(*(*O).left_).right_).right_ = O;
-          } else if ( (*O).is_leaf( )  ) {
-            (*(*(*O).right_).right_).left_ = O;
+        if( !(*O).is_root( ) && !(*O).is_leaf( ) ) {
+          if( (*O).color_ == 0) {
+            if( (*O).is_root( ) ) {
+              (*(*(*O).left_).right_).right_ = O;
+            } else if ( (*O).is_leaf( ) ) {
+              (*(*(*O).right_).right_).left_ = O;
+            } else {
+              (*(*(*O).left_).right_).right_ = O;
+              (*(*(*O).right_).right_).left_ = O;
+            }
           } else {
-            (*(*(*O).left_).right_).right_ = O;
-            (*(*(*O).right_).right_).left_ = O;
+            if ( (*O).is_leaf( )  ) {
+              (*(*(*O).right_).left_).right_ = O;
+            } else {
+              (*(*(*O).right_).left_).right_ = O;
+              (*(*(*O).left_).right_).right_ = O;
+            }
           }
-        } else {
-          if ( (*O).is_leaf( )  ) {
-            (*(*(*O).right_).left_).right_ = O;
-          } else {
-            (*(*(*O).right_).left_).right_ = O;
-            (*(*(*O).left_).right_).right_ = O;
-          }
+          (*P).left_  = nullptr;
+          (*P).right_ = nullptr;
         }
-
-        (*P).left_  = nullptr;
-        (*P).right_ = nullptr;
-        
         return P;
       }
 
       template <typename V, typename C, typename A>
-      typename heap_a_node<V, C,A>::N** heap_a_node<V, C, A>::split( )
+      std::unique_ptr<typename heap_a_node<V,C,A>::N*[]> heap_a_node<V, C, A>::split( )
       {
-        assert(is_root( ));
+        //assert(is_root( ));
         
         // not too c++'ish...but what...
-        // should probably use a smart pointer instead
-        // like : std::unique_ptr<int[]> my_array(new int[5]);
-        N** st = new N*[2];
+        std::unique_ptr<N*[]> st(new N*[2]);
+        //N** st = new N*[2];
         st[0]  = left_ ;
-        st[1]  = (*left_).right_;
+        st[1]  = (*left_).right_; (*st[1]).color_ = 0;
 
         (*st[1]).right_ = nullptr; 
         (*st[0]).right_ = nullptr; 
-        left_ = nullptr; 
+        left_           = nullptr; 
         
-        assert(is_root( )); assert((*st[0]).is_root( )); assert((*st[1]).is_root( ));
+        //assert(is_root( )); assert((*st[0]).is_root( )); assert((*st[1]).is_root( ));
         return st;
       }
 
