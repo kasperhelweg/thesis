@@ -117,7 +117,7 @@ namespace KHJ  {
           }
         }
                 
-        V e  = T->element_; sell_node_( T ); top_ = nullptr;
+        V e = T->element_; sell_node_( T ); T = nullptr; top_ = nullptr;
         
         for( auto it = heap_store_.begin( ) ; it != heap_store_.end( ) ; it++ ) {
           for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {

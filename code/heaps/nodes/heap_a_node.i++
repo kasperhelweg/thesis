@@ -44,7 +44,9 @@ namespace KHJ  {
        *
        */
       template <typename V, typename C, typename A>
-      heap_a_node<V, C, A>::~heap_a_node( ) { }    
+      heap_a_node<V, C, A>::~heap_a_node( ) { 
+        
+      }    
       
       /**
        * Comparison operators
@@ -363,8 +365,8 @@ namespace KHJ  {
           
           if( !(*R).is_leaf( )) { (*(*(*R).left_).right_).right_ = R; }
           
-          assert((*P).is_root( ));
-          assert((*P).left_ == R);
+          //assert((*P).is_root( ));
+          //assert((*P).left_ == R);
         } 
         // case 0-1 - right node, parent is root'''
         else if( (*R).is_root( ) && color_ == 1 ) { 
@@ -389,8 +391,8 @@ namespace KHJ  {
           
           swap_colors( R );
           
-          assert((*P).is_root( ));
-          assert((*P).left_ == Q);
+          //assert((*P).is_root( ));
+          //assert((*P).left_ == Q);
         }
         // case 1 - left node, left subtree'''
         else if( (*R).color_ == 0 && color_ == 0 ) { 

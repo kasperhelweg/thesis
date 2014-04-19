@@ -131,11 +131,12 @@ int main( )
   std::cout << "-----------------" << std::endl ; 
   std::cout << "CPU: " << cpu_time * 1000 << std::endl;
   
-  //for( auto it = heap_vec.begin( ) ; it != heap_vec.end( ) ; it++ ) {
-  //  std::cout << ( *it ) << " ";
-  //}
-  //std::cout << std::endl;
-  
+  /*
+  for( auto it = heap_vec.begin( ) ; it != heap_vec.end( ) ; it++ ) {
+    std::cout << ( *it ) << " ";
+  }
+  std::cout << std::endl;
+  */
 
   cpu0  = clock();
   for( auto it = data.begin( ) ; it != data.end( ) ; it++ ) {

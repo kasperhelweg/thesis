@@ -16,7 +16,10 @@ namespace KHJ {
       template <typename N, typename C>
       magical_heap_store<N, C>::magical_heap_store( ) : top_( nullptr )
       { 
-        store_.push_back( root_store( ) );
+        root_store s;
+        s.reserve( 4 );
+      
+        store_.push_back( s );
         
         lo_.push_back( store_.begin( ) );
         state_ = { store_.begin( ) };
@@ -36,6 +39,10 @@ namespace KHJ {
       magical_heap_store<N, C>::~magical_heap_store( ) 
       {
         std::cout << "HeapStore dies" << std::endl;
+        for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
+          //it->erase( );
+          
+        }
         store_.clear( );
       }
 
@@ -184,13 +191,13 @@ namespace KHJ {
         swap_nodes_( t, 2, compare_( *t[0], *t[2] ) );
         
         if( W != store_.end( ) ) {
-          N** st = t[0]->split( );
+          std::unique_ptr<N*[]> st = t[0]->split( );
           t[0]->join_heaps( t[1], t[2] ); E->push_back( t[0] );
           
           if( W->size( ) <= 1 ) { lo_.pop_back( ); }
           update_lo_( E );
           
-          W->push_back(st[0]); W->push_back(st[1]); delete[] st; st=nullptr;
+          W->push_back(st[0]); W->push_back(st[1]);;
           if( W->size( ) >= 3 ) { hi_.push_back( W ); }
         } else {
           t[0]->join_heaps( t[1], t[2] ); E->push_back( t[0] );
@@ -214,7 +221,8 @@ namespace KHJ {
         store_iterator_type W = std::prev( I );
         
         N* P   = E->back( ); E->pop_back( );
-        N** st = P->split( );
+        std::unique_ptr<N*[]> st = P->split( );
+        //N** st = P->split( );
 
 
         if( E->size( ) == 0 && std::next( E ) == store_.end( ) ) {
@@ -248,8 +256,7 @@ namespace KHJ {
         I->push_back( P );
         I->push_back( st[0] );
         I->push_back( st[1] );
-        delete[] st;
-        st = nullptr;
+
         hi_.push_back( I );
       }
 
@@ -300,7 +307,9 @@ namespace KHJ {
       template <typename N, typename C>
       void magical_heap_store<N, C>::grow_( store_iterator_type I ) 
       { 
-        store_.push_back( root_store( ) );
+        root_store s;
+        s.reserve( 4 );
+        store_.push_back( s );
         //store_.emplace( I ); 
         if( state_.size( ) == 1) { state_.push_back( std::prev( I ) ); }
       }
