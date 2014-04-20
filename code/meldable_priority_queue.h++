@@ -1,6 +1,6 @@
 /**
  *
- * Desc : A meldable priority queue. The class is a bridge to a concrete implementation.
+ * Desc : A meldable priority queue. This class serves as a bridge to a concrete implementation.
  * Auth : KHJ
  * Ref  :
  *
@@ -16,26 +16,11 @@ namespace KHJ {
       
       
     public:
-      N* 
-      find_min( );
-      void 
-      insert(  );
-      void      
-      borrow( );
-      void 
-      extract_min( );
-      void      
-      remove( );
-      void        
-      meld( );
     
     private:
-      
 
     };
   }
 }
 #include "heap_store_base.i++"
 #endif
-
-
