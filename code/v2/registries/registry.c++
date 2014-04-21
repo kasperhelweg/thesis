@@ -6,16 +6,26 @@
 #include "heap_a_node.h++"
 #include "node_a_modifier.h++"
 #include "paper_store.h++"
+#include "paper_join_policy.h++"
 #include "root_registry.h++"
 
+// Node
 typedef long E1;
 typedef KHJ::thesis::heap_node::heap_a_node<E1> N1;
 
+// Node modifier
 typedef std::less<N1> C1;
 typedef KHJ::thesis::modifier::node_a_modifier<N1, C1> M1;
 
+// Storage
 typedef KHJ::thesis::store::paper_store<N1> S1;
-typedef KHJ::thesis::registry::root_registry<N1, M1, S1> R1;
+typedef S1::iterator_type F1;
+
+// Join policy
+typedef KHJ::thesis::policy::paper_join_policy<F1> J1;
+
+// Registry
+typedef KHJ::thesis::registry::root_registry<N1, M1, S1, J1> R1;
 
 int main( )
 {

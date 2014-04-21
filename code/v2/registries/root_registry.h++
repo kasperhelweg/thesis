@@ -3,15 +3,16 @@
 namespace KHJ  {
   namespace thesis  {
     namespace registry  {
-      template<typename N, typename M, typename S>
+      template<typename N, typename M, typename S, typename J>
       class root_registry {
       public:
-        typedef N node_type;
+        typedef N     node_type;
         typedef M modifier_type;
-        typedef S store_type;
+        typedef S    store_type;
+        typedef J   join_policy;
       
-        typedef typename store_type::join_schedule join_schedule;
-        typedef typename store_type::accessor_type accessor_type;
+        typedef typename join_policy::cons_list cons_list;
+        typedef typename store_type::iterator_type iterator_type;
         
         explicit root_registry( );
                 ~root_registry( ); 
@@ -23,12 +24,13 @@ namespace KHJ  {
         void print( ) const;
         
       private:
-        store_type store_;
+        store_type        store_;
+        join_policy join_policy_;
        
-        void        fix_( accessor_type );
+        void        fix_( iterator_type );
         void      unfix_( );
         void swap_nodes_( N* [], int, int );
-        void  update_lo_( accessor_type );
+        void  update_lo_( iterator_type );
       };
     }
   }

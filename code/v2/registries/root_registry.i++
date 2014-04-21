@@ -10,8 +10,8 @@ namespace KHJ  {
        * @author KHJ
        *
        */
-      template<typename N, typename M, typename S>
-      root_registry<N, M, S>::root_registry( ) 
+      template<typename N, typename M, typename S, typename J>
+      root_registry<N, M, S, J>::root_registry( ) 
       { }
 
       /**
@@ -21,8 +21,8 @@ namespace KHJ  {
        * @author KHJ
        *
        */
-      template<typename N, typename M, typename S>
-      root_registry<N, M, S>::~root_registry( ) 
+      template<typename N, typename M, typename S, typename J>
+      root_registry<N, M, S, J>::~root_registry( ) 
       { }
       
       /**
@@ -32,8 +32,8 @@ namespace KHJ  {
        * @author KHJ
        *
        */
-      template<typename N, typename M, typename S>
-      void root_registry<N, M, S>::top( ) const
+      template<typename N, typename M, typename S, typename J>
+      void root_registry<N, M, S, J>::top( ) const
       { 
         return store_.top( );
       }
@@ -45,10 +45,15 @@ namespace KHJ  {
        * @author KHJ
        *
        */
-      template<typename N, typename M, typename S>
-      void root_registry<N, M, S>::insert( N* Q )
+      template<typename N, typename M, typename S, typename J>
+      void root_registry<N, M, S, J>::insert( N* Q )
       { 
-        join_schedule L = store_.push_front( Q );
+        store_.push_front( Q );
+
+        //cons_list L = store_.push_front( Q );
+        if( (*store_.begin( )).size( ) == 3 ) { join_policy_.push_hi( store_.begin( ) ); 
+        } 
+        cons_list L = join_policy_.join_list( );
         for( auto it = L.begin( ); it != L.end(); ++it) {
           fix_( *it );
         }
@@ -62,8 +67,8 @@ namespace KHJ  {
        * @author KHJ
        *
        */
-      template<typename N, typename M, typename S>
-      N* root_registry<N, M, S>::extract( )
+      template<typename N, typename M, typename S, typename J>
+      N* root_registry<N, M, S, J>::extract( )
       { 
       }
  
@@ -74,11 +79,11 @@ namespace KHJ  {
        * @author KHJ
        *
        */
-      template<typename N, typename M, typename S>
-      void root_registry<N, M, S>::fix_( accessor_type I )
+      template<typename N, typename M, typename S, typename J>
+      void root_registry<N, M, S, J>::fix_( iterator_type I )
       { 
-        accessor_type E = std::next( I );  // should be abstracted
-        accessor_type W = std::prev( I );  // should be abstracted
+        iterator_type E = std::next( I );  
+        iterator_type W = std::prev( I );
         
         N* Q = store_.extract( I );
         N* R = store_.extract( I );
@@ -88,23 +93,23 @@ namespace KHJ  {
         swap_nodes_( t, 0, modifier_type::compare_( *t[1], *t[0] ) );
         swap_nodes_( t, 2, modifier_type::compare_( *t[0], *t[2] ) );
         
-        if( store_.is_valid( W ) ) {
+        if( W != store_.end( ) ) {
           std::unique_ptr<N*[]> st = modifier_type::split( t[0] );
           modifier_type::join_heaps( t[0], t[1], t[2]  );
           store_.insert( E, t[0]  );
           
-          if( store_.size_of( W ) <= 1 ) { store_.pop_lo( ); }
+          if( W->size( ) <= 1 ) { join_policy_.pop_lo( ); }
           update_lo_( E );
           
           store_.insert( W, st[0] ); store_.insert( W, st[1] );
-          if( store_.size_of( W ) >= 3 ) { store_.push_hi( W ); }
+          if( W->size( ) >= 3 ) { join_policy_.push_hi( W ); }
         } else {
           modifier_type::join_heaps( t[0], t[1], t[2]  );
           store_.insert( E, t[0] );
                     
           update_lo_( E );
         }
-        store_.push_lo( I );
+        join_policy_.push_lo( I );
       }
 
       /**
@@ -114,31 +119,32 @@ namespace KHJ  {
        * @author KHJ
        *
        */
-      template<typename N, typename M, typename S>
-      void root_registry<N, M, S>::unfix_( )
+      template<typename N, typename M, typename S, typename J>
+      void root_registry<N, M, S, J>::unfix_( )
       { }
 
       // swap aux
-      template <typename N, typename M, typename S>
-      void  root_registry<N, M, S>::swap_nodes_ (N* nodes[], int i1, int i2) {
+      template <typename N, typename M, typename S, typename J>
+      void  root_registry<N, M, S, J>::swap_nodes_ (N* nodes[], int i1, int i2) {
         N* temp   = nodes[i1];
         nodes[i1] = nodes[i2];
         nodes[i2] = temp;
       }
 
-      template <typename N, typename M, typename S>
-      void  root_registry<N, M, S>::update_lo_ ( accessor_type E ) {
-        if( store_.size_of( E ) == 1 && store_.lo_empty( )  ) { 
+      template <typename N, typename M, typename S, typename J>
+      void  root_registry<N, M, S, J>::update_lo_ ( iterator_type E ) {
+        if( E->size( )  == 1 && join_policy_.lo_empty( )  ) { 
           //P.push_lo( E ); 
-        } else if( store_.size_of( E ) == 2 ) { 
+        } else if( E->size( ) == 2 ) { 
           //P.pop_lo( ); 
-        } else if( store_.size_of( E ) == 3 ) { store_.push_hi( E ); }
+        } else if( E->size( ) == 3 ) { join_policy_.push_hi( E ); }
       }
 
-      template<typename N, typename M, typename S>
-      void root_registry<N, M, S>::print( ) const
+      template<typename N, typename M, typename S, typename J>
+      void root_registry<N, M, S, J>::print( ) const
       {
         store_.print( );
+        join_policy_.print( );
       }
 
     }

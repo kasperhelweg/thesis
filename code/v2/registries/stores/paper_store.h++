@@ -10,66 +10,61 @@ namespace KHJ {
       template <typename N>        
       class paper_store {        
       public:        
+
+        /* this should be the store iterator !
+
+           struct accessor_proxy {  
+           typedef typename store_type::iterator_type iterator_type;
+           
+           accessor_proxy( iterator_type a, bool v ) : accessor( a ), is_valid( v ) { }
+           ~accessor_proxy( );
+           
+           store_type s;
+           iterator_type accessor;
+           iterator_type is_valid;
+           
+           inline int   size( ) const;  
+           
+           inline bool operator==(const accessor_proxy& O) const
+           {
+           return element_ == O.element_;
+           }
+           
+           };
+        */
+
+        /* here should be a custom iterator if need be 
+           for example, there could be a root iterator, a store iterator and a heap iterator
+         */
         typedef std::vector<N*>       root_store;
         typedef std::list<root_store> store_type;
         
-        struct accessor_proxy {  
-          typedef typename store_type::accessor_type accessor_type;
-
-           accessor_proxy( accessor_type a, bool v ) : accessor( a ), is_valid( v ) { }
-          ~accessor_proxy( );
-
-          store_type s;
-          accessor_type accessor;
-          accessor_type is_valid;
-                  
-          inline bool valid( ) const;  
-          inline int   size( ) const;  
-        };
-
-        typedef typename store_type::iterator accessor_type;       
-        typedef std::vector<accessor_type> join_schedule;
-        
+        typedef typename store_type::iterator iterator_type;       
+                
          paper_store( );
         ~paper_store( );
      
-        N*                   top( ) const;  
-        join_schedule push_front( N* S );
-        N*             pop_front( );
-        void              insert( accessor_type, N* );     
-        N*               extract( accessor_type );
+        N*          top( ) const;  
+        void push_front( N* S );
+        N*    pop_front( );
+        void     insert( iterator_type, N* );     
+        N*      extract( iterator_type );
         
-        bool            is_valid( accessor_type ) const;  
-        int              size_of( accessor_type ) const;  
-
-        void   push_hi( accessor_type );  
-        void   push_lo( accessor_type );  
-        void    pop_hi( );  
-        void    pop_lo( );  
-        inline bool  lo_empty( ) { return lo_.empty( ); }
-        inline bool  hi_empty( ) { return hi_.empty( ); }
-        
+        /* should return custom iterator if need be */
+        inline iterator_type begin( ) { return store_.begin( ); }
+        inline iterator_type   end( ) { return store_.end( );   }
+    
         void print( ) const;  
         
-      private:
-        //friend class cons_proxy<N, I, S>;
-        
-        typedef std::vector<accessor_type> lo_digits;
-        typedef std::vector<accessor_type> hi_digits;
-        
+      private:   
         N*           top_;
         store_type store_;
-        
-        lo_digits     lo_;
-        hi_digits     hi_;
-        
-        join_schedule join_schedule_( );  
-        
-        void     grow_( accessor_type );  
-        void   shrink_( accessor_type );  
+             
+        void   grow_( iterator_type );  
+        void shrink_( iterator_type );  
         
         /* Paper store
-           for arrays, store_accessor_type is just an int
+           for arrays, store_iterator_type is just an int
            typedef std::forward_list<N*>  root_store;
            typedef std::list<root_store>  store_type;
         */

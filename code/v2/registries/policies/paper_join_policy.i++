@@ -1,0 +1,78 @@
+namespace KHJ {
+  namespace thesis {
+    namespace policy {
+
+      /** join_schedule **/
+
+      template<typename I>
+      void paper_join_policy<I>::push_hi( iterator_type position )
+      { 
+        hi_.push_back( position );
+      }
+
+      template<typename I>
+      void paper_join_policy<I>::pop_hi( )
+      { 
+        hi_.pop_back( );
+      }
+      
+      template<typename I>
+      void paper_join_policy<I>::push_lo( iterator_type position )
+      { 
+        lo_.push_back( position );
+      }
+
+      template<typename I>
+      void paper_join_policy<I>::pop_lo( )
+      { 
+        lo_.pop_back( );
+      }
+
+      template<typename I>
+      typename paper_join_policy<I>::cons_list paper_join_policy<I>::join_list( )
+      {
+        cons_list v = { };
+        if( !hi_.empty( ) ) {
+          v.push_back( hi_.back( ) ); hi_.pop_back( );
+        } 
+        return v; 
+      }
+
+      template<typename I>
+      void paper_join_policy<I>::print( ) const
+      { 
+        std::cout << "-----------------" << std::endl ; 
+        std::cout << "hi: ";
+        if( !hi_.empty( )) {
+          for( auto it = hi_.begin( ); it != hi_.end( ); ++it) {
+            std::cout << (*(*it)).size( ) << " " ;
+          }
+        } else {
+          std::cout << "empty";
+        } 
+        std::cout << std::endl;
+        /*
+        std::cout << "-----------------" << std::endl ; 
+        std::cout << "lo: ";
+        if( !lo_.empty( )) {
+          for( auto it = lo_.begin( ); it != lo_.end( ); ++it) {
+            std::cout << (*(*it).accessor( )).size( ) << " " ;
+          }
+         
+        } else {
+          std::cout << "empty";
+        }
+        */
+
+        
+      }
+
+    }
+  }
+}
+
+
+
+
+
+       

@@ -48,18 +48,9 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      typename paper_store<N>::join_schedule paper_store<N>::push_front( N* S ) 
+      void paper_store<N>::push_front( N* S ) 
       { 
-        root_store* F = &store_.front( );
-        (*F).push_back( S );
-                
-        //lo_.push_back( C( store_.begin( ), *this ) );
-        
-        //if( (*F).size( ) == 2 ) { lo_.pop_back( ); 
-        //}         
-        if( (*F).size( ) == 3 ) { hi_.push_back( store_.begin( ) ); 
-        } 
-        return join_schedule_( );
+        (*(begin( ))).push_back( S );
       }
 
       /**
@@ -82,9 +73,9 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      void paper_store<N>::insert( accessor_type position, N* S )
+      void paper_store<N>::insert( iterator_type position, N* S )
       { 
-        if( !is_valid( position ) ) {
+        if( position == end( ) ) {
           grow_( position ); (*std::prev(position)).push_back( S );
         } else {
           (*position).push_back( S );
@@ -99,24 +90,10 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      N* paper_store<N>::extract( accessor_type position )
+      N* paper_store<N>::extract( iterator_type position )
       { 
         N* S = position->back( ); position->pop_back( );
         return S;
-      }
-
-      /** public auxiliary **/
-      
-      template<typename N>
-      bool paper_store<N>::is_valid( accessor_type position ) const
-      { 
-        return position != store_.end( );
-      }
-
-      template<typename N>
-      int paper_store<N>::size_of( accessor_type position ) const
-      { 
-        return position->size( );
       }
 
       /** private auxiliary **/
@@ -124,7 +101,7 @@ namespace KHJ  {
       // grow_( ).
       
       template <typename N>
-      void paper_store<N>::grow_( accessor_type position ) 
+      void paper_store<N>::grow_( iterator_type position ) 
       { 
         root_store s; s.reserve( 4 );
         store_.push_back( s );
@@ -133,46 +110,9 @@ namespace KHJ  {
       // shrink_( ).
       
       template <typename N>
-      void paper_store<N>::shrink_( accessor_type position ) 
+      void paper_store<N>::shrink_( iterator_type position ) 
       { 
         store_.erase( position );
-      }
-
-
-      /** join_schedule **/
-
-      template<typename N>
-      void paper_store<N>::push_hi( accessor_type position )
-      { 
-        hi_.push_back( position );
-      }
-
-      template<typename N>
-      void paper_store<N>::pop_hi( )
-      { 
-        hi_.pop_back( );
-      }
-      
-      template<typename N>
-      void paper_store<N>::push_lo( accessor_type position )
-      { 
-        lo_.push_back( position );
-      }
-
-      template<typename N>
-      void paper_store<N>::pop_lo( )
-      { 
-        lo_.pop_back( );
-      }
-
-      template<typename N>
-      typename paper_store<N>::join_schedule paper_store<N>::join_schedule_( )
-      {
-        join_schedule v = { };
-        if( !hi_.empty( ) ) {
-          v.push_back( hi_.back( ) ); hi_.pop_back( );
-        } 
-        return v; 
       }
       
       template<typename N>
@@ -182,29 +122,6 @@ namespace KHJ  {
         for( auto it = store_.begin( ); it != store_.end( ); ++it) {
           std::cout << (*it).size( ) << " " ;
         } 
-        std::cout << std::endl;
-        std::cout << "-----------------" << std::endl ; 
-        std::cout << "hi: ";
-        if( !hi_.empty( )) {
-          for( auto it = hi_.begin( ); it != hi_.end( ); ++it) {
-            std::cout << (*(*it)).size( ) << " " ;
-          }
-        } else {
-          std::cout << "empty";
-        } 
-        std::cout << std::endl;
-        /*
-        std::cout << "-----------------" << std::endl ; 
-        std::cout << "lo: ";
-        if( !lo_.empty( )) {
-          for( auto it = lo_.begin( ); it != lo_.end( ); ++it) {
-            std::cout << (*(*it).accessor( )).size( ) << " " ;
-          }
-         
-        } else {
-          std::cout << "empty";
-        }
-        */
         std::cout << std::endl << std::endl ;     
       }
     }
