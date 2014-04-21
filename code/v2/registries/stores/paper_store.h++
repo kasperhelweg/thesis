@@ -6,111 +6,67 @@
 namespace KHJ {
   namespace thesis {
     namespace store {
-      
-      template<typename N, typename A, typename S>
-      class cons_proxy {
-      public:  
-        typedef N node_type;
-        typedef A accessor_type;
-        typedef S store_type;
-        
-        explicit cons_proxy( accessor_type a, store_type& s  ) : accessor_( a ), paper_store_( s ) 
-        { }
-                
-        accessor_type accessor( ) { return accessor_; }
-        accessor_type     next( ) { return std::next( accessor_ ); }
-        accessor_type     prev( ) { return std::prev( accessor_ ); }
-        
-        void push( accessor_type a, N* s ) {
-          paper_store_.insert( a, s );
-        }
-        
-        N* pop( accessor_type a  ) {
-          return paper_store_.extract( a );
-        }
-
-        void pop_hi( ) {
-          paper_store_.hi_.pop_back( );
-        }
-
-        void pop_lo( ) {
-          paper_store_.lo_.pop_back( );
-        }
-        
-        void push_hi( accessor_type a ) {
-          paper_store_.push_hi_( a );
-        }
-
-        void push_lo( accessor_type a ) {
-          paper_store_.push_lo_( a );
-        }
-
-        bool is_valid( accessor_type a ) {
-          return paper_store_.is_valid_( a );
-        }
-     
-        int size( accessor_type a ) {
-          return paper_store_.size_of_( a );
-        }
-
-        bool lo_empty( ) {
-          return paper_store_.lo_.empty( );
-        }
-        
-        bool hi_empty( ) {
-          return paper_store_.hi_.empty( );
-        }
-        
-        
-      private:
-        store_type&  paper_store_;
-        accessor_type   accessor_;
-      };
-      
+            
       template <typename N>        
       class paper_store {        
       public:        
         typedef std::vector<N*>       root_store;
         typedef std::list<root_store> store_type;
-        typedef typename store_type::iterator  I;
+        
+        struct accessor_proxy {  
+          typedef typename store_type::accessor_type accessor_type;
 
-        typedef paper_store S;
-        typedef cons_proxy<N, I, S> C;
+           accessor_proxy( accessor_type a, bool v ) : accessor( a ), is_valid( v ) { }
+          ~accessor_proxy( );
 
-        typedef std::vector<C> cons_list;
+          store_type s;
+          accessor_type accessor;
+          accessor_type is_valid;
+                  
+          inline bool valid( ) const;  
+          inline int   size( ) const;  
+        };
+
+        typedef typename store_type::iterator accessor_type;       
+        typedef std::vector<accessor_type> join_schedule;
         
          paper_store( );
         ~paper_store( );
+     
+        N*                   top( ) const;  
+        join_schedule push_front( N* S );
+        N*             pop_front( );
+        void              insert( accessor_type, N* );     
+        N*               extract( accessor_type );
         
-        cons_list push_front( N* S );
-        N*         pop_front( );
-        N*               top( );  
+        bool            is_valid( accessor_type ) const;  
+        int              size_of( accessor_type ) const;  
 
-        void print( );  
-      
+        void   push_hi( accessor_type );  
+        void   push_lo( accessor_type );  
+        void    pop_hi( );  
+        void    pop_lo( );  
+        inline bool  lo_empty( ) { return lo_.empty( ); }
+        inline bool  hi_empty( ) { return hi_.empty( ); }
+        
+        void print( ) const;  
+        
       private:
-        friend class cons_proxy<N, I, S>;
+        //friend class cons_proxy<N, I, S>;
         
-        typedef std::vector<C> lo_digits;
-        typedef std::vector<C> hi_digits;
-
+        typedef std::vector<accessor_type> lo_digits;
+        typedef std::vector<accessor_type> hi_digits;
+        
         N*           top_;
         store_type store_;
+        
         lo_digits     lo_;
         hi_digits     hi_;
         
-        void      insert( I, N* );     
-        N*       extract( I );
-        cons_list  cons_(   );  
-                
-        bool is_valid_( I );  
-        int   size_of_( I );  
-
-        void   push_hi_( I );  
-        void   push_lo_( I );  
-
-        void     grow_( I );  
-        void   shrink_( I );  
+        join_schedule join_schedule_( );  
+        
+        void     grow_( accessor_type );  
+        void   shrink_( accessor_type );  
         
         /* Paper store
            for arrays, store_accessor_type is just an int

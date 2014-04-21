@@ -34,7 +34,9 @@ namespace KHJ  {
        */
       template<typename N, typename M, typename S>
       void root_registry<N, M, S>::top( ) const
-      { }
+      { 
+        return store_.top( );
+      }
       
       /**
        * insert( )
@@ -44,9 +46,9 @@ namespace KHJ  {
        *
        */
       template<typename N, typename M, typename S>
-      void root_registry<N, M, S>::insert( N* s )
+      void root_registry<N, M, S>::insert( N* Q )
       { 
-        cons_list L = store_.push_front( s );
+        join_schedule L = store_.push_front( Q );
         for( auto it = L.begin( ); it != L.end(); ++it) {
           fix_( *it );
         }
@@ -73,37 +75,36 @@ namespace KHJ  {
        *
        */
       template<typename N, typename M, typename S>
-      void root_registry<N, M, S>::fix_( cons_proxy P )
+      void root_registry<N, M, S>::fix_( accessor_type I )
       { 
-        accessor_type I = P.accessor( );
-        accessor_type E = P.next( );
-        accessor_type W = P.prev( );
+        accessor_type E = std::next( I );  // should be abstracted
+        accessor_type W = std::prev( I );  // should be abstracted
         
-        N* Q = P.pop( I );
-        N* R = P.pop( I );
-        N* V = P.pop( I );
+        N* Q = store_.extract( I );
+        N* R = store_.extract( I );
+        N* V = store_.extract( I );
         
         N* t[3] = { Q, R, V };     
         swap_nodes_( t, 0, modifier_type::compare_( *t[1], *t[0] ) );
         swap_nodes_( t, 2, modifier_type::compare_( *t[0], *t[2] ) );
         
-        if( P.is_valid( W ) ) {
+        if( store_.is_valid( W ) ) {
           std::unique_ptr<N*[]> st = modifier_type::split( t[0] );
           modifier_type::join_heaps( t[0], t[1], t[2]  );
-          P.push( E, t[0]  );
+          store_.insert( E, t[0]  );
           
-          if( P.size( W ) <= 1 ) { P.pop_lo( ); }
-          update_lo_( E, P );
+          if( store_.size_of( W ) <= 1 ) { store_.pop_lo( ); }
+          update_lo_( E );
           
-          P.push( W, st[0] ); P.push( W, st[1] );
-          if( P.size( W ) >= 3 ) { P.push_hi( W ); }
+          store_.insert( W, st[0] ); store_.insert( W, st[1] );
+          if( store_.size_of( W ) >= 3 ) { store_.push_hi( W ); }
         } else {
           modifier_type::join_heaps( t[0], t[1], t[2]  );
-          P.push( E, t[0] );
+          store_.insert( E, t[0] );
                     
-          update_lo_( E, P );
+          update_lo_( E );
         }
-        P.push_lo( I );
+        store_.push_lo( I );
       }
 
       /**
@@ -126,16 +127,16 @@ namespace KHJ  {
       }
 
       template <typename N, typename M, typename S>
-      void  root_registry<N, M, S>::update_lo_ ( accessor_type E, cons_proxy P ) {
-        if( P.size( E ) == 1 && P.lo_empty( )  ) { 
+      void  root_registry<N, M, S>::update_lo_ ( accessor_type E ) {
+        if( store_.size_of( E ) == 1 && store_.lo_empty( )  ) { 
           //P.push_lo( E ); 
-        } else if( P.size( E ) == 2 ) { 
+        } else if( store_.size_of( E ) == 2 ) { 
           //P.pop_lo( ); 
-        } else if( P.size( E ) == 3 ) { P.push_hi( E ); }
+        } else if( store_.size_of( E ) == 3 ) { store_.push_hi( E ); }
       }
 
       template<typename N, typename M, typename S>
-      void root_registry<N, M, S>::print( )
+      void root_registry<N, M, S>::print( ) const
       {
         store_.print( );
       }
