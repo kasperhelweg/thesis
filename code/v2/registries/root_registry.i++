@@ -1,0 +1,145 @@
+#include <memory>
+namespace KHJ  {
+  namespace thesis  {
+    namespace registry  {
+      
+      /**
+       * Constructor.
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      root_registry<N, M, S>::root_registry( ) 
+      { }
+
+      /**
+       * DeConstructor.
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      root_registry<N, M, S>::~root_registry( ) 
+      { }
+      
+      /**
+       * top( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      void root_registry<N, M, S>::top( ) const
+      { }
+      
+      /**
+       * insert( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      void root_registry<N, M, S>::insert( N* s )
+      { 
+        cons_list L = store_.push_front( s );
+        for( auto it = L.begin( ); it != L.end(); ++it) {
+          fix_( *it );
+        }
+        //store_.print( );
+      }
+
+      /**
+       * extract( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      N* root_registry<N, M, S>::extract( )
+      { 
+      }
+ 
+      /**
+       * fix_()
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      void root_registry<N, M, S>::fix_( cons_proxy P )
+      { 
+        accessor_type I = P.accessor( );
+        accessor_type E = P.next( );
+        accessor_type W = P.prev( );
+        
+        N* Q = P.pop( I );
+        N* R = P.pop( I );
+        N* V = P.pop( I );
+        
+        N* t[3] = { Q, R, V };     
+        swap_nodes_( t, 0, modifier_type::compare_( *t[1], *t[0] ) );
+        swap_nodes_( t, 2, modifier_type::compare_( *t[0], *t[2] ) );
+        
+        if( P.is_valid( W ) ) {
+          std::unique_ptr<N*[]> st = modifier_type::split( t[0] );
+          modifier_type::join_heaps( t[0], t[1], t[2]  );
+          P.push( E, t[0]  );
+          
+          if( P.size( W ) <= 1 ) { P.pop_lo( ); }
+          update_lo_( E, P );
+          
+          P.push( W, st[0] ); P.push( W, st[1] );
+          if( P.size( W ) >= 3 ) { P.push_hi( W ); }
+        } else {
+          modifier_type::join_heaps( t[0], t[1], t[2]  );
+          P.push( E, t[0] );
+                    
+          update_lo_( E, P );
+        }
+        P.push_lo( I );
+      }
+
+      /**
+       * unfix_()
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      void root_registry<N, M, S>::unfix_( )
+      { }
+
+      // swap aux
+      template <typename N, typename M, typename S>
+      void  root_registry<N, M, S>::swap_nodes_ (N* nodes[], int i1, int i2) {
+        N* temp   = nodes[i1];
+        nodes[i1] = nodes[i2];
+        nodes[i2] = temp;
+      }
+
+      template <typename N, typename M, typename S>
+      void  root_registry<N, M, S>::update_lo_ ( accessor_type E, cons_proxy P ) {
+        if( P.size( E ) == 1 && P.lo_empty( )  ) { 
+          //P.push_lo( E ); 
+        } else if( P.size( E ) == 2 ) { 
+          //P.pop_lo( ); 
+        } else if( P.size( E ) == 3 ) { P.push_hi( E ); }
+      }
+
+      template<typename N, typename M, typename S>
+      void root_registry<N, M, S>::print( )
+      {
+        store_.print( );
+      }
+
+    }
+  }
+}

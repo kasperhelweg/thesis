@@ -19,7 +19,6 @@
 namespace KHJ {
   namespace thesis {
     namespace heap_node {  
-    
       template <typename E>        
       class heap_a_node {    
 
@@ -27,16 +26,8 @@ namespace KHJ {
         // maybe private ?
         typedef E value_type;
         typedef heap_a_node<E> N;
-        E    element_;      
-      private:
-  
-        bool   color_;
-        N*      left_;
-        N*     right_;
-
-        template<typename N, typename C> friend class KHJ::thesis::modifier::node_a_modifier;
         
-      public:  
+  
         explicit heap_a_node( const E& ); 
         explicit heap_a_node( const E&, bool ); 
         ~heap_a_node( ); 
@@ -59,6 +50,16 @@ namespace KHJ {
         N*    left_child( ) const;
         N*   right_child( ) const;
         N*     find_root( ) const;
+
+      private:
+        E    element_;      
+        bool   color_;
+        N*      left_;
+        N*     right_;
+
+        // Should be friends will all modifier types...
+        template<typename N, typename C> 
+        friend class KHJ::thesis::modifier::node_a_modifier;
       };
     }
   }

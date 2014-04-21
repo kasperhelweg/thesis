@@ -1,4 +1,5 @@
-#include <memory>
+//#include <memory>
+//#include <assert.h>
 #include "heap_utils.h++"
 
 #ifndef THESIS_A_NODE_MODIFIER
@@ -7,17 +8,14 @@ namespace KHJ  {
   namespace thesis  {
     namespace modifier  {
       template <typename N, typename C>
-      class node_a_modifier {
+      class node_a_modifier {     
+        template<typename node_type, typename M> friend class KHJ::thesis::utils::pfb;
       
-        
-
       public:
         typedef N node_type;
         typedef C comparator_type;
 
         constexpr static C compare_ = C( );
-
-        template<typename node_type, typename M> friend class KHJ::thesis::utils::pfb;
         
         static typename node_type::value_type val( N* S )
         {        
@@ -48,7 +46,7 @@ namespace KHJ  {
          */
         static void join_heaps( N* S, N* L, N* R )
         {
-          assert((*S).is_root( ) && (*L).is_root( ) && (*R).is_root( ));
+          //assert((*S).is_root( ) && (*L).is_root( ) && (*R).is_root( ));
           join( S, L, R );
         }
       
@@ -92,7 +90,7 @@ namespace KHJ  {
         
         static std::unique_ptr<N*[]> split( N* S )
         {
-          assert((*S).is_root( ));
+          //assert((*S).is_root( ));
         
           // not too c++'ish...but what...
           std::unique_ptr<N*[]> st(new N*[2]);
@@ -104,7 +102,7 @@ namespace KHJ  {
           (*st[0]).right_ = nullptr; 
           (*S).left_      = nullptr; 
         
-          assert((*S).is_root( )); assert((*st[0]).is_root( )); assert((*st[1]).is_root( ));
+          //assert((*S).is_root( )); assert((*st[0]).is_root( )); assert((*st[1]).is_root( ));
           return st;
         }
 
@@ -166,8 +164,8 @@ namespace KHJ  {
             if( !(*O).is_leaf( )) { (*(*(*O).left_).right_).right_ = O; }
           
             
-            assert((*S).is_root( ));
-            assert((*S).left_ == O);
+            //assert((*S).is_root( ));
+            //assert((*S).left_ == O);
           } 
           else if( (*O).is_root( ) && (*S).color_ == 1 ) { 
           
@@ -190,8 +188,8 @@ namespace KHJ  {
             
             swap_colors_( S, O );
           
-            assert((*S).is_root( ));
-            assert((*S).left_ == Q);
+            //assert((*S).is_root( ));
+            //assert((*S).left_ == Q);
           }
           else if( (*O).color_ == 0 && (*S).color_ == 0 ) { 
           

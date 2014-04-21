@@ -1,3 +1,5 @@
+// g++ -O3 -I ../utils/ -I ./ -std=c++11 -o heap_nodes.out heap_nodes.c++
+
 #include <iostream>
 #include <assert.h>
 #include <time.h>

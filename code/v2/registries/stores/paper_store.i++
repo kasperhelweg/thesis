@@ -1,0 +1,202 @@
+namespace KHJ  {
+  namespace thesis  {
+    namespace store {
+      
+      /**
+       * Constructor.
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N>
+      paper_store<N>::paper_store( ) : top_( nullptr )
+      {
+        root_store s; s.reserve( 4 );
+        store_.push_back( s );
+      }
+
+      /**
+       * DeConstructor.
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N>
+      paper_store<N>::~paper_store( ) 
+      { }
+
+      /**
+       * push_front( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N>
+      typename paper_store<N>::cons_list paper_store<N>::push_front( N* S ) 
+      { 
+        root_store* F = &store_.front( );
+        (*F).push_back( S );
+        
+        
+        
+        //lo_.push_back( C( store_.begin( ), *this ) );
+        
+        //if( (*F).size( ) == 2 ) { lo_.pop_back( ); 
+        //}         
+        if( (*F).size( ) == 3 ) { hi_.push_back( C( store_.begin( ), *this )  ); 
+        } 
+        return cons_( );
+      }
+
+      /**
+       * top( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N>
+      N* paper_store<N>::top( ) 
+      { 
+        return top_;
+      }
+
+
+      /**
+       * pop_front( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N>
+      N* paper_store<N>::pop_front( ) 
+      { 
+      }
+
+      /**
+       * insert( I position )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N>
+      void paper_store<N>::insert( I position, N* n )
+      { 
+        if( position == store_.end( ) ) {
+          grow_( position ); (*std::prev(position)).push_back( n );
+        } else {
+          (*position).push_back( n );
+        }
+      }
+
+      /**
+       * extract( I position )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N>
+      N* paper_store<N>::extract( I position )
+      { 
+        N* S = position->back( ); position->pop_back( );
+        return S;
+      }
+
+
+      template<typename N>
+      typename paper_store<N>::cons_list paper_store<N>::cons_( )
+      {
+        cons_list v = { };
+        if( !hi_.empty( ) ) {
+          v.push_back( hi_.back( ) ); hi_.pop_back( );
+        } 
+        return v; 
+      }
+
+      template<typename N>
+      bool paper_store<N>::is_valid_( I position )
+      { 
+        return position != store_.end( );
+      }
+      
+      template<typename N>
+      int paper_store<N>::size_of_( I position )
+      { 
+        return position->size( );
+      }
+
+      template<typename N>
+      void paper_store<N>::push_hi_( I position )
+      { 
+        hi_.push_back( C( position, *this )  );
+      }
+
+      
+      template<typename N>
+      void paper_store<N>::push_lo_( I position )
+      { 
+        lo_.push_back( C( position, *this )  );
+      }
+
+      template <typename N>
+      void paper_store<N>::grow_( I position ) 
+      { 
+        root_store s; s.reserve( 4 );
+        store_.push_back( s );
+      }
+
+      /**
+       * Shrink_( ).
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      
+      template <typename N>
+      void paper_store<N>::shrink_( I position ) 
+      { 
+        store_.erase( position );
+      }
+
+      template<typename N>
+      void paper_store<N>::print( )
+      { 
+        std::cout << "-----------------" << std::endl ;
+        for( auto it = store_.begin( ); it != store_.end( ); ++it) {
+          std::cout << (*it).size( ) << " " ;
+        } 
+        std::cout << std::endl;
+        std::cout << "-----------------" << std::endl ; 
+        std::cout << "hi: ";
+        if( !hi_.empty( )) {
+          for( auto it = hi_.begin( ); it != hi_.end( ); ++it) {
+            std::cout << (*(*it).accessor( )).size( ) << " " ;
+          }
+        } else {
+          std::cout << "empty";
+        } 
+        std::cout << std::endl;
+        /*
+        std::cout << "-----------------" << std::endl ; 
+        std::cout << "lo: ";
+        if( !lo_.empty( )) {
+          for( auto it = lo_.begin( ); it != lo_.end( ); ++it) {
+            std::cout << (*(*it).accessor( )).size( ) << " " ;
+          }
+         
+        } else {
+          std::cout << "empty";
+        }
+        */
+        std::cout << std::endl << std::endl ;     
+      }
+    }
+  }
+}
