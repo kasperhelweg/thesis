@@ -11,7 +11,7 @@ namespace KHJ  {
        *
        */
       template<typename N, typename M, typename S, typename J>
-      root_registry<N, M, S, J>::root_registry( )
+      root_registry<N, M, S, J>::root_registry( ) : top_( nullptr )
       { 
         state_.reserve( 2 );
         state_[0] = store_.begin( );
@@ -40,9 +40,7 @@ namespace KHJ  {
        */
       template<typename N, typename M, typename S, typename J>
       N* root_registry<N, M, S, J>::top( ) const
-      { 
-        return store_.top( );
-      }
+      { return top_; }
       
       /**
        * insert( )
@@ -54,7 +52,9 @@ namespace KHJ  {
       template<typename N, typename M, typename S, typename J>
       void root_registry<N, M, S, J>::insert( N* Q )
       { 
+        if( top_ == nullptr || modifier_type::compare_( *Q, *top_ ) ) { top_ = Q; }
         store_.push_front( Q );
+        
         if( (*store_.begin( )).size( ) == 2 ) { join_policy_.pop_lo(  ); 
         } 
         if( (*store_.begin( )).size( ) == 3 ) { join_policy_.push_hi( store_.begin( ) ); 
@@ -91,16 +91,16 @@ namespace KHJ  {
           }
         }
 
-        store_.top_ = nullptr;
-    
+        top_ = nullptr;
+      
         for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
           for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
-            if( store_.top_ == nullptr || modifier_type::compare_( (*(*vit)),  (*store_.top_)  ))  {          
-              store_.top_ = (*vit);
+            if( top_ == nullptr || modifier_type::compare_( (*(*vit)),  (*top_)  ))  {          
+              top_ = (*vit);
             }
           }
         }
-            
+        
         return Q;
       }
 
@@ -219,7 +219,8 @@ namespace KHJ  {
         
         if( !in_idle_state_( ) && !join_policy_.lo_empty( ) ) {
           if( state_[0]->size( ) == 2 && state_[1]->size( ) == 2) {
-            if( !join_policy_.hi_empty( ) && join_policy_.get_hi( join_policy_.hi_size( ) - 1 )->size( ) == 3 ) {
+            if( !join_policy_.hi_empty( ) && 
+                join_policy_.get_hi( join_policy_.hi_size( ) - 1 )->size( ) == 3 ) {
               cons_list L = join_policy_.join_list_lo( );
               for( auto it = L.begin( ); it != L.end(); ++it) {
                 unfix_( *it );
@@ -232,6 +233,7 @@ namespace KHJ  {
             }
           }
         }
+
         B = store_.extract( I );
         if( !(I->empty( )) && I->size( ) == 2 ) { join_policy_.pop_hi( );
         } else if( ( I->empty( ) || ( !I->empty() && I->size( ) == 1 )) && 
@@ -252,7 +254,8 @@ namespace KHJ  {
           if( !join_policy_.hi_empty( ) ) {
             return false;
           } else {
-            if( join_policy_.lo_size( ) == 1 || join_policy_.get_lo( join_policy_.lo_size( ) - 2 ) == store_.last( ) ) {
+            if( join_policy_.lo_size( ) == 1 || 
+                join_policy_.get_lo( join_policy_.lo_size( ) - 2 ) == store_.last( ) ) {
               return true;
             } else {
               return false;

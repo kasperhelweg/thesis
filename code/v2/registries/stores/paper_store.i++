@@ -9,11 +9,14 @@ namespace KHJ  {
        * @author KHJ
        *
        */
-      template<typename N, typename C>
-      paper_store<N, C>::paper_store( ) : top_( nullptr ), compare_( C( ) )
+      template<typename N>
+      paper_store<N>::paper_store( )
       {
         root_store f; f.reserve( 4 ); store_.push_back( f );
         root_store s; s.reserve( 4 ); store_.push_back( s );
+        
+        //root_store f; store_.push_back( f );
+        //root_store s; store_.push_back( s );
       }
 
       /**
@@ -23,22 +26,9 @@ namespace KHJ  {
        * @author KHJ
        *
        */
-      template<typename N, typename C>
-      paper_store<N, C>::~paper_store( ) 
+      template<typename N>
+      paper_store<N>::~paper_store( ) 
       { }
-
-      /**
-       * top( )
-       * 
-       * complexity is (probably) O(1)
-       * @author KHJ
-       *
-       */
-      template<typename N, typename C>
-      N* paper_store<N, C>::top( ) const
-      { 
-        return top_;
-      }
 
       /**
        * push_front( )
@@ -47,13 +37,11 @@ namespace KHJ  {
        * @author KHJ
        *
        */
-      template<typename N, typename C>
-      void paper_store<N, C>::push_front( N* S ) 
+      template<typename N>
+      void paper_store<N>::push_front( N* S ) 
       { 
-        (*(begin( ))).push_back( S );
-        if( top_ == nullptr || compare_( *S, *top_ ) ) {
-          top_ = S;
-        }
+        (*(begin( ))).push_back( S ); 
+        //(*(begin( ))).push_front( S ); 
       }
 
       /**
@@ -63,11 +51,19 @@ namespace KHJ  {
        * @author KHJ
        *
        */
-      template<typename N, typename C>
-      N* paper_store<N, C>::pop_front( ) 
+      template<typename N>
+      N* paper_store<N>::pop_front( ) 
       { 
-        return (*(begin( ))).pop_back( );
+        //return (*(begin( ))).pop_back( ); 
+        //return (*(begin( ))).pop_back( ); 
       }
+
+      template <typename N>
+      int paper_store<N>::size( iterator_type I ) 
+      { 
+        return (*I).size( );
+      }
+
 
       /**
        * insert( I position )
@@ -76,10 +72,11 @@ namespace KHJ  {
        * @author KHJ
        *
        */
-      template<typename N, typename C>
-      void paper_store<N, C>::insert( iterator_type position, N* S )
+      template<typename N>
+      void paper_store<N>::insert( iterator_type position, N* S )
       { 
-        (*position).push_back( S );
+        (*position).push_back( S ); 
+        //(*position).push_front( S ); 
       }
 
       /**
@@ -89,34 +86,32 @@ namespace KHJ  {
        * @author KHJ
        *
        */
-      template<typename N, typename C>
-      N* paper_store<N, C>::extract( iterator_type position )
+      template<typename N>
+      N* paper_store<N>::extract( iterator_type position )
       {
         N* S = position->back( ); position->pop_back( );
+        //N* S = position->front( ); position->pop_front( );
         return S;
       }
       
-      /** private auxiliary **/
-
       // grow_( ).
       
-      template <typename N, typename C>
-      void paper_store<N, C>::grow( ) 
+      template <typename N>
+      void paper_store<N>::grow( ) 
       { 
         root_store s; s.reserve( 4 );
+        //root_store s;
         store_.push_back( s );
       }
 
       // shrink_( ).
       
-      template <typename N, typename C>
-      void paper_store<N, C>::shrink(  ) 
-      { 
-        store_.pop_back( );;
-      }
+      template <typename N>
+      void paper_store<N>::shrink(  ) 
+      { store_.pop_back( ); }
       
-      template<typename N, typename C>
-      void paper_store<N, C>::print( ) const
+      template<typename N>
+      void paper_store<N>::print( ) const
       { 
         std::cout << "-----------------" << std::endl ;
         for( auto it = store_.begin( ); it != store_.end( ); ++it) {

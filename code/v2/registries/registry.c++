@@ -18,7 +18,7 @@ typedef KHJ::thesis::heap_node::heap_a_node<E1> N1;
 typedef std::less<N1> C1;
 typedef KHJ::thesis::modifier::node_a_modifier<N1, C1> M1;
 // Storage
-typedef KHJ::thesis::store::paper_store<N1, C1> S1;
+typedef KHJ::thesis::store::paper_store<N1> S1;
 typedef S1::iterator_type F1;
 // Join policy
 typedef KHJ::thesis::policy::paper_join_policy<F1> J1;
@@ -70,7 +70,9 @@ int main( )
   cpu1  = clock();
   cpu_time = static_cast<double>( cpu1 - cpu0 )  / CLOCKS_PER_SEC;
 
+  assert( sort_vec.size() == elements - 5 );
   assert( std::is_sorted( sort_vec.begin(),sort_vec.end() ));
+  
   std::cout << "-----------------" << std::endl ; 
   std::cout << "CPU Pop( ): " << cpu_time * 1000 << std::endl;
   std::cout << "-----------------" << std::endl ; 

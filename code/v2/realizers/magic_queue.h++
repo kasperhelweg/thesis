@@ -1,9 +1,9 @@
-#ifndef THESIS_MELDABLE_PRIORITY_QUEUE
-#define THESIS_MELDABLE_PRIORITY_QUEUE
+#ifndef THESIS_MAGIC_QUEUE
+#define THESIS_MAGIC_QUEUE
 namespace KHJ  {
   namespace thesis  {
     namespace priority_queue  {
-      class meldable_priority_queue {
+      class magic_queue {
       public:
 
         //iterator top();
@@ -12,11 +12,10 @@ namespace KHJ  {
         //void    erase( iterator );
         //void increase( iterator, V const& );
         //void    clear( );
-        //void     meld( meldable_priority_queue& );
-
+        
       };
     }
   }
 }
-#include "meldable-priority-queue.i++"
+#include "magic_queue.i++"
 #endif

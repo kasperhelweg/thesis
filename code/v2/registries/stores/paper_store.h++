@@ -1,4 +1,5 @@
 #include<list>
+#include <forward_list>
 #include<vector>
 
 #ifndef THESIS_PAPER_STORE
@@ -7,8 +8,14 @@ namespace KHJ {
   namespace thesis {
     namespace store {
             
-      template <typename N, typename C>        
+      template <typename N>        
       class paper_store {        
+        struct node {
+          int size_;
+          std::vector<N*> root_list;           
+        };
+
+      
       public:        
 
         /* this should be the store iterator !
@@ -38,22 +45,20 @@ namespace KHJ {
          */
         typedef std::vector<N*>       root_store;
         typedef std::list<root_store> store_type;
+        
+        //typedef std::list<node> store_type;
 
-        typedef C comparator_type;
         typedef typename store_type::iterator iterator_type;
         typedef typename store_type::const_iterator const_iterator_type;
         
-        
-        
         paper_store( );
         ~paper_store( );
-     
-        N*          top( ) const;  
+
         void push_front( N* S );
         N*    pop_front( );
         void     insert( iterator_type, N* );     
         N*      extract( iterator_type );
-        
+        int        size( iterator_type );  
            
         /* should return custom iterator if need be */
         inline iterator_type      begin( ) { return store_.begin( ); }
@@ -67,13 +72,10 @@ namespace KHJ {
         void shrink( );  
         
         void print( ) const;  
-
-        N* top_;
         
       private:   
         store_type store_;
-        comparator_type compare_;
-        
+
 
 
         /* Paper store

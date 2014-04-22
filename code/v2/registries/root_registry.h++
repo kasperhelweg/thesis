@@ -38,6 +38,8 @@ namespace KHJ  {
         
       private:
         typedef std::vector<iterator_type> state_type;
+        
+        N* top_;
 
         store_type        store_;
         join_policy join_policy_;
