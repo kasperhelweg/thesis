@@ -95,7 +95,7 @@ namespace KHJ  {
        */
       template<typename N, typename C>
       N* paper_store<N, C>::extract( iterator_type position )
-      { 
+      {
         N* S = position->back( ); position->pop_back( );
         return S;
       }

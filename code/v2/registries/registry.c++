@@ -29,7 +29,7 @@ int main( )
 {
   R1 registry;
   
-  E1 elements = 10000;
+  E1 elements = 1000000;
   std::vector<E1> data;
   for (E1 i = elements; i >= 1; --i) data.push_back( i );
   std::random_shuffle ( data.begin( ), data.end( ) );
@@ -50,27 +50,33 @@ int main( )
   double cpu_time = static_cast<double>( cpu1 - cpu0 )  / CLOCKS_PER_SEC;
 
   std::cout << "-----------------" << std::endl ; 
-  std::cout << "CPU: " << cpu_time * 1000 << std::endl;
+  std::cout << "CPU Push( ): " << cpu_time * 1000 << std::endl;
   std::cout << "-----------------" << std::endl ; 
   std::cout << std::endl ; 
 
   registry.print( );
   std::cout << std::endl ; 
-  
+  std::cout << "-----------------" << std::endl ; 
+  std::cout << "-----------------" << std::endl ; 
+  std::cout << std::endl ; 
+
+  cpu0  = clock( );
   std::vector<E1> sort_vec;
-  for( int i = 1; i != 9000 ; ++i ) {
+  for( int i = 1; i <= elements-5  ; ++i ) {
     N1* S = registry.extract_min( );
     sort_vec.push_back( S->element( ) );
-    //std::cout << "extract: " << (*S).element( ) << std::endl;
     //delete S; S = nullptr;
-    //registry.print( );
   }
-  //registry.print( );
-  
-  assert( std::is_sorted( sort_vec.begin(),sort_vec.end() ));
-  
-  
+  cpu1  = clock();
+  cpu_time = static_cast<double>( cpu1 - cpu0 )  / CLOCKS_PER_SEC;
 
+  assert( std::is_sorted( sort_vec.begin(),sort_vec.end() ));
+  std::cout << "-----------------" << std::endl ; 
+  std::cout << "CPU Pop( ): " << cpu_time * 1000 << std::endl;
+  std::cout << "-----------------" << std::endl ; 
+  std::cout << std::endl ; 
+  registry.print( );
+  
   for( auto it = nodes.begin( ) ; it != nodes.end( ) ; it++ ) {
     delete *it;
    }

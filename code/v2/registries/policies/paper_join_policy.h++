@@ -26,10 +26,10 @@ namespace KHJ {
         inline bool  hi_empty( ) const { return hi_.empty( ); } 
         
         inline int lo_size( ) const { return lo_.size( ); } 
-        inline iterator_type get_lo( int index ) const { return lo_[index]; } 
+        inline iterator_type get_lo( int index ) const { if(!lo_.empty() ) {return lo_[index];} } 
         
         inline int hi_size( ) const { return hi_.size( ); }
-        inline iterator_type get_hi( int index ) const { return hi_[index]; }
+        inline iterator_type get_hi( int index ) const { if(!hi_.empty( )) {return hi_[index];} }
         
         void print( ) const;  
         

@@ -229,9 +229,6 @@ namespace KHJ  {
               for( auto it = L.begin( ); it != L.end(); ++it) {
                 unfix_( *it );
               }
-              if( store_.back( ).size( ) == 0 ) {
-                
-              }
             }
           } else {
             cons_list L = join_policy_.join_list_lo( );
@@ -241,11 +238,12 @@ namespace KHJ  {
           }
         }
         B = store_.extract( I );
-        if( I->size( ) == 2 ) {
+        if( !(I->empty( )) && I->size( ) == 2 ) {
           join_policy_.pop_hi( );
-        } else if( I->size( ) <= 1 && join_policy_.get_lo( join_policy_.lo_size( ) - 1) != I ) {
+        } else if( ( I->empty( ) || ( !I->empty() && I->size( ) == 1 ))  && ( join_policy_.get_lo( join_policy_.lo_size( ) - 1) != I) ) {
           join_policy_.push_lo( I );
         }
+    
         return B;
       }
 
