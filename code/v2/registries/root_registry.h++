@@ -1,3 +1,13 @@
+/* 
+  A root registry keeps track of the roots of the perfect binary heaps
+  in a binary queue. In this registry the magical skew system is used such that 
+  the registry structure is of the form :REGWXPS HERE
+  Also note that the registry is composed of two parts: Storage and Join "policy".
+  
+  Author : KHJ 2014
+*/
+
+
 #ifndef THESIS_A_ROOT_REGISTRY
 #define THESIS_A_ROOT_REGISTRY
 namespace KHJ  {
@@ -17,10 +27,12 @@ namespace KHJ  {
         explicit root_registry( );
                 ~root_registry( ); 
         
+        
         N*          top( ) const;
+        bool      empty( ) const;
         void     insert( N* );
         N*      extract( N* );
-        N*  extract_min( );
+        N*  extract_min( ); // only extract
 
         void print( ) const;
         
@@ -29,12 +41,13 @@ namespace KHJ  {
 
         store_type        store_;
         join_policy join_policy_;
-        state_type    state_;
+        state_type        state_;
 
         void           fix_( iterator_type );
         void         unfix_( iterator_type );
         N*          borrow_( );
-        bool in_idle_state_(  ); // should be const  
+
+        bool in_idle_state_(  ) const;  
         void    swap_nodes_( N* [], int, int );
         void     update_lo_( iterator_type );
       };

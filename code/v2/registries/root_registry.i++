@@ -15,7 +15,7 @@ namespace KHJ  {
       { 
         state_.reserve( 2 );
         state_[0] = store_.begin( );
-        state_[1] = std::next( store_.begin( ) );
+        state_[1] = std::next( state_[0] );
         
         join_policy_.push_lo( store_.begin( ) );
       }
@@ -64,7 +64,6 @@ namespace KHJ  {
         for( auto it = L.begin( ); it != L.end(); ++it) {
           fix_( *it );
         }
-        //print( );
       }
       
       /**
@@ -79,7 +78,7 @@ namespace KHJ  {
       { 
         N* B = borrow_( );
         modifier_type::replace( Q, B );
-    
+        
         modifier_type::siftup_( B );
         modifier_type::siftdown_( B );
            
@@ -130,9 +129,13 @@ namespace KHJ  {
       template<typename N, typename M, typename S, typename J>
       void root_registry<N, M, S, J>::fix_( iterator_type I )
       { 
+        if( std::next( I ) == store_.end( ) ) { store_.grow( ); }
+        
         iterator_type E = std::next( I );  
         iterator_type W = std::prev( I );
         
+        if( E == store_.end( ) ) { store_.grow( ); }
+
         N* Q = store_.extract( I );
         N* R = store_.extract( I );
         N* V = store_.extract( I );
@@ -143,18 +146,15 @@ namespace KHJ  {
         
         if( W != store_.end( ) ) {
           std::unique_ptr<N*[]> st = modifier_type::split( t[0] );
-          modifier_type::join_heaps( t[0], t[1], t[2]  );
-          store_.insert( &E, t[0]  );
+          modifier_type::join_heaps( t[0], t[1], t[2]  ); store_.insert( E, t[0]  );
           
           if( W->size( ) <= 1 ) { join_policy_.pop_lo( ); }
           update_lo_( E );
           
-          store_.insert( &W, st[0] ); store_.insert( &W, st[1] );
+          store_.insert( W, st[0] ); store_.insert( W, st[1] );
           if( W->size( ) >= 3 ) { join_policy_.push_hi( W ); }
         } else {
-          modifier_type::join_heaps( t[0], t[1], t[2]  );
-          store_.insert( &E, t[0] );
-                    
+          modifier_type::join_heaps( t[0], t[1], t[2]  ); store_.insert( E, t[0] );
           update_lo_( E );
         }
         join_policy_.push_lo( I );
@@ -176,9 +176,8 @@ namespace KHJ  {
         N* P = store_.extract( E );
         std::unique_ptr<N*[]> st = modifier_type::split( P );
     
-        if( E->size() == 0 && std::next(E) == store_.end( ) ) {
-          join_policy_.pop_lo( );
-          store_.shrink_( );
+        if( E->empty( ) && E == store_.last( ) ) {
+          join_policy_.pop_lo( ); store_.shrink( );
         } else {
           if( E->size( ) == 1 ) {
             join_policy_.push_lo( E );
@@ -187,24 +186,20 @@ namespace KHJ  {
           }
         }
         if( W != store_.end( ) ) {
-          if( W->size() >= 3 ) {
-            join_policy_.pop_hi( );
-          }
+          if( W->size() >= 3 ) { join_policy_.pop_hi( ); }
+
           N* Q = store_.extract( W );
           N* R = store_.extract( W );
-          if( W->size() <= 1 && W != store_.begin( ) ) {
-             join_policy_.push_lo( W );
-          }
+          if( W->size() <= 1 && W != store_.begin( ) ) { join_policy_.push_lo( W ); }
           modifier_type::join_heaps( P, Q, R  );
           modifier_type::siftdown_( P );
 
-          if( !(P->is_root( )) ) {
-            P = P->find_root( );
-          }
+          if( !(P->is_root( )) ) { P = P->find_root( ); }
         }
-        store_.insert( &I, P );
-        store_.insert( &I, st[0] );
-        store_.insert( &I, st[1] );
+
+        store_.insert( I, P );
+        store_.insert( I, st[0] );
+        store_.insert( I, st[1] );
 
         join_policy_.push_hi( I );       
       }
@@ -238,18 +233,17 @@ namespace KHJ  {
           }
         }
         B = store_.extract( I );
-        if( !(I->empty( )) && I->size( ) == 2 ) {
-          join_policy_.pop_hi( );
-        } else if( ( I->empty( ) || ( !I->empty() && I->size( ) == 1 ))  && ( join_policy_.get_lo( join_policy_.lo_size( ) - 1) != I) ) {
+        if( !(I->empty( )) && I->size( ) == 2 ) { join_policy_.pop_hi( );
+        } else if( ( I->empty( ) || ( !I->empty() && I->size( ) == 1 )) && 
+                   ( join_policy_.get_lo( join_policy_.lo_size( ) - 1) != I) ) {
           join_policy_.push_lo( I );
         }
-    
+        
         return B;
       }
 
-      // cant make cont since std::prev is not const
       template<typename N, typename M, typename S, typename J>
-      bool root_registry<N, M, S, J>::in_idle_state_( ) 
+      bool root_registry<N, M, S, J>::in_idle_state_( ) const
       { 
         // idle state 21t
         if( state_[0]->size() == 2 && state_[1]->size() == 1) {
@@ -258,7 +252,7 @@ namespace KHJ  {
           if( !join_policy_.hi_empty( ) ) {
             return false;
           } else {
-            if( join_policy_.lo_size( ) == 1 || join_policy_.get_lo( join_policy_.lo_size( ) - 2 ) == std::prev( store_.end( ) ) ) {
+            if( join_policy_.lo_size( ) == 1 || join_policy_.get_lo( join_policy_.lo_size( ) - 2 ) == store_.last( ) ) {
               return true;
             } else {
               return false;
@@ -279,12 +273,9 @@ namespace KHJ  {
 
       template <typename N, typename M, typename S, typename J>
       void  root_registry<N, M, S, J>::update_lo_( iterator_type E ) {
-        if( E->size( ) == 1 && join_policy_.lo_empty( )  ) {
-          join_policy_.push_lo( E );
-        } else if( E->size( ) == 2 ) { 
-          join_policy_.pop_lo( ); 
-        } else if( E->size( ) == 3 ) { join_policy_.push_hi( E ); }
-      }
+        if( E->size( ) == 1 && join_policy_.lo_empty( ) ) { join_policy_.push_lo( E );
+        } else if( E->size( ) == 2 ) { join_policy_.pop_lo( ); 
+        } else if( E->size( ) == 3 ) { join_policy_.push_hi( E ); } }
 
       template<typename N, typename M, typename S, typename J>
       void root_registry<N, M, S, J>::print( ) const

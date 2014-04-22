@@ -77,13 +77,9 @@ namespace KHJ  {
        *
        */
       template<typename N, typename C>
-      void paper_store<N, C>::insert( iterator_type* position, N* S )
+      void paper_store<N, C>::insert( iterator_type position, N* S )
       { 
-        if( *position == end( ) ) {
-          grow_( *position ); (*(--(*position))).push_back( S );
-        } else {
-          (*(*position)).push_back( S );
-        }
+        (*position).push_back( S );
       }
 
       /**
@@ -105,7 +101,7 @@ namespace KHJ  {
       // grow_( ).
       
       template <typename N, typename C>
-      void paper_store<N, C>::grow_( iterator_type position ) 
+      void paper_store<N, C>::grow( ) 
       { 
         root_store s; s.reserve( 4 );
         store_.push_back( s );
@@ -114,7 +110,7 @@ namespace KHJ  {
       // shrink_( ).
       
       template <typename N, typename C>
-      void paper_store<N, C>::shrink_(  ) 
+      void paper_store<N, C>::shrink(  ) 
       { 
         store_.pop_back( );;
       }

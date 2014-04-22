@@ -46,7 +46,6 @@ namespace KHJ  {
          */
         static void join_heaps( N* S, N* L, N* R )
         {
-          //assert((*S).is_root( ) && (*L).is_root( ) && (*R).is_root( ));
           join( S, L, R );
         }
       
@@ -63,10 +62,7 @@ namespace KHJ  {
           (*O).right_ = (*S).right_;
           (*O).color_ = (*S).color_;
           
-          if( (*O).is_root( ) && (*O).is_leaf( ) ) {
-           
-          }
-
+          if( (*O).is_root( ) && (*O).is_leaf( ) ) { /* no-op */ }
           else if( !(*O).is_root( ) && !(*O).is_leaf( ) ) {
             if( (*O).color_ == 0) {
               (*(*(*O).left_).right_).right_ = O;
@@ -86,17 +82,14 @@ namespace KHJ  {
               }
             }
           }
+
           (*S).left_  = nullptr;
-          (*S).right_ = nullptr;
-          
+          (*S).right_ = nullptr;          
           return S;
         }
         
         static std::unique_ptr<N*[]> split( N* S )
         {
-          //assert((*S).is_root( ));
-        
-          // not too c++'ish...but what...
           std::unique_ptr<N*[]> st(new N*[2]);
           //N** st = new N*[2];
           st[0]  = (*S).left_ ;
@@ -106,7 +99,6 @@ namespace KHJ  {
           (*st[0]).right_ = nullptr; 
           (*S).left_      = nullptr; 
         
-          //assert((*S).is_root( )); assert((*st[0]).is_root( )); assert((*st[1]).is_root( ));
           return st;
         }
 
@@ -168,10 +160,6 @@ namespace KHJ  {
             (*O).right_ = Q;
           
             if( !(*O).is_leaf( )) { (*(*(*O).left_).right_).right_ = O; }
-          
-            
-            //assert((*S).is_root( ));
-            //assert((*S).left_ == O);
           } 
           else if( (*O).is_root( ) && (*S).color_ == 1 ) { 
           
@@ -193,9 +181,6 @@ namespace KHJ  {
             if( !(*O).is_leaf( )) { (*(*(*O).left_).right_).right_ = O; }
             
             swap_colors_( S, O );
-          
-            //assert((*S).is_root( ));
-            //assert((*S).left_ == Q);
           }
           else if( (*O).color_ == 0 && (*S).color_ == 0 ) { 
           

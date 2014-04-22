@@ -38,9 +38,12 @@ namespace KHJ {
          */
         typedef std::vector<N*>       root_store;
         typedef std::list<root_store> store_type;
-        
-        typedef typename store_type::iterator iterator_type;
+
         typedef C comparator_type;
+        typedef typename store_type::iterator iterator_type;
+        typedef typename store_type::const_iterator const_iterator_type;
+        
+        
         
         paper_store( );
         ~paper_store( );
@@ -48,26 +51,29 @@ namespace KHJ {
         N*          top( ) const;  
         void push_front( N* S );
         N*    pop_front( );
-        void     insert( iterator_type*, N* );     
+        void     insert( iterator_type, N* );     
         N*      extract( iterator_type );
         
            
         /* should return custom iterator if need be */
-        inline iterator_type  begin( ) { return store_.begin( ); }
-        inline iterator_type    end( ) { return store_.end( );   }
-        inline root_store&     back( ) { return store_.back( );   }
+        inline iterator_type      begin( ) { return store_.begin( ); }
+        inline iterator_type        end( ) { return store_.end( );   }
+        inline root_store&        front( ) { return store_.front( ); }
+        inline root_store&         back( ) { return store_.back( );  }
+
+        inline const_iterator_type last( ) const { return std::prev( store_.end( ) );   }
+        
+        void   grow( );  
+        void shrink( );  
         
         void print( ) const;  
 
-        N*           top_;
-        void         shrink_( );  
+        N* top_;
+        
       private:   
-
         store_type store_;
-
         comparator_type compare_;
-      
-        void           grow_( iterator_type );  
+        
 
 
         /* Paper store
