@@ -50,7 +50,8 @@ int main( )
 
   N1* root;
   std::cout << "START REPLACE" << std::endl;
-  for( int k = 1; k != 16; k++ ) {
+  for( int k = 0; k != 16; k++ ) {
+ 
     root = pfb_N1::build_and_inject( k );
     assert( root->is_root( ));
     pfb_N1::assert_heap( root  );

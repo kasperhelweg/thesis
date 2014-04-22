@@ -17,20 +17,26 @@ namespace KHJ  {
         explicit root_registry( );
                 ~root_registry( ); 
         
-        void    top( ) const;
-        void insert( N* );
-        N*  extract( );
+        N*          top( ) const;
+        void     insert( N* );
+        N*      extract( N* );
+        N*  extract_min( );
 
         void print( ) const;
         
       private:
+        typedef std::vector<iterator_type> state_type;
+
         store_type        store_;
         join_policy join_policy_;
-       
-        void        fix_( iterator_type );
-        void      unfix_( );
-        void swap_nodes_( N* [], int, int );
-        void  update_lo_( iterator_type );
+        state_type    state_;
+
+        void           fix_( iterator_type );
+        void         unfix_( iterator_type );
+        N*          borrow_( );
+        bool in_idle_state_(  ); // should be const  
+        void    swap_nodes_( N* [], int, int );
+        void     update_lo_( iterator_type );
       };
     }
   }

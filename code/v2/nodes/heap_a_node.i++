@@ -224,6 +224,19 @@ namespace KHJ  {
         assert((*r).is_leaf( ));
         return h;
       }
+
+      /**
+       * element( )
+       * 
+       * complexity is O(lg n).
+       * @author KHJ
+       *
+       */
+      template <typename E>
+      E heap_a_node<E>::element( ) const
+      {
+        return element_;
+      }
     }
   }
 }

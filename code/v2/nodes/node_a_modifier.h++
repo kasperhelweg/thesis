@@ -15,7 +15,7 @@ namespace KHJ  {
         typedef N node_type;
         typedef C comparator_type;
 
-        constexpr static C compare_ = C( );
+        constexpr static comparator_type compare_ = C( );
         
         static typename node_type::value_type val( N* S )
         {        
@@ -63,7 +63,11 @@ namespace KHJ  {
           (*O).right_ = (*S).right_;
           (*O).color_ = (*S).color_;
           
-          if( !(*O).is_root( ) && !(*O).is_leaf( ) ) {
+          if( (*O).is_root( ) && (*O).is_leaf( ) ) {
+           
+          }
+
+          else if( !(*O).is_root( ) && !(*O).is_leaf( ) ) {
             if( (*O).color_ == 0) {
               (*(*(*O).left_).right_).right_ = O;
               (*(*(*O).right_).right_).left_ = O;
@@ -106,13 +110,6 @@ namespace KHJ  {
           return st;
         }
 
-      private:
-        static void swap_colors_( N* S, N* O )
-        {
-          bool oc = (*O).color_;
-          (*O).color_ = (*S).color_; (*S).color_ = oc;
-        }
-
         static void siftup_( N* S )
         {
           N* O = (*S).parent( );
@@ -141,6 +138,15 @@ namespace KHJ  {
           }
         }
 
+
+      private:
+        static void swap_colors_( N* S, N* O )
+        {
+          bool oc = (*O).color_;
+          (*O).color_ = (*S).color_; (*S).color_ = oc;
+        }
+
+        
         static void exchange_( N* S, N* O )
         {
           if( (*O).is_root( ) && (*S).color_ == 0 ) {

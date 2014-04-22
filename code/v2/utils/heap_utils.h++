@@ -143,9 +143,10 @@ namespace KHJ {
           //std::cout << "O " << O->element_ << std::endl;
           
 
-          //std::cout << "------" << std::endl;
-          modifier_type::replace( P, O );        
-          //std::cout << "------" << std::endl;
+          //std::cout << "--K----" << std::endl;
+          modifier_type::replace( P, O );     
+          //std::cout << "--B----" << std::endl;
+          //std::cout << "--A----" << std::endl;
           //breadth_first_draw( P->find_root() );
           //std::cout << "------" << std::endl;
 
@@ -155,7 +156,7 @@ namespace KHJ {
           //assert_heap( O->find_root( ), false  );
           modifier_type::siftup_( O );
           modifier_type::siftdown_( O );
-          
+          //std::cout << "--F----" << std::endl;
           //std::cout << "P " << P << std::endl;
           //std::cout << "O " << O << std::endl;
           

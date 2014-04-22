@@ -50,7 +50,8 @@ namespace KHJ {
         N*    left_child( ) const;
         N*   right_child( ) const;
         N*     find_root( ) const;
-
+        E        element( ) const;
+        
       private:
         E    element_;      
         bool   color_;
