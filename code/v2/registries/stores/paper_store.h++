@@ -11,11 +11,11 @@ namespace KHJ {
       template <typename N>        
       class paper_store {        
         struct node {
+          node( std::vector<N*> v ) : size( 0 ), root_list = v
           int size_;
           std::vector<N*> root_list;           
         };
 
-      
       public:        
 
         /* this should be the store iterator !
