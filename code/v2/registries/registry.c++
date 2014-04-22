@@ -63,9 +63,9 @@ int main( )
   cpu0  = clock( );
   std::vector<E1> sort_vec;
   for( int i = 1; i <= elements-5  ; ++i ) {
-    N1* S = registry.extract_min( );
+    N1* S = registry.extract( registry.top( ) );
     sort_vec.push_back( S->element( ) );
-    //delete S; S = nullptr;
+    delete S; S = nullptr;
   }
   cpu1  = clock();
   cpu_time = static_cast<double>( cpu1 - cpu0 )  / CLOCKS_PER_SEC;
@@ -79,9 +79,9 @@ int main( )
   std::cout << std::endl ; 
   registry.print( );
   
-  for( auto it = nodes.begin( ) ; it != nodes.end( ) ; it++ ) {
-    delete *it;
-   }
+  //for( auto it = nodes.begin( ) ; it != nodes.end( ) ; it++ ) {
+  //  delete *it;
+  // }
 
   //for( int i = 0; i != n; i++ ) {
   //  N1* S = registry.extract( );

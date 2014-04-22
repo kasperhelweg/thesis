@@ -1,8 +1,8 @@
 #include <memory>
+#include "heap_utils.h++"
 namespace KHJ  {
   namespace thesis  {
     namespace registry  {
-      
       /**
        * Constructor.
        * 
@@ -40,7 +40,9 @@ namespace KHJ  {
        */
       template<typename N, typename M, typename S, typename J>
       N* root_registry<N, M, S, J>::top( ) const
-      { return top_; }
+      { 
+        return top_; 
+      }
       
       /**
        * insert( )
@@ -52,7 +54,8 @@ namespace KHJ  {
       template<typename N, typename M, typename S, typename J>
       void root_registry<N, M, S, J>::insert( N* Q )
       { 
-        if( top_ == nullptr || modifier_type::compare_( *Q, *top_ ) ) { top_ = Q; }
+        if( top_ == nullptr || modifier_type::compare_( *Q, *top_ ) ) { top_ = Q; 
+        }
         store_.push_front( Q );
         
         if( (*store_.begin( )).size( ) == 2 ) { join_policy_.pop_lo(  ); 
@@ -77,47 +80,32 @@ namespace KHJ  {
       N* root_registry<N, M, S, J>::extract( N* Q )
       { 
         N* B = borrow_( );
-        modifier_type::replace( Q, B );
         
-        modifier_type::siftup_( B );
+        modifier_type::replace( Q, B );
+        modifier_type::siftup_( B ); 
         modifier_type::siftdown_( B );
-           
+       
         // should be abstracted into storage
         for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
           for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
-            if( *vit == Q   ) {
+            if( !(*vit)->is_root( ) ) {
+              *vit = (*vit)->find_root();
+            } else if( (*vit) == Q  ) {
               *vit = B->find_root(); 
             }
           }
         }
-
+     
         top_ = nullptr;
-      
         for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
           for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
             if( top_ == nullptr || modifier_type::compare_( (*(*vit)),  (*top_)  ))  {          
               top_ = (*vit);
             }
           }
-        }
-        
+        }     
         return Q;
       }
-
-      /**
-       * extract( )
-       * 
-       * complexity is (probably) O(1)
-       * @author KHJ
-       *
-       */
-      template<typename N, typename M, typename S, typename J>
-      N* root_registry<N, M, S, J>::extract_min( )
-      { 
-        N* Q = extract( top( ) );
-        return Q;
-      }
- 
  
       /**
        * fix_()
@@ -174,11 +162,17 @@ namespace KHJ  {
         iterator_type W = std::prev( I );
         
         N* P = store_.extract( E );
+        
         std::unique_ptr<N*[]> st = modifier_type::split( P );
-    
+        
+        
+        E->empty( );
+        
         if( E->empty( ) && E == store_.last( ) ) {
+        
           join_policy_.pop_lo( ); store_.shrink( );
         } else {
+        
           if( E->size( ) == 1 ) {
             join_policy_.push_lo( E );
           } else if( E->size( ) == 2 ){
@@ -223,6 +217,7 @@ namespace KHJ  {
                 join_policy_.get_hi( join_policy_.hi_size( ) - 1 )->size( ) == 3 ) {
               cons_list L = join_policy_.join_list_lo( );
               for( auto it = L.begin( ); it != L.end(); ++it) {
+        
                 unfix_( *it );
               }
             }
@@ -233,7 +228,6 @@ namespace KHJ  {
             }
           }
         }
-
         B = store_.extract( I );
         if( !(I->empty( )) && I->size( ) == 2 ) { join_policy_.pop_hi( );
         } else if( ( I->empty( ) || ( !I->empty() && I->size( ) == 1 )) && 

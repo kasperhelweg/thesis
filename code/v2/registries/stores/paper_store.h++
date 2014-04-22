@@ -11,13 +11,18 @@ namespace KHJ {
       template <typename N>        
       class paper_store {        
         struct node {
-          node( std::vector<N*> v ) : size( 0 ), root_list = v
+          node( std::vector<N*> v ) : size_( 0 ), root_list_( v ) {}
+          
           int size_;
-          std::vector<N*> root_list;           
+          std::vector<N*> root_list_;       
+          
+          int size( ) const {  return size_; }
+          bool empty( ) const { return size_ == 0; }
+          typename std::vector<N*>::iterator begin( ) { return root_list_.begin( );   }     
+          typename std::vector<N*>::iterator end( ) { return root_list_.end( );   }     
         };
 
       public:        
-
         /* this should be the store iterator !
 
            struct accessor_proxy {  
@@ -44,9 +49,9 @@ namespace KHJ {
            for example, there could be a root iterator, a store iterator and a heap iterator
          */
         typedef std::vector<N*>       root_store;
-        typedef std::list<root_store> store_type;
+        //typedef std::list<root_store> store_type;
         
-        //typedef std::list<node> store_type;
+        typedef std::list<node> store_type;
 
         typedef typename store_type::iterator iterator_type;
         typedef typename store_type::const_iterator const_iterator_type;
@@ -63,8 +68,8 @@ namespace KHJ {
         /* should return custom iterator if need be */
         inline iterator_type      begin( ) { return store_.begin( ); }
         inline iterator_type        end( ) { return store_.end( );   }
-        inline root_store&        front( ) { return store_.front( ); }
-        inline root_store&         back( ) { return store_.back( );  }
+        //inline root_store&        front( ) { return store_.front( ); }
+        //inline root_store&         back( ) { return store_.back( );  }
 
         inline const_iterator_type last( ) const { return std::prev( store_.end( ) );   }
         
@@ -75,8 +80,6 @@ namespace KHJ {
         
       private:   
         store_type store_;
-
-
 
         /* Paper store
            for arrays, store_iterator_type is just an int

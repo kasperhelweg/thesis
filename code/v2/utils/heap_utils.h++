@@ -185,10 +185,11 @@ namespace KHJ {
           int l = floor( log2( heap.size( ) - 1 ) );
           int off = l * 10;
 
+          std::cout << "-------------------------------" << std::endl; 
           for (auto n = heap.begin( ); n != heap.end( );) {
             for( int i = 0; i != pow( 2, h ); i++ ) {
               
-              std::cout << (*n)->element_ << " "; 
+              std::cout << (*n)->element() << " "; 
               
               n++;
             }
@@ -196,6 +197,7 @@ namespace KHJ {
             h++;
             l--;
           }
+           std::cout << "-------------------------------" << std::endl; 
         }
       };
     }

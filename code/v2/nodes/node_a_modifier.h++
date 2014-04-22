@@ -9,12 +9,13 @@ namespace KHJ  {
     namespace modifier  {
       template <typename N, typename C>
       class node_a_modifier {     
-        template<typename node_type, typename M> friend class KHJ::thesis::utils::pfb;
+        // Debug utils
+        template<typename node_type, typename M> 
+        friend class KHJ::thesis::utils::pfb;
       
       public:
         typedef N node_type;
         typedef C comparator_type;
-
         constexpr static comparator_type compare_ = C( );
         
         static typename node_type::value_type val( N* S )
@@ -91,6 +92,7 @@ namespace KHJ  {
         static std::unique_ptr<N*[]> split( N* S )
         {
           std::unique_ptr<N*[]> st(new N*[2]);
+
           //N** st = new N*[2];
           st[0]  = (*S).left_ ;
           st[1]  = (*(*S).left_).right_; (*st[1]).color_ = 0;
@@ -106,7 +108,8 @@ namespace KHJ  {
         {
           N* O = (*S).parent( );
           while( !(*S).is_root( ) && ( compare_( *S, *O ) ) ) {
-            exchange_( S, O ); O = (*S).parent( );
+            exchange_( S, O ); 
+            O = (*S).parent( );
           }
         }
       
@@ -130,7 +133,6 @@ namespace KHJ  {
           }
         }
 
-
       private:
         static void swap_colors_( N* S, N* O )
         {
@@ -142,7 +144,6 @@ namespace KHJ  {
         static void exchange_( N* S, N* O )
         {
           if( (*O).is_root( ) && (*S).color_ == 0 ) {
-            
             //             
             //     O           S
             //    / \   <=>   / \
@@ -162,7 +163,6 @@ namespace KHJ  {
             if( !(*O).is_leaf( )) { (*(*(*O).left_).right_).right_ = O; }
           } 
           else if( (*O).is_root( ) && (*S).color_ == 1 ) { 
-          
             //               
             //     O           S
             //    / \   <=>   / \
@@ -170,7 +170,7 @@ namespace KHJ  {
             //  /   /       /   /
                      
             N* Q = (*O).left_;
-
+   
             (*S).right_ = (*O).right_;
             (*O).left_  = (*S).left_;
             (*Q).right_ = O;
@@ -183,7 +183,7 @@ namespace KHJ  {
             swap_colors_( S, O );
           }
           else if( (*O).color_ == 0 && (*S).color_ == 0 ) { 
-          
+            
             //      /           /
             //     O-          S-
             //    / \   <=>   / \
@@ -202,7 +202,7 @@ namespace KHJ  {
             if( !(*O).is_leaf( )) { (*(*(*O).left_).right_).right_ = O; }
           }
           else if( (*O).color_ == 0 && (*S).color_ == 1 ) { 
-      
+                  
             //      /           /
             //     O-          S-
             //    / \   <=>   / \
@@ -219,7 +219,6 @@ namespace KHJ  {
           
             if( !(*S).is_root( )) { (*(*(*S).right_).right_).left_ = S; }
             if( !(*O).is_leaf( )) { (*(*(*O).left_).right_).right_ = O; }
-
             swap_colors_( S, O );
           }
           else if( (*O).color_ == 1 && (*S).color_ == 0 ) {
@@ -244,7 +243,7 @@ namespace KHJ  {
             swap_colors_( S, O );
           }
           else if( (*O).color_ == 1 && (*S).color_ == 1 ) { 
-          
+                    
             //    \           \
             //    -O          -S
             //    / \   <=>   / \

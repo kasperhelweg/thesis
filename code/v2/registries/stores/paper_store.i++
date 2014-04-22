@@ -12,11 +12,9 @@ namespace KHJ  {
       template<typename N>
       paper_store<N>::paper_store( )
       {
-        root_store f; f.reserve( 4 ); store_.push_back( f );
-        root_store s; s.reserve( 4 ); store_.push_back( s );
-        
-        //root_store f; store_.push_back( f );
-        //root_store s; store_.push_back( s );
+        root_store f; f.reserve( 4 ); node n1( f ); 
+        root_store s; s.reserve( 4 ); node n2( s );
+        store_.push_back( n1 ); store_.push_back( n2 );
       }
 
       /**
@@ -40,8 +38,8 @@ namespace KHJ  {
       template<typename N>
       void paper_store<N>::push_front( N* S ) 
       { 
-        (*(begin( ))).push_back( S ); 
-        //(*(begin( ))).push_front( S ); 
+        (*(begin( ))).root_list_.push_back( S ); 
+        (*begin( )).size_++;
       }
 
       /**
@@ -61,7 +59,7 @@ namespace KHJ  {
       template <typename N>
       int paper_store<N>::size( iterator_type I ) 
       { 
-        return (*I).size( );
+        return store_.size( );
       }
 
 
@@ -75,8 +73,8 @@ namespace KHJ  {
       template<typename N>
       void paper_store<N>::insert( iterator_type position, N* S )
       { 
-        (*position).push_back( S ); 
-        //(*position).push_front( S ); 
+        (*position).root_list_.push_back( S );
+        (*position).size_++;
       }
 
       /**
@@ -89,8 +87,9 @@ namespace KHJ  {
       template<typename N>
       N* paper_store<N>::extract( iterator_type position )
       {
-        N* S = position->back( ); position->pop_back( );
-        //N* S = position->front( ); position->pop_front( );
+        N* S = (*position).root_list_.back( ); (*position).root_list_.pop_back( );
+        (*position).size_--;
+        
         return S;
       }
       
@@ -99,8 +98,7 @@ namespace KHJ  {
       template <typename N>
       void paper_store<N>::grow( ) 
       { 
-        root_store s; s.reserve( 4 );
-        //root_store s;
+        root_store s; s.reserve( 4 ); node n1( s ); 
         store_.push_back( s );
       }
 

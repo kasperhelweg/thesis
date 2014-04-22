@@ -23,20 +23,23 @@ namespace KHJ  {
       
         typedef typename join_policy::cons_list cons_list;
         typedef typename store_type::iterator_type iterator_type;
+
+        typedef KHJ::thesis::utils::pfb<N, M> pfb_N1;
         
         explicit root_registry( );
                 ~root_registry( ); 
-        
         
         N*          top( ) const;
         bool      empty( ) const;
         void     insert( N* );
         N*      extract( N* );
-        N*  extract_min( ); // only extract
 
         void print( ) const;
         
       private:
+        // Debug utils
+        pfb_N1 utils;
+
         typedef std::vector<iterator_type> state_type;
         
         N* top_;

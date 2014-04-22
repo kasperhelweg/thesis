@@ -3,15 +3,28 @@
 namespace KHJ  {
   namespace thesis  {
     namespace priority_queue  {
+      template<typename E, typename N, typename R, typename A>
       class magic_queue {
       public:
+        typedef E value_type;
+        typedef N node_type;
+        typedef R registry_type;
+        typedef A allocator_type;
 
-        //iterator top();
-        //iterator push( V const& );
-        //void      pop( );
-        //void    erase( iterator );
-        //void increase( iterator, V const& );
-        //void    clear( );
+        explicit magic_queue( ) : registry_( R( )), allocator_( A( ) ) { } 
+        
+        value_type   top( );          //find-min
+        N*          push( E const& ); //insert //should return iterator instead
+        value_type   pop( );          //delete_min
+        void       erase( N* );       //delete //should take iterator instead
+        void       clear( );
+        
+      private:
+        registry_type   registry_;
+        allocator_type allocator_;
+        
+        N*    buy_node_( const E& val );
+        void sell_node_( N* );
         
       };
     }
