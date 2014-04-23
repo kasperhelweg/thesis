@@ -50,7 +50,6 @@ namespace KHJ {
 
         static void assert_heap( N* R, bool hp = true  )
         {
-          //std::cout << "ASSERT" << std::endl;; 
           std::deque<N*> bf = breadth_traverse( R );
           assert( bf.size( ) == (pow( 2, (*R).height( ) + 1 ) - 1) );
           
@@ -128,38 +127,18 @@ namespace KHJ {
         
         static N* replace_rand( N* R )
         {
-          //std::cout << "------" << std::endl;
-          //std::cout << "R: " << R->element_ << std::endl;
           std::deque<N*> bf = breadth_traverse( R );
-          //std::cout << "------" << std::endl;
-          //breadth_first_draw( R );
-          //std::cout << "------" << std::endl;
 
           int r = rand( ) % bf.size( ) + 0;
           node_type* O = new node_type( r );
           N* P         = bf[r];          
           
-          //std::cout << "P " << P->element_ << std::endl;
-          //std::cout << "O " << O->element_ << std::endl;
-          
-
-          //std::cout << "--K----" << std::endl;
           modifier_type::replace( P, O );     
-          //std::cout << "--B----" << std::endl;
-          //std::cout << "--A----" << std::endl;
-          //breadth_first_draw( P->find_root() );
-          //std::cout << "------" << std::endl;
-
           delete P; P = nullptr;   
-                    
-          //assert( S->is_root());
-          //assert_heap( O->find_root( ), false  );
+                   
           modifier_type::siftup_( O );
           modifier_type::siftdown_( O );
-          //std::cout << "--F----" << std::endl;
-          //std::cout << "P " << P << std::endl;
-          //std::cout << "O " << O << std::endl;
-          
+   
           return O->find_root( );
         }
     

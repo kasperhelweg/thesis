@@ -200,6 +200,7 @@ print(hi.p())
 print(lo.p())
 
 
+'''
 print("------------------------------------ DEC")
 for i in range( 0, n - 5 ):
   D = decrement( D )
@@ -212,5 +213,5 @@ print("------------------------------------")
 print( str( value_of(D) ) + ": " + str(D) )
 print(hi.p())
 print(lo.p())
-
+'''
 print( "--Program magic_skew--" )

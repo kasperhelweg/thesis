@@ -20,8 +20,15 @@ typedef KHJ::thesis::modifier::node_a_modifier<N1, C1> M1;
 // Storage
 typedef KHJ::thesis::store::paper_store<N1> S1;
 typedef S1::iterator_type F1;
+
+/* Policies */
 // Join policy
 typedef KHJ::thesis::policy::paper_join_policy<F1> J1;
+
+// Borrow policy
+//typedef KHJ::thesis::policy::paper_borrow_policy<S1> B1;
+
+
 // Registry
 typedef KHJ::thesis::registry::root_registry<N1, M1, S1, J1> R1;
 
@@ -29,7 +36,7 @@ int main( )
 {
   R1 registry;
   
-  E1 elements = 1000000;
+  E1 elements = 100000;
   std::vector<E1> data;
   for (E1 i = elements; i >= 1; --i) data.push_back( i );
   std::random_shuffle ( data.begin( ), data.end( ) );
@@ -53,13 +60,13 @@ int main( )
   std::cout << "CPU Push( ): " << cpu_time * 1000 << std::endl;
   std::cout << "-----------------" << std::endl ; 
   std::cout << std::endl ; 
-
+  
   registry.print( );
   std::cout << std::endl ; 
   std::cout << "-----------------" << std::endl ; 
   std::cout << "-----------------" << std::endl ; 
   std::cout << std::endl ; 
-
+  
   cpu0  = clock( );
   std::vector<E1> sort_vec;
   for( int i = 1; i <= elements-5  ; ++i ) {
@@ -69,7 +76,7 @@ int main( )
   }
   cpu1  = clock();
   cpu_time = static_cast<double>( cpu1 - cpu0 )  / CLOCKS_PER_SEC;
-
+  
   assert( sort_vec.size() == elements - 5 );
   assert( std::is_sorted( sort_vec.begin(),sort_vec.end() ));
   
