@@ -66,7 +66,6 @@ int main( )
   std::cout << "CPU Push( ): " << cpu_time * 1000 << std::endl;
   std::cout << "-----------------" << std::endl ; 
   std::cout << std::endl ; 
-
   
   std::random_shuffle ( nodes.begin( ), nodes.end( ) );
   cpu0  = clock( );
