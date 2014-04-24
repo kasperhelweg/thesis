@@ -10,11 +10,11 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      paper_store<N>::paper_store( )
+      paper_store<N>::paper_store( ) : top( nullptr )
       {
-        root_store f; f.reserve( 4 ); node n1( f ); 
-        root_store s; s.reserve( 4 ); node n2( s );
-        store_.push_back( n1 ); store_.push_back( n2 );
+        store_node n1, n2; 
+        store_.push_back( n1 ); 
+        store_.push_back( n2 );
       }
 
       /**
@@ -57,11 +57,17 @@ namespace KHJ  {
       }
 
       template <typename N>
-      int paper_store<N>::size( iterator_type I ) 
+      int paper_store<N>::size( ) const
       { 
-        return store_.size( );
-      }
+        int s = 0, i = 0;
+        
+        for( auto it = begin( ); it != end( ); ++it) {
+          s += it->size( ) * (pow(2, i+1) - 1);
+          ++i;
+        } 
 
+        return s;
+      }
 
       /**
        * insert( I position )
@@ -92,14 +98,32 @@ namespace KHJ  {
         
         return S;
       }
-      
+
+      /**
+       * extract( N* R )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N>
+      N* paper_store<N>::extract( iterator_type position, node_iterator_type index )
+      {
+        int i = index - (*position).begin( ); 
+        N* S = (*position).root_list_[i]; (*position).root_list_.erase( index );
+        (*position).size_--;
+        
+        return S;
+      }
+        
       // grow_( ).
       
       template <typename N>
       void paper_store<N>::grow( ) 
       { 
-        root_store s; s.reserve( 4 ); node n1( s ); 
-        store_.push_back( s );
+        //root_store s; s.reserve( 4 ); 
+        store_node n1; 
+        store_.push_back( n1 );
       }
 
       // shrink_( ).
@@ -111,8 +135,9 @@ namespace KHJ  {
       template<typename N>
       void paper_store<N>::print( ) const
       { 
+        std::cout << "size: " << size( ) << std::endl;     
         std::cout << "-----------------" << std::endl ;
-        for( auto it = store_.begin( ); it != store_.end( ); ++it) {
+        for( auto it = begin( ); it != end( ); ++it) {
           std::cout << (*it).size( ) << " " ;
         } 
         std::cout << std::endl;     

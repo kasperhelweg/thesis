@@ -1,0 +1,175 @@
+namespace KHJ {
+  namespace thesis {
+    namespace policy {
+
+      template <typename N, typename M, typename S>
+      numeral_consolidation_policy<N, M, S>::numeral_consolidation_policy( store_reference_type s ) : store_( s )
+      { 
+        state_.reserve( 2 );
+        state_[0] = store_.begin( );
+        state_[1] = std::next( state_[0] );
+        lo_.push_back( store_.begin( ) );
+      }
+      
+      template <typename N, typename M, typename S>
+      numeral_consolidation_policy<N, M, S>::~numeral_consolidation_policy( )
+      { }
+    
+
+      template <typename N, typename M, typename S>
+      void 
+      numeral_consolidation_policy<N, M, S>::consolidate( )
+      {
+        if( (*store_.begin( )).size( ) == 2 ) { lo_.pop_back( ); 
+        } else if( (*store_.begin( )).size( ) == 3 ) { hi_.push_back( store_.begin( ) ); 
+        }
+        
+        if( !hi_.empty( ) ) {
+          store_iterator_type I = hi_.back( ); hi_.pop_back( );
+          fix_( I );
+        }       
+      }
+  
+      template <typename N, typename M, typename S>
+      N* 
+      numeral_consolidation_policy<N, M, S>::borrow( )
+      { 
+        N* B;
+        store_iterator_type I = store_.begin( );
+        if( !in_idle_state_( ) && !lo_.empty( ) ) {
+          if( state_[0]->size( ) == 2 && state_[1]->size( ) == 2) {
+            if( !hi_.empty( ) && hi_[hi_.size( ) - 1]->size( ) == 3) {
+              store_iterator_type L = lo_.back( ); lo_.pop_back( );
+              unfix_( L );
+            }
+          } else {
+            store_iterator_type L = lo_.back( ); lo_.pop_back( );
+            unfix_( L );
+          }
+        }
+        B = store_.extract( I );
+        if( !(I->empty( )) && I->size( ) == 2 ) { hi_.pop_back( );
+          // Invalid Read
+        } else if( ( I->empty( ) || ( !I->empty() && I->size( ) == 1 )) && ( lo_[lo_.size( ) - 1]  != I ) ) {
+          lo_.push_back( I );
+        }
+        return B;
+      }
+  
+      template <typename N, typename M, typename S>
+      void 
+      numeral_consolidation_policy<N, M, S>::fix_( store_iterator_type I )
+      { 
+        store_iterator_type E = std::next( I );  
+        store_iterator_type W = std::prev( I );
+
+        if( E == store_.end( ) ) { store_.grow( ); --E; }
+
+        N* Q = store_.extract( I );
+        N* R = store_.extract( I );
+        N* V = store_.extract( I );
+        
+        N* t[3] = { Q, R, V };     
+        swap_nodes_( t, 0, modifier_type::compare_( *t[1], *t[0] ) );
+        swap_nodes_( t, 2, modifier_type::compare_( *t[0], *t[2] ) );
+        
+        if( I != store_.begin( ) ) {
+          std::unique_ptr<N*[]> st = modifier_type::split( t[0] );
+          modifier_type::join_heaps( t[0], t[1], t[2]  ); store_.insert( E, t[0]  );
+          
+          if( !W->empty( ) && W->size( ) <= 1 ) { lo_.pop_back( ); }
+          update_lo_( E );
+          
+          store_.insert( W, st[0] ); store_.insert( W, st[1] );
+          if( !W->empty( ) && W->size( ) >= 3 ) { hi_.push_back( W ); }
+        } else {
+          modifier_type::join_heaps( t[0], t[1], t[2]  ); store_.insert( E, t[0] );
+          update_lo_( E );
+        }
+        lo_.push_back( I );
+      }
+
+      /**
+       * unfix_()
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      void numeral_consolidation_policy<N, M, S>::unfix_( store_iterator_type I )
+      { 
+        store_iterator_type E = std::next( I );
+        store_iterator_type W = std::prev( I );
+        
+        N* P = store_.extract( E );
+        std::unique_ptr<N*[]> st = modifier_type::split( P );
+        
+        if( E->empty( ) && E == store_.last( ) ) {
+          lo_.pop_back( ); store_.shrink( );
+        } else {          
+          if( !E->empty( ) && E->size( ) == 1 ) {
+            lo_.push_back( E );
+          } else if( !E->empty( ) && E->size( ) == 2 ){
+            hi_.pop_back( );
+          }
+        }
+        if( I != store_.begin( ) ) {
+          if( !W->empty( ) && W->size( ) >= 3 ) { hi_.pop_back( ); }
+
+          N* Q = store_.extract( W );
+          N* R = store_.extract( W );
+
+          if( !W->empty( ) && W->size( ) <= 1 && W != store_.begin( ) ) { 
+            lo_.push_back( W ); 
+          }
+          modifier_type::join_heaps( P, Q, R  );
+          modifier_type::siftdown_( P );
+          if( !(P->is_root( )) ) { P = P->find_root( ); }
+        }
+
+        store_.insert( I, P );
+        store_.insert( I, st[0] );
+        store_.insert( I, st[1] );
+
+        hi_.push_back( I );       
+      }
+
+      template<typename N, typename M, typename S>
+      bool numeral_consolidation_policy<N, M, S>::in_idle_state_( ) const
+      { 
+        // idle state 21t
+        if( state_[0]->size() == 2 && state_[1]->size() == 1) { 
+          return true;
+        } else if( state_[0]->size( ) == 1 && state_[1]->size( ) == 2) {
+          if( lo_.size( ) == 1 || lo_[lo_.size( ) - 2] == store_.last( ) ) {            
+            return true;
+          }
+        }
+        return false;
+      }
+
+      template <typename N, typename M, typename S>
+      void  numeral_consolidation_policy<N, M, S>::update_lo_( store_iterator_type E ) 
+      {
+        if( E->size( ) == 1 && lo_.empty( ) ) { 
+          lo_.push_back( E );
+        } else if( E->size( ) == 2 ) { 
+          lo_.pop_back( ); 
+        } else if( E->size( ) == 3 ) { 
+          hi_.push_back( E ); 
+        } 
+      }
+      
+      // swap aux
+      template <typename N, typename M, typename S>
+      void 
+      numeral_consolidation_policy<N, M, S>::swap_nodes_ (N* nodes[], int i1, int i2) 
+      {
+        N* temp   = nodes[i1];
+        nodes[i1] = nodes[i2];
+        nodes[i2] = temp;
+      }
+    }
+  }
+}

@@ -34,8 +34,6 @@ namespace KHJ  {
         void insert( N* );
         N*  extract( N* );
 
-        void meld( root_registry& );
-
         void print( ) const;
         
       private:

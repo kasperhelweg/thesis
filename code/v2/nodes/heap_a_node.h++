@@ -1,5 +1,4 @@
-#include <memory>
-#include "node_a_modifier.h++"
+
 
 /**
  * Desc : A two-pointer basic heap node used in a perfect binary heap.
@@ -16,6 +15,9 @@
  */
 #ifndef THESIS_HEAP_A_NODE
 #define THESIS_HEAP_A_NODE
+#include <memory>
+#include <math.h>
+#include "node_a_modifier.h++"
 namespace KHJ {
   namespace thesis {
     namespace heap_node {  
@@ -46,6 +48,7 @@ namespace KHJ {
         bool     is_left( ) const;
         bool    is_right( ) const;
         int       height( ) const;
+        int         size( ) const;
         N*        parent( ) const;
         N*    left_child( ) const;
         N*   right_child( ) const;

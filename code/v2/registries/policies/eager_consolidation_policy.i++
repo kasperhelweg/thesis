@@ -1,0 +1,106 @@
+namespace KHJ {
+  namespace thesis {
+    namespace policy {
+
+      template <typename N, typename M, typename S>
+      eager_consolidation_policy<N, M, S>::eager_consolidation_policy( store_reference_type s ) : store_( s )
+      { }
+      
+      template <typename N, typename M, typename S>
+      eager_consolidation_policy<N, M, S>::~eager_consolidation_policy( )
+      { }
+    
+      template <typename N, typename M, typename S>
+      void 
+      eager_consolidation_policy<N, M, S>::consolidate( )
+      { 
+        if( (*store_.begin( )).size( ) == 3 ) { hi_.push_back( store_.begin( ) ); 
+        }
+        
+        while( true ) {
+          if( !hi_.empty( ) ) {
+            store_iterator_type I = hi_.back( ); hi_.pop_back( );
+            fix_( I );
+          } else {
+            break;
+          }
+        }
+      }
+  
+      template <typename N, typename M, typename S>
+      N* 
+      eager_consolidation_policy<N, M, S>::borrow( )
+      { 
+        N* B = nullptr;
+        
+        for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
+          if( !it->empty( )) {
+            for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
+              if( *vit != store_.top )  {
+                B = store_.extract( it, vit );
+                if( B->height( ) != 0 ) {
+                  std::unique_ptr<N*[]> st = modifier_type::split( B );
+                  store_.insert( --it, st[0] ); store_.insert( it, st[1] );
+                  if( it->size( ) >= 3 ) {
+                    fix_( it ); 
+                  } break;
+                } else { break; }
+              } else if( it->size( ) == 1 && (*vit)->size( ) == store_.size( )  ) {
+                B = store_.extract( it, vit );
+                if( B->height( ) != 0 ) {
+                  std::unique_ptr<N*[]> st = modifier_type::split( B );
+                  store_.insert( --it, st[0] ); store_.insert( it, st[1] );
+                  if( modifier_type::compare_( *st[0], *st[1] ) ) {
+                    store_.top = st[0];
+                  } else {
+                    store_.top = st[1];
+                  }
+                  break;
+                }
+              }
+            }
+            if( B != nullptr) { break; } 
+          }
+        }
+        return B;    
+      }
+  
+      template <typename N, typename M, typename S>
+      void 
+      eager_consolidation_policy<N, M, S>::fix_( store_iterator_type I )
+      { 
+        store_iterator_type E = std::next( I );  
+        store_iterator_type W = std::prev( I );
+        
+        if( E == store_.end( ) ) { store_.grow( ); --E; }
+        
+        N* Q = store_.extract( I );
+        N* R = store_.extract( I );
+        N* V = store_.extract( I );
+        
+        N* t[3] = { Q, R, V };     
+        swap_nodes_( t, 0, modifier_type::compare_( *t[1], *t[0] ) );
+        swap_nodes_( t, 2, modifier_type::compare_( *t[0], *t[2] ) );
+
+        if( I != store_.begin( ) ) {
+          std::unique_ptr<N*[]> st = modifier_type::split( t[0] );
+          modifier_type::join_heaps( t[0], t[1], t[2]  ); store_.insert( E, t[0]  );
+          store_.insert( W, st[0] ); store_.insert( W, st[1] );
+        } else {
+          modifier_type::join_heaps( t[0], t[1], t[2]  ); store_.insert( E, t[0] );
+        }
+        if( E->size( ) == 3) { hi_.push_back( E ); }
+      }
+      
+      // swap aux
+      template <typename N, typename M, typename S>
+      void 
+      eager_consolidation_policy<N, M, S>::swap_nodes_ (N* nodes[], int i1, int i2) 
+      {
+        N* temp   = nodes[i1];
+        nodes[i1] = nodes[i2];
+        nodes[i2] = temp;
+      }
+    }
+  }
+}

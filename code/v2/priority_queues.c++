@@ -38,6 +38,16 @@ typedef KHJ::thesis::registry::root_registry<N1, M1, S1, J1> R1;
 // magic queue( not meldable )
 typedef KHJ::thesis::priority_queue::magic_queue<E1, N1, R1, A1> Q1;
 
+/* 
+   There will be no policy, thus no iterator type is needed.
+   The types will be:  
+   typedef KHJ::thesis::store::paper_store<N1> S1;
+   typedef KHJ::thesis::policy::paper_consolidation_policy<S1> J1;
+   typedef KHJ::thesis::registry::root_registry<N1, M1, S1, J1> R1;
+   
+   typedef KHJ::thesis::priority_queue::magic_queue<E1, N1, R1, A1> Q1;
+*/
+
 /* Magic Queue - Meldable */
 /* Magic Queue - Lazy */
 

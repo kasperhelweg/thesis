@@ -226,6 +226,19 @@ namespace KHJ  {
       }
 
       /**
+       * size( )
+       * 
+       * complexity is O(lg n).
+       * @author KHJ
+       *
+       */
+      template <typename E>
+      int heap_a_node<E>::size( ) const
+      {
+        return pow( 2, height( ) + 1 ) - 1;
+      }
+
+      /**
        * element( )
        * 
        * complexity is O(lg n).
