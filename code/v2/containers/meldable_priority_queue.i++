@@ -10,7 +10,14 @@ namespace KHJ  {
       }
       
       template<typename V, typename C, typename A, typename E, typename R>
-      E* meldable_priority_queue<V, C, A, E, R>::push( const V& val ) 
+      E* meldable_priority_queue<V, C, A, E, R>::push( E* S ) 
+      {
+        realizer_.insert( S );
+        return S;
+      }
+
+      template<typename V, typename C, typename A, typename E, typename R>
+      E* meldable_priority_queue<V, C, A, E, R>::emplace( const V& val ) 
       {
         E* S = buy_( val );
         
@@ -21,7 +28,7 @@ namespace KHJ  {
       template<typename V, typename C, typename A, typename E, typename R>
       V meldable_priority_queue<V, C, A, E, R>::pop( ) 
       {
-        E* S = realizer_.erase_min( );
+        E* S  = realizer_.erase_min( );
         V val = S->element( );
         
         sell_( S );
@@ -31,7 +38,6 @@ namespace KHJ  {
       template<typename V, typename C, typename A, typename E, typename R>
       void meldable_priority_queue<V, C, A, E, R>::erase( E* P ) 
       {
-        //E* S = 
         realizer_.erase( P );
         sell_( P );
       }

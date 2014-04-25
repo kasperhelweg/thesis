@@ -77,19 +77,13 @@ int main( )
   //----------------------PAPER REGISTRY EXTRACT----------------------
   
   cpu0  = clock( );
-  std::vector<E1> sort_vec;
   for( int i = 1; i <= elements - 5  ; ++i ) {
-    //N1* S = registry.extract( registry.top( ) );
     N1* S = registry.extract( );
-    sort_vec.push_back( S->element( ) );
     //delete S; S = nullptr;
   }
   cpu1  = clock();
   cpu_time = static_cast<double>( cpu1 - cpu0 )  / CLOCKS_PER_SEC;
-  
-  assert( sort_vec.size() == elements - 5 );
-  //assert( std::is_sorted( sort_vec.begin(),sort_vec.end() ));
-  
+    
   std::cout << "-----------------" << std::endl ; 
   std::cout << "CPU Pop( ): " << cpu_time * 1000 << std::endl;
   std::cout << "-----------------" << std::endl ; 
@@ -108,10 +102,8 @@ int main( )
 
   std::vector<N1*> nodes_eager;
   for( auto it = data.begin( ) ; it != data.end( ) ; it++ ) {
-    //std::cout << *it << std::endl;
     N1* S = new N1( *it );
     nodes_eager.push_back( S );
-    //registry.print( );
   }
 
   cpu0  = clock( );
@@ -136,10 +128,8 @@ int main( )
   cpu0  = clock( );
   std::random_shuffle ( nodes_eager.begin( ), nodes_eager.end( ) );
   for( int i = 1; i <= elements-5  ; ++i ) {
-    //N1* S = eager_registry.extract( nodes_eager.back( ) );
     N1* S = eager_registry.extract( );
     //std::cout << S->element( ) << std::endl ; 
-    //sort_vec.push_back( S->element( ) );
     //delete S; S = nullptr;
   }
   cpu1  = clock( );

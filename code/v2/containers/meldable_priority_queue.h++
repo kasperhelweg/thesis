@@ -21,7 +21,8 @@ namespace KHJ  {
         int       size( );
         
         // modifiers     
-        E*          push( V const& );      //insert //should return iterator instead
+        E*          push( E* );            //insert //should return iterator instead
+        E*       emplace( V const& );
         value_type   pop( );               //delete_min
         void       erase( E* );            //delete //should take iterator instead
         void    increase( E* );            //delete //should take iterator instead

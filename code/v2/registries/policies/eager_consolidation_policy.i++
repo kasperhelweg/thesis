@@ -9,7 +9,7 @@ namespace KHJ {
       template <typename N, typename M, typename S>
       eager_consolidation_policy<N, M, S>::~eager_consolidation_policy( )
       { }
-    
+      
       template <typename N, typename M, typename S>
       void 
       eager_consolidation_policy<N, M, S>::consolidate( )

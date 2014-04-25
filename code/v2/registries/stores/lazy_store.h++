@@ -40,8 +40,7 @@ namespace KHJ {
         typedef typename store_node::iterator_type node_iterator_type;
         typedef typename store_node::const_iterator_type const_node_iterator_type;
         
-
-        lazy_store( );
+         lazy_store( );
         ~lazy_store( );
 
         N*   top; 

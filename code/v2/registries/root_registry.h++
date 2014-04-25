@@ -37,7 +37,6 @@ namespace KHJ  {
         
         void insert( N* );
         N*  extract(    );
-        N*  extract( N* );
 
         void consolidate( );
         void  update_top( );

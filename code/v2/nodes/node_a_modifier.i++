@@ -4,7 +4,6 @@ namespace KHJ  {
       template <typename N, typename C>
       class node_a_modifier {     
         
-        
         static typename node_type::value_type val( N* S )
         {        
           return (*S).element_;
@@ -217,7 +216,7 @@ namespace KHJ  {
             //  /   /       /   /
 
             N* Q = (*S).right_;
-
+            
             (*S).right_ = (*O).right_;
             (*O).left_  = (*S).left_;
             (*S).left_  = O;
