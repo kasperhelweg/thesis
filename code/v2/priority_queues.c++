@@ -13,10 +13,14 @@ g++ -O3 -I ./utils/ -I ./nodes/ -I ./registries -I ./registries/stores/ -I ./reg
 #include "node_a_modifier.h++"
 
 #include "paper_store.h++"
-#include "paper_join_policy.h++"
 
+#include "eager_consolidation_policy.h++"
 #include "root_registry.h++"
-#include "magic_queue.h++"
+
+#include "binary_queue.h++"
+#include "eager_binary_queue.h++"
+
+#include "meldable_priority_queue.h++"
 
 // Node
 typedef long E1;
@@ -30,36 +34,41 @@ typedef std::allocator<N1> A1;
 /* Magic Queue - Not Meldable */
 // Storage
 typedef KHJ::thesis::store::paper_store<N1> S1;
-typedef S1::iterator_type F1;
-// Join policy
-typedef KHJ::thesis::policy::paper_join_policy<F1> J1;
+// Policy policy
+typedef KHJ::thesis::policy::eager_consolidation_policy<N1, M1, S1> J1;
 // Registry
 typedef KHJ::thesis::registry::root_registry<N1, M1, S1, J1> R1;
 // magic queue( not meldable )
-typedef KHJ::thesis::priority_queue::magic_queue<E1, N1, R1, A1> Q1;
-
-/* 
-   There will be no policy, thus no iterator type is needed.
-   The types will be:  
-   typedef KHJ::thesis::store::paper_store<N1> S1;
-   typedef KHJ::thesis::policy::paper_consolidation_policy<S1> J1;
-   typedef KHJ::thesis::registry::root_registry<N1, M1, S1, J1> R1;
-   
-   typedef KHJ::thesis::priority_queue::magic_queue<E1, N1, R1, A1> Q1;
-*/
-
-/* Magic Queue - Meldable */
-/* Magic Queue - Lazy */
+typedef KHJ::thesis::queue::binary_queue<E1, N1, R1, A1> Q1;
 
 
-//typedef KHJ::thesis::priority_queue::meldable_priority_queue<N1, M1, R1, B1> Q
+/* EAGER BINARY QUEUE */
+
+typedef long E2;
+typedef KHJ::thesis::heap_node::heap_a_node<E2> N2;
+// Node modifier
+typedef std::less<N2> C2;
+typedef KHJ::thesis::modifier::node_a_modifier<N2, C2> M2;
+// Allocator
+typedef std::allocator<N2> A2;
+
+// Storage
+typedef KHJ::thesis::store::paper_store<N2> S2;
+// Policy policy
+typedef KHJ::thesis::policy::eager_consolidation_policy<N2, M2, S2> J2;
+// Registry
+typedef KHJ::thesis::registry::root_registry<N2, M2, S2, J2> F2;
+// eager binary queue
+typedef KHJ::thesis::queue::eager_binary_queue<E2, C2, N2, M2, F2> R2;
+typedef KHJ::thesis::priority_queue::meldable_priority_queue<E2, C2, A2, N2, R2> Q2;
+
 
 
 int main( ) 
 {
-  Q1 magic_Q;
+  Q2 magic_Q;
 
-  E1 elements = 1000000;
+  E1 elements = 10000000;
   std::vector<E1> data;
   for (E1 i = elements; i >= 1; --i) data.push_back( i );
   std::random_shuffle ( data.begin( ), data.end( ) );
@@ -79,13 +88,14 @@ int main( )
   
   std::random_shuffle ( nodes.begin( ), nodes.end( ) );
   cpu0  = clock( );
-  for( int i = 1; i <= elements-5  ; ++i ) {
+  for( int i = 1; i < elements  ; ++i ) {
+    //std::cout << magic_Q.pop( ) << std::endl;
     magic_Q.erase( nodes.back( ) );
     nodes.pop_back( );
   }
   cpu1  = clock();
   cpu_time = static_cast<double>( cpu1 - cpu0 )  / CLOCKS_PER_SEC;
-  assert( nodes.size() == 5 );
+  assert( nodes.size() == 1 );
   
   std::cout << "-----------------" << std::endl ; 
   std::cout << "CPU Delete( ): " << cpu_time * 1000 << std::endl;

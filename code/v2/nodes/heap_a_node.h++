@@ -29,7 +29,6 @@ namespace KHJ {
         typedef E value_type;
         typedef heap_a_node<E> N;
         
-  
         explicit heap_a_node( const E& ); 
         explicit heap_a_node( const E&, bool ); 
         ~heap_a_node( ); 

@@ -26,6 +26,7 @@ typedef KHJ::thesis::store::paper_store<N1> S1;
 // Registries
 typedef KHJ::thesis::policy::numeral_consolidation_policy<N1, M1, S1> J1;
 typedef KHJ::thesis::registry::root_registry<N1, M1, S1, J1> R1;
+
 typedef KHJ::thesis::policy::eager_consolidation_policy<N1, M1, S1> J2;
 typedef KHJ::thesis::registry::root_registry<N1, M1, S1, J2> R2;
 
@@ -38,7 +39,7 @@ int main( )
   E1 elements = 1000000;
   std::vector<E1> data;
   for (E1 i = elements; i >= 1; --i) data.push_back( i );
-  //std::random_shuffle ( data.begin( ), data.end( ) );
+  std::random_shuffle ( data.begin( ), data.end( ) );
   
   std::vector<N1*> nodes;
   for( auto it = data.begin( ) ; it != data.end( ) ; it++ ) {
@@ -47,15 +48,19 @@ int main( )
     nodes.push_back( S );
     //registry.print( );
   }
+  
 
   //----------------------PAPER REGISTRY----------------------
   std::cout << std::endl ; 
   std::cout << "----------------------PAPER REGISTRY----------------------" << std::endl;
 
   clock_t cpu0  = clock( );
+
   for( auto it = nodes.begin( ) ; it != nodes.end( ) ; it++ ) {
     registry.insert( *it );
+    registry.consolidate( );
   }
+  
   clock_t cpu1  = clock();
   double cpu_time = static_cast<double>( cpu1 - cpu0 )  / CLOCKS_PER_SEC;
 
@@ -66,9 +71,7 @@ int main( )
   
   registry.print( );
   std::cout << std::endl ; 
-  std::cout << "-----------------" << std::endl ; 
-  std::cout << "-----------------" << std::endl ; 
-  std::cout << std::endl ; 
+
   
 
   //----------------------PAPER REGISTRY EXTRACT----------------------
@@ -76,7 +79,8 @@ int main( )
   cpu0  = clock( );
   std::vector<E1> sort_vec;
   for( int i = 1; i <= elements - 5  ; ++i ) {
-    N1* S = registry.extract( registry.top( ) );
+    //N1* S = registry.extract( registry.top( ) );
+    N1* S = registry.extract( );
     sort_vec.push_back( S->element( ) );
     //delete S; S = nullptr;
   }
@@ -84,14 +88,15 @@ int main( )
   cpu_time = static_cast<double>( cpu1 - cpu0 )  / CLOCKS_PER_SEC;
   
   assert( sort_vec.size() == elements - 5 );
-  assert( std::is_sorted( sort_vec.begin(),sort_vec.end() ));
+  //assert( std::is_sorted( sort_vec.begin(),sort_vec.end() ));
   
   std::cout << "-----------------" << std::endl ; 
   std::cout << "CPU Pop( ): " << cpu_time * 1000 << std::endl;
   std::cout << "-----------------" << std::endl ; 
   std::cout << std::endl ; 
   registry.print( );
- 
+  std::cout << std::endl ; 
+
   for( auto it = nodes.begin( ) ; it != nodes.end( ) ; it++ ) {
     delete *it;
   }
@@ -99,7 +104,6 @@ int main( )
  
   //----------------------EAGER REGISTRY----------------------
 
-  std::cout << std::endl ; 
   std::cout << "----------------------EAGER REGISTRY----------------------" << std::endl;
 
   std::vector<N1*> nodes_eager;
@@ -113,6 +117,7 @@ int main( )
   cpu0  = clock( );
   for( auto it = nodes_eager.begin( ) ; it != nodes_eager.end( ) ; it++ ) {
     eager_registry.insert( *it );
+    eager_registry.consolidate( );
   }
   cpu1  = clock( );
 
@@ -124,12 +129,15 @@ int main( )
   std::cout << std::endl ; 
 
   eager_registry.print( );
+  std::cout << std::endl ; 
 
   //----------------------EAGER REGISTRY EXTRACT----------------------
 
   cpu0  = clock( );
+  std::random_shuffle ( nodes_eager.begin( ), nodes_eager.end( ) );
   for( int i = 1; i <= elements-5  ; ++i ) {
-    N1* S = eager_registry.extract( eager_registry.top( ) );
+    //N1* S = eager_registry.extract( nodes_eager.back( ) );
+    N1* S = eager_registry.extract( );
     //std::cout << S->element( ) << std::endl ; 
     //sort_vec.push_back( S->element( ) );
     //delete S; S = nullptr;
@@ -144,6 +152,7 @@ int main( )
   std::cout << std::endl ; 
 
   eager_registry.print( );
+  std::cout << std::endl ; 
 
   for( auto it = nodes_eager.begin( ) ; it != nodes_eager.end( ) ; it++ ) {
     delete *it;
@@ -151,7 +160,6 @@ int main( )
 
   //----------------------STD PQ----------------------
 
-  std::cout << std::endl ; 
   std::cout << "----------------------STD PQueue----------------------" << std::endl; 
   cpu0  = clock( );
   for( auto it = data.begin( ) ; it != data.end( ) ; it++ ) {

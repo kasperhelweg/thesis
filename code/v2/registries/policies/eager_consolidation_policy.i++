@@ -29,7 +29,7 @@ namespace KHJ {
   
       template <typename N, typename M, typename S>
       N* 
-      eager_consolidation_policy<N, M, S>::borrow( )
+      eager_consolidation_policy<N, M, S>::extract( )
       { 
         N* B = nullptr;
         

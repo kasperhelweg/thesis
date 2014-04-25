@@ -32,7 +32,7 @@ namespace KHJ {
   
       template <typename N, typename M, typename S>
       N* 
-      numeral_consolidation_policy<N, M, S>::borrow( )
+      numeral_consolidation_policy<N, M, S>::extract( )
       { 
         N* B;
         store_iterator_type I = store_.begin( );

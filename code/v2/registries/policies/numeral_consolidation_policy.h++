@@ -18,7 +18,7 @@ namespace KHJ {
         numeral_consolidation_policy( store_reference_type );
         ~numeral_consolidation_policy( );
         
-        N* borrow( );
+        N* extract( );
         void consolidate( );
         
       private:

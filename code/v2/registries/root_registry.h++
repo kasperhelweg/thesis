@@ -28,13 +28,19 @@ namespace KHJ  {
         explicit root_registry( );
         ~root_registry( ); 
         
-        N*   top( )   const;
+        N*     top( ) const;
         bool empty( ) const;
+        int   size( ) const;
 
+        inline iterator_type begin( ) { return store_.begin( ); }
+        inline iterator_type end( )   { return store_.end( ); }
+        
         void insert( N* );
+        N*  extract(    );
         N*  extract( N* );
 
-        void meld( root_registry& );
+        void consolidate( );
+        void  update_top( );
 
         void print( ) const;
         
