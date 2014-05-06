@@ -17,12 +17,7 @@ namespace KHJ  {
         typedef N node_type;
         typedef C comparator_type;
         constexpr static comparator_type compare_ = C( );
-        
-        static typename node_type::value_type val( N* S )
-        {        
-          return (*S).element_;
-        }
-        
+              
         /**
          * join( )
          * 
@@ -89,6 +84,7 @@ namespace KHJ  {
           return S;
         }
         
+        /*
         static std::unique_ptr<N*[]> split( N* S )
         {
           std::unique_ptr<N*[]> st(new N*[2]);
@@ -103,29 +99,47 @@ namespace KHJ  {
         
           return st;
         }
+        */
 
-        static void siftup_( N* S )
+        static N** split( N* S )
+        {
+          //std::unique_ptr<N*[]> st(new N*[2]);
+          
+          N** st = new N*[2];
+          st[0]  = (*S).left_ ;
+          st[1]  = (*(*S).left_).right_; (*st[1]).color_ = 0;
+
+          (*st[1]).right_ = nullptr; 
+          (*st[0]).right_ = nullptr; 
+          (*S).left_      = nullptr; 
+        
+          return st;
+        }
+
+
+
+        static void siftup( N* S )
         {
           N* O = (*S).parent( );
-          while( !(*S).is_root( ) && ( compare_( *S, *O ) ) ) {
+          while( !(*S).is_root( ) && ( compare_( (*S).element(), (*O).element() ) ) ) {
             exchange_( S, O ); 
             O = (*S).parent( );
           }
         }
       
-        static void siftdown_( N* S )
+        static void siftdown( N* S )
         {
           N* L; N* R; N* O;  
                   
           while( !(*S).is_leaf( ) ) {
             L = (*S).left_;
             R = (*(*S).left_).right_;
-            if( compare_( *L, *R ) ) {
+            if( compare_( (*L).element(), (*R).element() ) ) {
               O = L; 
             } else { 
               O = R; 
             }
-            if( compare_( *O,  *S ) ) {
+            if( compare_( (*O).element(),  (*S).element() ) ) {
               exchange_( O, S ); 
             } else { 
               break; 

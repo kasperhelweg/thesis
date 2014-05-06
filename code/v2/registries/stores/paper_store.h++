@@ -12,6 +12,7 @@ namespace KHJ {
       template <typename N>        
       class paper_store {        
 
+        // Template of two types: Container and Adapter
         struct store_node {
           typedef std::vector<N*> root_list_type;
           typedef typename root_list_type::iterator       iterator_type;
@@ -61,7 +62,7 @@ namespace KHJ {
         { return store_.begin( ); }
         inline iterator_type end( ) 
         { return store_.end( );   }
-
+        
         inline const_iterator_type begin( ) const 
         { return store_.begin( ); }
         inline const_iterator_type   end( ) const 

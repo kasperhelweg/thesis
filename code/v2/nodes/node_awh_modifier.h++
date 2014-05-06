@@ -1,14 +1,24 @@
+//#include <memory>
+//#include <assert.h>
+
+
+#ifndef THESIS_AWH_NODE_MODIFIER
+#define THESIS_AWH_NODE_MODIFIER
+#include "heap_utils.h++"
 namespace KHJ  {
   namespace thesis  {
     namespace modifier  {
       template <typename N, typename C>
-      class node_a_modifier {     
-        
-        static typename node_type::value_type val( N* S )
-        {        
-          return (*S).element_;
-        }
-        
+      class node_awh_modifier {     
+        // Debug utils
+        template<typename node_type, typename M> 
+        friend class KHJ::thesis::utils::pfb;
+      
+      public:
+        typedef N node_type;
+        typedef C comparator_type;
+        constexpr static comparator_type compare_ = C( );
+              
         /**
          * join( )
          * 
@@ -17,10 +27,12 @@ namespace KHJ  {
          *
          */
         static void join( N* S, N* L, N* R )
-        {        
+        {
           (*L).right_ = R; 
           (*R).right_ = S; (*R).color_ = 1;
           (*S).left_  = L;
+
+          (*S).height_ += 1;
         }
         
         /**
@@ -75,43 +87,44 @@ namespace KHJ  {
           return S;
         }
         
-        static std::unique_ptr<N*[]> split( N* S )
+        static N** split( N* S )
         {
-          std::unique_ptr<N*[]> st(new N*[2]);
+          //std::unique_ptr<N*[]> st(new N*[2]);
 
-          //N** st = new N*[2];
+          N** st = new N*[2];
           st[0]  = (*S).left_ ;
           st[1]  = (*(*S).left_).right_; (*st[1]).color_ = 0;
-
+          
           (*st[1]).right_ = nullptr; 
           (*st[0]).right_ = nullptr; 
           (*S).left_      = nullptr; 
-        
+          
+          //(*S).height_ = 0;
           return st;
         }
 
-        static void siftup_( N* S )
+        static void siftup( N* S )
         {
           N* O = (*S).parent( );
-          while( !(*S).is_root( ) && ( compare_( *S, *O ) ) ) {
+          while( !(*S).is_root( ) && ( compare_( (*S).element(), (*O).element() ) ) ) {
             exchange_( S, O ); 
             O = (*S).parent( );
           }
         }
       
-        static void siftdown_( N* S )
+        static void siftdown( N* S )
         {
           N* L; N* R; N* O;  
                   
           while( !(*S).is_leaf( ) ) {
             L = (*S).left_;
             R = (*(*S).left_).right_;
-            if( compare_( *L, *R ) ) {
+            if( compare_( (*L).element(), (*R).element() ) ) {
               O = L; 
             } else { 
               O = R; 
             }
-            if( compare_( *O,  *S ) ) {
+            if( compare_( (*O).element(),  (*S).element() ) ) {
               exchange_( O, S ); 
             } else { 
               break; 
@@ -216,7 +229,7 @@ namespace KHJ  {
             //  /   /       /   /
 
             N* Q = (*S).right_;
-            
+
             (*S).right_ = (*O).right_;
             (*O).left_  = (*S).left_;
             (*S).left_  = O;
@@ -254,3 +267,5 @@ namespace KHJ  {
     }
   }
 }
+//#include "heap_a_node.i++"
+#endif

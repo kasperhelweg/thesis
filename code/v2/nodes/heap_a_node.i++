@@ -2,14 +2,11 @@ namespace KHJ  {
   namespace thesis  {
     namespace heap_node  {
       
-      //template <typename V, typename C, typename A>
-      //constexpr C heap_a_node<V, C, A>::heap_a_node::compare_;
-      
-      /*********************************************************************
-       *                                                                   *
-       *               N o d e T y p e A  \  P u b l i c                   *
-       *                                                                   *
-       *********************************************************************/
+      /*
+       *                                      
+       * N o d e T y p e A  \  P u b l i c                
+       *
+       */
       
       /**
        * Constructor.
@@ -52,7 +49,7 @@ namespace KHJ  {
        * @author KHJ
        *
        */
-      //-----------------------------
+    
       template <typename E>
       inline bool heap_a_node<E>::operator<(const N& O) const
       {
@@ -88,9 +85,8 @@ namespace KHJ  {
       {
         return element_ >= O.element_;
       }
-      //-----------------------------
+  
       
-
       /**
        * is_root( )
        * 
@@ -115,8 +111,6 @@ namespace KHJ  {
       template <typename E>
       bool heap_a_node<E>::is_leaf( ) const
       {
-        //std::cout << "is_leaf()" << std::endl;
-        //std::cout << this->element_ << std::endl;
         return left_ == nullptr;
       }
       

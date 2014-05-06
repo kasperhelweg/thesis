@@ -19,37 +19,20 @@ namespace KHJ  {
       template<typename E, typename C, typename N, typename M, typename R>
       N* eager_binary_queue<E, C, N, M, R>::erase_min( ) 
       {
-        N* T = registry_.top( ); 
-        N* B = registry_.extract( );
-
-        if( B != T  ) {
-          modifier_type::replace( T, B );
-          modifier_type::siftup_( B ); 
-          modifier_type::siftdown_( B );
-          
-          for( auto it = registry_.begin( ) ; it != registry_.end( ) ; it++ ) {
-            for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
-              if( (*vit) == T  ) {
-                *vit = (*B).find_root( ); 
-              }
-            }
-          }
-        }
-         
-        registry_.update_top( );
+        N* T = registry_.top( ); erase( T );
         return T;
       }
 
       template<typename E, typename C, typename N, typename M, typename R>
       void eager_binary_queue<E, C, N, M, R>::erase( N* P ) 
       {
-        bool is_root = (*P).is_root( );
-        
         N* B = registry_.extract( );
+        bool is_root = (*P).is_root( );
+
         if( B != P  ) {
           modifier_type::replace( P, B );
-          modifier_type::siftup_( B ); 
-          modifier_type::siftdown_( B );           
+          modifier_type::siftup( B ); 
+          modifier_type::siftdown( B );           
           
           if( is_root || (*B).is_root( ) ){
             for( auto it = registry_.begin( ) ; it != registry_.end( ) ; it++ ) {
@@ -64,6 +47,12 @@ namespace KHJ  {
           }
         }
         if( P == registry_.top( ) ) { registry_.update_top( ); }
+      }
+      
+      template<typename E, typename C, typename N, typename M, typename R>
+      int eager_binary_queue<E, C, N, M, R>::size(  ) const
+      {
+        return registry_.size( );
       }
     }
   }

@@ -16,12 +16,14 @@ namespace KHJ  {
                 
         explicit eager_binary_queue( ) : registry_( R( )) { } 
         
-        N* find_min( );       //find-min
-        void insert( N* ); //insert //should return iterator instead
-        N*  erase_min( );       //delete_min
-        void    erase( N* );  //delete //should take iterator instead
+        int size( ) const;
+
+        N*   find_min( );     
+        void   insert( N* ); 
+        N*  erase_min( );      
+        void    erase( N* );
         
-        //void        meld( binary_queue& );       
+        void  meld( eager_binary_queue& );       
         void clear( );
         
       private:

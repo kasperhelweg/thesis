@@ -1,0 +1,137 @@
+namespace KHJ {
+  namespace thesis {
+    namespace policy {
+      template <typename N, typename M, typename S>
+      lazy_consolidation_policy<N, M, S>::
+      lazy_consolidation_policy( store_reference_type s ) : store_( s )
+      { }
+      
+      template <typename N, typename M, typename S>
+      lazy_consolidation_policy<N, M, S>::~lazy_consolidation_policy( )
+      { }
+      
+      template <typename N, typename M, typename S>
+      void 
+      lazy_consolidation_policy<N, M, S>::consolidate( )
+      { 
+        //Alloc array and initialize
+        int i = 0, w = 0, c = 0;
+        int s = floor( log2( store_.size( ) ) + 1   );
+
+
+        int C[s]; for( i = 0 ; i < s; i++) {  C[i] = 0; }
+
+        for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
+          for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
+            int h = (*vit)->height( );
+            C[h] += 1;
+            if ( C[h] > 2 ) { c = 1; break; }
+          }
+        }
+
+        if( c ) {          
+          std::vector<N*> A[s];
+          for( i = 0; i <= s; i++) { 
+            std::vector<N*> v = std::vector<N*>();
+            A[i] = v;
+          }
+
+          while( !store_.empty( )) {
+            N* Q  = store_.pop_front( );
+            i = (*Q).height( );
+            A[i].push_back(Q);   
+          }
+                
+          i = 0;
+          while( 1 ) {
+            while(!A[i].empty( ) && A[i].size( ) > 2  ) {
+              N* P = A[i].back( ); A[i].pop_back( );
+              N* R = A[i].back( ); A[i].pop_back( );
+              N* T = A[i].back( ); A[i].pop_back( );
+              N* t[3] = { P, R, T };     
+              if( i == 0 ) {
+                swap_nodes_( t, 0, modifier_type::compare_( (*t[1]).element(), (*t[0]).element() ) );
+                swap_nodes_( t, 2, modifier_type::compare_( (*t[0]).element(), (*t[2]).element() ) );
+                modifier_type::join_heaps( t[0], t[1], t[2]  );
+                A[1].push_back( t[0] );
+              } else {
+                swap_nodes_( t, 0, modifier_type::compare_( (*t[1]).element(), (*t[0]).element() ) );
+                swap_nodes_( t, 2, modifier_type::compare_( (*t[0]).element(), (*t[2]).element() ) );
+                N** st = modifier_type::split( t[0] );
+                modifier_type::join_heaps( t[0], t[1], t[2]  );
+                A[i+1].push_back( t[0] );
+                A[i-1].push_back( st[0] );
+                A[i-1].push_back( st[1] );
+                delete[] st;
+                if( A[i-1].size( ) > 2 ) {
+                  w = 1;
+                }
+              }
+            }
+            if ( i == s - 1  ) { break; } 
+            else if( w == 1)   { i = i - 1; w = 0; } 
+            else               { i = i + 1; }
+          }
+        
+          for( i = s - 1 ; i >= 0; i--) { 
+            for( auto it = A[i].begin( ); it != A[i].end( ); ++it) {
+              N* v = (*it); 
+              store_.push_front( v );
+            } 
+            A[i].clear();
+          }
+        }
+      }
+      
+      template <typename N, typename M, typename S>
+      N* 
+      lazy_consolidation_policy<N, M, S>::extract( )
+      { 
+        N* B = nullptr;
+        if( store_.one_heap( ) ) {
+          B = store_.pop_front( );
+          if( B->height( ) != 0 ) {
+            N** st = modifier_type::split( B );
+            store_.push_front( st[0] ); store_.push_front( st[1] );
+            if( modifier_type::compare_( (*st[0]).element(), (*st[1]).element() ) ) {
+              store_.top = st[0];
+            } else {
+              store_.top = st[1];
+            }
+            delete[] st;
+          }
+        } else {
+          B = store_.pop_front( );
+          if( B == store_.top ) {
+            N* T = B;
+            B = store_.pop_front();
+            store_.push_front( T );
+          }
+          if( B->height( ) != 0 ) {
+            N** st = modifier_type::split( B );
+            store_.push_front( st[0] ); store_.push_front( st[1] );
+            delete[] st;
+          }
+        }
+        return B;    
+      }
+  
+      template <typename N, typename M, typename S>
+      void 
+      lazy_consolidation_policy<N, M, S>::fix_( store_iterator_type I )
+      { 
+       
+      }
+      
+      // swap aux
+      template <typename N, typename M, typename S>
+      void 
+      lazy_consolidation_policy<N, M, S>::swap_nodes_ (N* nodes[], int i1, int i2) 
+      {
+        N* temp   = nodes[i1];
+        nodes[i1] = nodes[i2];
+        nodes[i2] = temp;
+      }
+    }
+  }
+}

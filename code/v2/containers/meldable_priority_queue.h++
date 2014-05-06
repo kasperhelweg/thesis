@@ -9,25 +9,29 @@ namespace KHJ  {
         typedef V value_type;
         typedef C comparator_type;
         typedef A allocator_type;
-        typedef E element_type;
+        typedef E encapsulator_type;
         typedef R realizer_type;
         
-        
-        explicit meldable_priority_queue( ) : realizer_( realizer_type( )), allocator_( allocator_type( ) ) { } 
+        explicit meldable_priority_queue( ) : 
+          realizer_( realizer_type( )), allocator_( allocator_type( ) ) { } 
         
         // accessors     
         value_type top( );               //find-min
         bool     empty( );
-        int       size( );
+        int       size( ) const;
         
         // modifiers     
-        E*          push( E* );            //insert //should return iterator instead
+        E*          push( E* );            
         E*       emplace( V const& );
-        value_type   pop( );               //delete_min
-        void       erase( E* );            //delete //should take iterator instead
-        void    increase( E* );            //delete //should take iterator instead
-        //void        meld( binary_queue& );       
+        E*       extract( );
+        V            pop( );               
+        void       erase( E* );            
+        void    increase( E* );            
+        void    decrease( E* );            
+        void        meld( meldable_priority_queue& );       
         void       clear( );
+
+        
         
       private:
         realizer_type   realizer_;
@@ -35,7 +39,6 @@ namespace KHJ  {
         
         E*    buy_( const V& val );
         void sell_( E* );
-        
       };
     }
   }

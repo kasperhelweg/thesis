@@ -1,9 +1,9 @@
 namespace KHJ {
   namespace thesis {
     namespace policy {
-
       template <typename N, typename M, typename S>
-      eager_consolidation_policy<N, M, S>::eager_consolidation_policy( store_reference_type s ) : store_( s )
+      eager_consolidation_policy<N, M, S>::
+      eager_consolidation_policy( store_reference_type s ) : store_( s )
       { }
       
       template <typename N, typename M, typename S>
@@ -11,8 +11,7 @@ namespace KHJ {
       { }
       
       template <typename N, typename M, typename S>
-      void 
-      eager_consolidation_policy<N, M, S>::consolidate( )
+      void eager_consolidation_policy<N, M, S>::consolidate( )
       { 
         if( (*store_.begin( )).size( ) == 3 ) { hi_.push_back( store_.begin( ) ); 
         }
@@ -28,35 +27,39 @@ namespace KHJ {
       }
   
       template <typename N, typename M, typename S>
-      N* 
-      eager_consolidation_policy<N, M, S>::extract( )
+      N* eager_consolidation_policy<N, M, S>::extract( )
       { 
         N* B = nullptr;
-        
+       
         for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
           if( !it->empty( )) {
-            for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
+            for( auto vit = (*it).begin( ); vit != (*it).end( ); vit++ ) {
               if( *vit != store_.top )  {
                 B = store_.extract( it, vit );
                 if( B->height( ) != 0 ) {
-                  std::unique_ptr<N*[]> st = modifier_type::split( B );
+                  N** st = modifier_type::split( B );
                   store_.insert( --it, st[0] ); store_.insert( it, st[1] );
+                  delete[] st;
                   if( it->size( ) >= 3 ) {
                     fix_( it ); 
                   } break;
-                } else { break; }
+                } 
+                else { 
+                  break; 
+                }
               } else if( it->size( ) == 1 && (*vit)->size( ) == store_.size( )  ) {
                 B = store_.extract( it, vit );
                 if( B->height( ) != 0 ) {
-                  std::unique_ptr<N*[]> st = modifier_type::split( B );
+                  N** st = modifier_type::split( B );
                   store_.insert( --it, st[0] ); store_.insert( it, st[1] );
-                  if( modifier_type::compare_( *st[0], *st[1] ) ) {
+                  if( modifier_type::compare_( (*st[0]).element(), (*st[1]).element() ) ) {
                     store_.top = st[0];
                   } else {
                     store_.top = st[1];
                   }
+                  delete[] st;
                   break;
-                }
+                } else { break;}
               }
             }
             if( B != nullptr) { break; } 
@@ -66,8 +69,7 @@ namespace KHJ {
       }
   
       template <typename N, typename M, typename S>
-      void 
-      eager_consolidation_policy<N, M, S>::fix_( store_iterator_type I )
+      void eager_consolidation_policy<N, M, S>::fix_( store_iterator_type I )
       { 
         store_iterator_type E = std::next( I );  
         store_iterator_type W = std::prev( I );
@@ -79,13 +81,14 @@ namespace KHJ {
         N* V = store_.extract( I );
         
         N* t[3] = { Q, R, V };     
-        swap_nodes_( t, 0, modifier_type::compare_( *t[1], *t[0] ) );
-        swap_nodes_( t, 2, modifier_type::compare_( *t[0], *t[2] ) );
+        swap_nodes_( t, 0, modifier_type::compare_( (*t[1]).element(), (*t[0]).element() ) );
+        swap_nodes_( t, 2, modifier_type::compare_( (*t[0]).element(), (*t[2]).element() ) );
 
         if( I != store_.begin( ) ) {
-          std::unique_ptr<N*[]> st = modifier_type::split( t[0] );
+          N** st = modifier_type::split( t[0] );
           modifier_type::join_heaps( t[0], t[1], t[2]  ); store_.insert( E, t[0]  );
           store_.insert( W, st[0] ); store_.insert( W, st[1] );
+          delete[] st;
         } else {
           modifier_type::join_heaps( t[0], t[1], t[2]  ); store_.insert( E, t[0] );
         }
@@ -94,8 +97,7 @@ namespace KHJ {
       
       // swap aux
       template <typename N, typename M, typename S>
-      void 
-      eager_consolidation_policy<N, M, S>::swap_nodes_ (N* nodes[], int i1, int i2) 
+      void eager_consolidation_policy<N, M, S>::swap_nodes_ (N* nodes[], int i1, int i2) 
       {
         N* temp   = nodes[i1];
         nodes[i1] = nodes[i2];

@@ -1,7 +1,7 @@
 namespace KHJ  {
   namespace thesis  {
     namespace priority_queue  {
-
+      
       template<typename V, typename C, typename A, typename E, typename R>
       V meldable_priority_queue<V, C, A, E, R>::top(  ) 
       {
@@ -35,11 +35,25 @@ namespace KHJ  {
         return val;
       }
 
+      
+      template<typename V, typename C, typename A, typename E, typename R>
+      E* meldable_priority_queue<V, C, A, E, R>::extract( ) 
+      {
+        E* S  = realizer_.erase_min( );
+        return S;
+      }
+ 
       template<typename V, typename C, typename A, typename E, typename R>
       void meldable_priority_queue<V, C, A, E, R>::erase( E* P ) 
       {
         realizer_.erase( P );
         sell_( P );
+      }
+
+      template<typename V, typename C, typename A, typename E, typename R>
+      void meldable_priority_queue<V, C, A, E, R>::meld( meldable_priority_queue& other ) 
+      {
+        realizer_.meld( other.realizer );
       }
 
       // Buy a node. Heap memory is the currency.
@@ -63,6 +77,13 @@ namespace KHJ  {
         allocator_.destroy( S ); allocator_.deallocate( S, 1 ); 
         S = nullptr;
       }
+
+      template<typename V, typename C, typename A, typename E, typename R>
+      int meldable_priority_queue<V, C, A, E, R>::size( ) const
+      {
+        return realizer_.size( );
+      }
+
     }
   }
 }

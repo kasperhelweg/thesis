@@ -52,8 +52,10 @@ namespace KHJ  {
       template<typename N>
       N* paper_store<N>::pop_front( ) 
       { 
-        //return (*(begin( ))).pop_back( ); 
-        //return (*(begin( ))).pop_back( ); 
+        N* S = (*(begin( ))).root_list_.back( S ); 
+        (*(begin( ))).root_list_.pop_back( S ); 
+        (*begin( )).size_--;
+        return S;
       }
 
       template <typename N>

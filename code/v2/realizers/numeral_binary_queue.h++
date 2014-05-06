@@ -11,17 +11,19 @@ namespace KHJ  {
         typedef N node_type;
         typedef M modifier_type;
         typedef R registry_type;
-
+        
         typedef typename registry_type::iterator_type iterator_type;
                 
         explicit numeral_binary_queue( ) : registry_( R( )) { } 
+
+        int size( ) const;
         
         N*   find_min( );       //find-min
         void   insert( N* ); //insert //should return iterator instead
         N*  erase_min( );       //delete_min
         void    erase( N* );  //delete //should take iterator instead
         
-        //void        meld( binary_queue& );       
+        void  meld( numeral_binary_queue& );       
         void clear( );
         
       private:

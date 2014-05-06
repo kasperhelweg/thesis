@@ -70,7 +70,7 @@ def fix( D, j ):
   D[j] -= 3
   #--------------------
   if j != 0:
-    if D[j-1] <= 1: lo.pop()
+    if D[j-1] <= 1: lo.pop( )
     D[j-1] += 2  
   #--------------------
 
@@ -113,8 +113,6 @@ def decrement( D ):
 
 def unfix( D, j ):
   #--------------------
-  
-
   # shrink list
   D[j+1] -= 1
   l = len( D )
@@ -200,7 +198,7 @@ print(hi.p())
 print(lo.p())
 
 
-'''
+
 print("------------------------------------ DEC")
 for i in range( 0, n - 5 ):
   D = decrement( D )
@@ -213,5 +211,5 @@ print("------------------------------------")
 print( str( value_of(D) ) + ": " + str(D) )
 print(hi.p())
 print(lo.p())
-'''
+
 print( "--Program magic_skew--" )

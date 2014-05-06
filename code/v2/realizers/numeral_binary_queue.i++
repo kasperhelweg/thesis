@@ -19,49 +19,45 @@ namespace KHJ  {
       template<typename E, typename C, typename N, typename M, typename R>
       N* numeral_binary_queue<E, C, N, M, R>::erase_min( ) 
       {
-        N* T = registry_.top( ); 
-        N* B = registry_.extract( );
-
-        if( B != T  ) {
-          modifier_type::replace( T, B );
-          modifier_type::siftup_( B ); 
-          modifier_type::siftdown_( B );
-          
-          for( auto it = registry_.begin( ) ; it != registry_.end( ) ; it++ ) {
-            for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
-              if( (*vit) == T  ) {
-                *vit = (*B).find_root( ); 
-              }
-            }
-          }
-        }
-         
-        registry_.update_top( );
+        N* T = registry_.top( ); erase( T );
         return T;
       }
 
       template<typename E, typename C, typename N, typename M, typename R>
       void numeral_binary_queue<E, C, N, M, R>::erase( N* P ) 
       {
-        bool is_root = (*P).is_root( );
-
         N* B = registry_.extract( );
+        bool p_is_root = (*P).is_root( );
+
         if( B != P  ) {
           modifier_type::replace( P, B );
-          modifier_type::siftup_( B ); 
-          modifier_type::siftdown_( B );           
-          
-          for( auto it = registry_.begin( ) ; it != registry_.end( ) ; it++ ) {
-            for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
-              if( !(*(*vit)).is_root( ) ) {
-                *vit = (*(*vit)).find_root();
-              } else if( (*vit) == P  ) {
-                *vit = (*B).find_root( ); 
+          modifier_type::siftup( B ); 
+          modifier_type::siftdown( B );           
+          if( p_is_root || (*B).is_root( ) ){
+            for( auto it = registry_.begin( ) ; it != registry_.end( ) ; it++ ) {
+              for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
+                if( (*vit) == P  ) {
+                  *vit = (*B).find_root( ); 
+                } else if( !(*(*vit)).is_root( ) ) { 
+                  *vit = (*(*vit)).find_root( ); 
+                } 
               }
             }
           }
         }
         if( P == registry_.top( ) ) { registry_.update_top( ); }
+      }
+
+      template<typename E, typename C, typename N, typename M, typename R>
+      void numeral_binary_queue<E, C, N, M, R>::meld( numeral_binary_queue& ) 
+      {
+        return;
+      }
+
+      template<typename E, typename C, typename N, typename M, typename R>
+      int numeral_binary_queue<E, C, N, M, R>::size(  ) const
+      {
+        return registry_.size( );
       }
     }
   }
