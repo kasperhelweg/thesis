@@ -18,9 +18,11 @@ namespace KHJ {
          lazy_consolidation_policy( store_reference_type );
         ~lazy_consolidation_policy( );
         
-        N* extract( );
+        void insert( N* );
+          N* extract( );
         void consolidate( );
-        
+        void update_top( );
+
       private:
         store_reference_type store_;
         std::vector<store_iterator_type> hi_;

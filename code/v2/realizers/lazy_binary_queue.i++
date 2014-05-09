@@ -31,7 +31,6 @@ namespace KHJ  {
           modifier_type::replace( P, B );
           modifier_type::siftup( B ); 
           modifier_type::siftdown( B );           
-          
           if( is_root || (*B).is_root( ) ){
             for( auto it = registry_.begin( ) ; it != registry_.end( ) ; it++ ) {
               for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {

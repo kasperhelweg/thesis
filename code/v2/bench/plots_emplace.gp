@@ -1,7 +1,7 @@
 set logscale x
 set logscale y
-set pointsize 1
-set xr [1000.0:1000000.0]
+set pointsize 0.5
+set xr [1000.0:10000000.0]
 set output "./figures/emplace.ps"
 set terminal postscript eps color
 

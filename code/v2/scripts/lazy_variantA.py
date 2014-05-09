@@ -113,10 +113,10 @@ Q = [1,1,1,1,1,1,1,1,1,15,15,15,1,1,1,1,32767,32767,1,1,1,1023,1023,1023,2047,20
 Li = linked_list()
 
 for i in range(0,100):
-  Li.append(1)
+  Li.append(3)
 
 for i in range(0,10000000):
-  L.append(1)
+  L.append(3)
 
 print("----------------------------")
 
@@ -132,7 +132,7 @@ cProfile.run( 'cons_alg_a(collect(A, L))' )
 A = []
 for i in range(0, math.floor(math.log(size(L), 2)-1)):
   A.append([])
-R = cons_alg_b(A, L)
+R = cons_alg_a(A, L)
 print(R)
 
 hh = 0

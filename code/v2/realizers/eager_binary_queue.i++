@@ -28,7 +28,7 @@ namespace KHJ  {
       {
         N* B = registry_.extract( );
         bool is_root = (*P).is_root( );
-
+        
         if( B != P  ) {
           modifier_type::replace( P, B );
           modifier_type::siftup( B ); 

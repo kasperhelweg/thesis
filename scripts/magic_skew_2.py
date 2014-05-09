@@ -55,9 +55,8 @@ lo = linked_list( )
 
 def increment( D ): 
   D[0] += 1  
-  #if D[0] == 1 and the first low digit is not D[0] : push D[0] 
-  if D[0]   == 1 and lo.peak( 1 ) != 0: lo.append( 0 ) 
-  elif D[0] == 2: lo.pop( )
+  #if D[0]   == 1 and lo.peak( 1 ) != 0: lo.append( 0 ) 
+  #elif D[0] == 2: lo.pop( )
   
   if D[0] == 3: D = fix( D, 0 )
   else:
@@ -69,6 +68,8 @@ def increment( D ):
 
 def fix( D, j ):
   D[j] -= 3
+
+
   #--------------------
   if j != 0:
     if D[j-1] <= 1: lo.pop( )

@@ -13,7 +13,7 @@ namespace KHJ  {
       void numeral_binary_queue<E, C, N, M, R>::insert( N* S ) 
       {
         registry_.insert( S );
-        registry_.consolidate( );
+        //registry_.consolidate( );
       }
     
       template<typename E, typename C, typename N, typename M, typename R>

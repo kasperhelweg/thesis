@@ -18,8 +18,10 @@ namespace KHJ {
          eager_consolidation_policy( store_reference_type );
         ~eager_consolidation_policy( );
         
-        N* extract( );
+        void insert( N* );
+          N* extract( );
         void consolidate( );
+        void update_top( );
         
       private:
         store_reference_type store_;

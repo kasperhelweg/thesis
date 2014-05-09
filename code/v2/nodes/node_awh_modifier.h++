@@ -32,7 +32,8 @@ namespace KHJ  {
           (*R).right_ = S; (*R).color_ = 1;
           (*S).left_  = L;
 
-          (*S).height_ += 1;
+          //(*S).height_ += 1;
+          (*S).height_ += (*L).height_;
         }
         
         /**
@@ -99,7 +100,7 @@ namespace KHJ  {
           (*st[0]).right_ = nullptr; 
           (*S).left_      = nullptr; 
           
-          //(*S).height_ = 0;
+          (*S).height_ = 0;
           return st;
         }
 
