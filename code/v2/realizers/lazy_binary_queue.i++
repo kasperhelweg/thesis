@@ -27,10 +27,15 @@ namespace KHJ  {
       {
         N* B = registry_.extract( );
         bool is_root = (*P).is_root( );
+        
+        if( B->element( ) == registry_.top( )->element( ) )
+          modifier_type::siftup( registry_.top( ) );
         if( B != P  ) {
           modifier_type::replace( P, B );
-          modifier_type::siftup( B ); 
-          modifier_type::siftdown( B );           
+          if( B != registry_.top( ) ) {
+            modifier_type::siftdown( B ); 
+            modifier_type::siftup( B );
+          } 
           if( is_root || (*B).is_root( ) ){
             for( auto it = registry_.begin( ) ; it != registry_.end( ) ; it++ ) {
               for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {

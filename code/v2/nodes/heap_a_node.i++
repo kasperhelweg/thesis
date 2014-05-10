@@ -165,7 +165,7 @@ namespace KHJ  {
       template <typename E>
       typename heap_a_node<E>::N* heap_a_node<E>::left_child( ) const
       {
-        assert(!is_leaf( )); return left_;
+        return left_;
       }
 
       /**
@@ -178,7 +178,7 @@ namespace KHJ  {
       template <typename E>
       typename heap_a_node<E>::N* heap_a_node<E>::right_child( ) const
       {
-        assert(!is_leaf( )); return (*left_).right_;
+        return (*left_).right_;
       }
 
       /**

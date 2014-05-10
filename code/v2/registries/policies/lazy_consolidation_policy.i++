@@ -19,9 +19,8 @@ namespace KHJ {
 
         //Alloc array and initialize
         int i = 0, w = 0, c = 0;
-        int s = floor( log2( store_.size( ) ) - 1   );
-        std::cout << s << std::endl;
-        std::cout << store_.size() << std::endl;
+        int s = floor( log2( store_.size( ) ) + 1   );
+    
         int C[s]; for( i = 0 ; i < s; i++) {  C[i] = 0; }
         
         for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
@@ -37,15 +36,15 @@ namespace KHJ {
           for( i = 0; i <= s; i++) { 
             std::vector<N*> v = std::vector<N*>();
             A[i] = v;
-            std::cout << "A" << std::endl;
+  
           }
 
           while( !store_.empty( )) {
-            std::cout << "B" << std::endl;
+  
             N* Q  = store_.pop_front( );
             i = (*Q).height( );
             A[i].push_back(Q);
-            std::cout << "C" << std::endl;
+  
           }
                 
           i = 0;
@@ -140,6 +139,7 @@ namespace KHJ {
           }
         }
         */
+        
         return B;    
       }
 

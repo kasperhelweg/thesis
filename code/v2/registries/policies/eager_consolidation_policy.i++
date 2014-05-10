@@ -32,43 +32,11 @@ namespace KHJ {
             break;
           }
         }
-        
-                
-        /*
-          for( auto vit = (*it).begin( ); vit != (*it).end( ); vit++ ) {
-          if( *vit != store_.top )  {
-          B = store_.extract( it, vit );
-          if( B->height( ) != 0 ) {
-          N** st = modifier_type::split( B );
-          store_.insert( --it, st[0] ); store_.insert( it, st[1] );
-          delete[] st;
-          if( it->size( ) >= 3 ) {
-          fix_( it ); 
-          } break;
-          } 
-          else { 
-          break; 
-          }
-          } else if( it->size( ) == 1 && (*vit)->size( ) == store_.size( )  ) {
-          B = store_.extract( it, vit );
-          if( B->height( ) != 0 ) {
-          N** st = modifier_type::split( B );
-          store_.insert( --it, st[0] ); store_.insert( it, st[1] );
-          if( modifier_type::compare_( (*st[0]).element(), (*st[1]).element() ) ) {
-          store_.top = st[0];
-          } else {
-          store_.top = st[1];
-          }
-          delete[] st;
-          break;
-          } else { break;}
-          }
-          }
-          if( B != nullptr) { break; } 
-          }
-          }
-        */
-        return B;    
+        if( (*B).element( ) == (*store_.top).element( ) ) {
+          modifier_type::siftup( store_.top );
+          store_.top = B;
+        }
+        return B;
       }
 
       template <typename N, typename M, typename S>
@@ -76,7 +44,6 @@ namespace KHJ {
       { 
         if( (*store_.begin( )).size( ) == 3 ) { hi_.push_back( store_.begin( ) ); 
         }
-
         while( true ) {
           if( !hi_.empty( ) ) {
             store_iterator_type I = hi_.back( ); hi_.pop_back( );

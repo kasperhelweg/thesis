@@ -57,8 +57,8 @@ namespace KHJ  {
           (*O).left_  = (*S).left_;
           (*O).right_ = (*S).right_;
           (*O).color_ = (*S).color_;
-          
           if( (*O).is_root( ) && (*O).is_leaf( ) ) { /* no-op */ }
+         
           else if( !(*O).is_root( ) && !(*O).is_leaf( ) ) {
             if( (*O).color_ == 0) {
               (*(*(*O).left_).right_).right_ = O;
@@ -78,7 +78,6 @@ namespace KHJ  {
               }
             }
           }
-
           (*S).left_  = nullptr;
           (*S).right_ = nullptr;          
           return S;

@@ -8,21 +8,21 @@ namespace KHJ  {
         N* S = registry_.top( );
         return S;
       }
-
+      
       template<typename E, typename C, typename N, typename M, typename R>
       void eager_binary_queue<E, C, N, M, R>::insert( N* S ) 
       {
         registry_.insert( S );
         registry_.consolidate( );
       }
-    
+      
       template<typename E, typename C, typename N, typename M, typename R>
       N* eager_binary_queue<E, C, N, M, R>::erase_min( ) 
       {
         N* T = registry_.top( ); erase( T );
         return T;
       }
-
+      
       template<typename E, typename C, typename N, typename M, typename R>
       void eager_binary_queue<E, C, N, M, R>::erase( N* P ) 
       {
@@ -31,9 +31,10 @@ namespace KHJ  {
         
         if( B != P  ) {
           modifier_type::replace( P, B );
-          modifier_type::siftup( B ); 
-          modifier_type::siftdown( B );           
-          
+          if( B != registry_.top( ) ) {
+            modifier_type::siftdown( B );
+            modifier_type::siftup( B );
+          }          
           if( is_root || (*B).is_root( ) ){
             for( auto it = registry_.begin( ) ; it != registry_.end( ) ; it++ ) {
               for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
@@ -46,7 +47,8 @@ namespace KHJ  {
             }
           }
         }
-        if( P == registry_.top( ) ) { registry_.update_top( ); }
+        if( P == registry_.top( ) ) 
+          registry_.update_top( );
       }
       
       template<typename E, typename C, typename N, typename M, typename R>

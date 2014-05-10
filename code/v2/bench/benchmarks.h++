@@ -40,7 +40,7 @@ namespace KHJ  {
         std::vector<E>  data;
         std::vector<N*> nodes;
         
-        E max_elements = pow(10, 5);
+        E max_elements = pow(10, 6);
         E     elements_ = 1000;
         
         double reps    = 3;
@@ -48,10 +48,12 @@ namespace KHJ  {
         double mean    = 0;
         double sd      = 0;
 
+        
         void push( queue_type& q )
         { 
-          std::string post_ = "_push.dat";
           
+          std::string post_ = "_push.dat";
+          std::cout << "PUSH" << std::endl;
           bench_plots.open(path + filename + post_);
           bench_plots << "#n        " << "#time_in_micro        " << "#compares" << std::endl;
           bench_plots << std::endl;
@@ -102,7 +104,7 @@ namespace KHJ  {
         void pop( queue_type& q )
         { 
           std::string post_ = "_pop.dat";
-          
+          std::cout << "POP" << std::endl;
           bench_plots.open(path + filename + post_);
           bench_plots << "#n        " << "#time_in_micro        " << "#compares" << std::endl;
           bench_plots << std::endl;
@@ -146,7 +148,8 @@ namespace KHJ  {
         void emplace( queue_type& q )
         {        
           std::string post_ = "_emplace.dat";
-          
+          std::cout << "EMPLACE" << std::endl;
+
           bench_plots.open(path + filename + post_);
           bench_plots << "#n        " << "#time_in_micro        " << "#compares" << std::endl;
           bench_plots << std::endl;
@@ -191,6 +194,7 @@ namespace KHJ  {
         { 
           std::string post_ = "_erase.dat";
           
+          std::cout << "ERASE" << std::endl;         
           bench_plots.open(path + filename + post_);
           bench_plots << "#n        " << "#time_in_micro        " << "#compares" << std::endl;
           bench_plots << std::endl;

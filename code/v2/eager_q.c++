@@ -60,11 +60,11 @@ int main( )
   B benchmarker( comps, "eager" );
   Q eager_Q;
 
- benchmarker.push( eager_Q );
- assert( eager_Q.size( ) == 0 );
- benchmarker.pop( eager_Q );
- benchmarker.emplace( eager_Q );
- benchmarker.erase( eager_Q );
+  benchmarker.push( eager_Q );
+  assert( eager_Q.size( ) == 0 );
+  benchmarker.pop( eager_Q );
+  benchmarker.emplace( eager_Q );
+  benchmarker.erase( eager_Q );
  
   return 0;
 }

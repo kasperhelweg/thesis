@@ -60,13 +60,14 @@ def cons_alg_a(A):
   i = 0
   b = 0
   while(True):
+    print( A )
     while(len(A[i]) > 2):
       if(i == 0):
-        h = A[i].pop() + A[i].pop() + A[i].pop()
+        h = A[i].pop() + A[i].pop() + A[i].pop() - 1
         A[i+1].append(h)
       elif(len(A[i]) > 2):
-        e = A[i].pop() + A[i].pop() + 1
-        w = ( A[i].pop() - 1 ) // 2
+        e = A[i].pop() + A[i].pop() - i
+        w = ( A[i].pop() - 1 ) #// 2
         A[i-1].append( w )
         A[i-1].append( w )
         A[i+1].append( e )
@@ -108,33 +109,39 @@ def cons_alg_inp(A, L):
   pass
 
 L = []
+P = []
 Q = [1,1,1,1,1,1,1,1,1,15,15,15,1,1,1,1,32767,32767,1,1,1,1023,1023,1023,2047,2047,4095,4095,4095,4095,4095]
 
 Li = linked_list()
 
-for i in range(0,100):
-  Li.append(3)
+for i in range(0,1000):
+  Li.append(1)
 
-for i in range(0,10000000):
-  L.append(3)
+for i in range(0,1000):
+  L.append(1)
+
+for i in range(0,100):
+  P.append(10)
 
 print("----------------------------")
 
 # Alloc Array
-'''
-A = []
-for i in range(0, math.floor(math.log(size(L), 2)-1)):
-  A.append([])
-#print(cons_alg_a(collect(A, L)))
-cProfile.run( 'cons_alg_a(collect(A, L))' )
-'''
 
 A = []
-for i in range(0, math.floor(math.log(size(L), 2)-1)):
+for i in range(0, math.floor(math.log(size(P), 2))):
   A.append([])
-R = cons_alg_a(A, L)
-print(R)
+print(cons_alg_a(collect(A, P)))
+#cProfile.run( 'cons_alg_a(collect(A, L))' )
 
+'''
+A = []
+for i in range(0, math.floor(math.log(size(Q), 2)-1)):
+  A.append([])
+
+R = cons_alg_b(A, Q)
+print( R )
+'''
+'''
 hh = 0
 for l in R:
   for t in l:
@@ -142,7 +149,7 @@ for l in R:
 
 print(hh)
 print(hh-10000000)
-
+'''
 
 
 #cProfile.run( 'cons_alg_b(A, L)' )
