@@ -1,18 +1,7 @@
-#include <iostream>
-#include <fstream>
-#include <assert.h>
-#include <time.h>
-#include <ctime>
-#include <sys/time.h>
-#include <algorithm>
-
 #include "heap_awh_node.h++"
 #include "node_awh_modifier.h++"
-
 #include "lazy_store.h++"
-#include "lazy_consolidation_policy.h++"
-
-#include "root_registry.h++"
+#include "lazy_root_registry.h++"
 #include "lazy_binary_queue.h++"
 #include "meldable_priority_queue.h++"
 
@@ -40,12 +29,8 @@ typedef KHJ::thesis::modifier::node_awh_modifier<N, C1> M;
 typedef std::allocator<N> A;
 // Storage
 typedef KHJ::thesis::store::lazy_store<N> S;
+typedef KHJ::thesis::root_registry::lazy_root_registry<N, M, S> F;
 /* LAZY BINARY QUEUE */
-// Policy policy
-typedef KHJ::thesis::policy::lazy_consolidation_policy<N, M, S> J;
-// Registry
-typedef KHJ::thesis::registry::root_registry<N, M, S, J> F;
-// eager binary queue
 typedef KHJ::thesis::queue::lazy_binary_queue<E, C1, N, M, F> R;
 typedef KHJ::thesis::priority_queue::meldable_priority_queue<E, C1, A, N, R> Q;
 
@@ -57,12 +42,10 @@ int main( )
   Q lazy_Q;
 
  benchmarker.push( lazy_Q );
- assert( lazy_Q.size( ) == 0 );
+ //assert( lazy_Q.size( ) == 0 );
  benchmarker.pop( lazy_Q );
  benchmarker.emplace( lazy_Q );
  benchmarker.erase( lazy_Q );
-
-
   
-  return 0;
+ return 0;
 }

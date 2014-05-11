@@ -1,20 +1,108 @@
-namespace KHJ {
-  namespace thesis {
-    namespace policy {
-      template <typename N, typename M, typename S>
-      lazy_consolidation_policy<N, M, S>::
-      lazy_consolidation_policy( store_reference_type s ) : store_( s )
+namespace KHJ  {
+  namespace thesis  {
+    namespace root_registry  {
+      /**
+       * Constructor.
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      lazy_root_registry<N, M, S>::lazy_root_registry( )
       { }
-      
-      template <typename N, typename M, typename S>
-      lazy_consolidation_policy<N, M, S>::~lazy_consolidation_policy( )
-      { }
-      
-      template <typename N, typename M, typename S>
-      void 
-      lazy_consolidation_policy<N, M, S>::consolidate( )
-      { 
 
+      /**
+       * DeConstructor.
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      lazy_root_registry<N, M, S>::~lazy_root_registry( ) 
+      { }
+      
+      /**
+       * top( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      N* lazy_root_registry<N, M, S>::top( ) const
+      { 
+        return store_.top; 
+      }
+
+      /**
+       * size( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      int lazy_root_registry<N, M, S>::size( ) const
+      { 
+        return store_.size( ); 
+      }
+
+      
+      /**
+       * insert( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      void lazy_root_registry<N, M, S>::insert( N* Q )
+      { 
+        if( store_.top == nullptr || 
+            modifier_type::compare_( (*Q).element(), (*store_.top).element() ) ) { 
+          store_.top = Q; 
+        } 
+        store_.push_front( Q );
+      }
+
+      /**
+       * extract( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      N* lazy_root_registry<N, M, S>::extract( )
+      { 
+        N* B = nullptr;
+        for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
+          if( !it->empty( )) {
+            B = store_.pop_front( );
+            if( B->height( ) != 0 ) {
+              N** st = modifier_type::split( B );
+              store_.push_front( st[0] ); store_.push_front( st[1] );
+              delete[] st;
+            }
+            break;
+          }
+        }
+        
+        return B;    
+      }
+       
+      /**
+       * consolidate( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      void lazy_root_registry<N, M, S>::consolidate( )
+      { 
         //int s = floor( log2( store_.size( ) ) + 1   );
 
         //Alloc array and initialize
@@ -36,7 +124,6 @@ namespace KHJ {
           for( i = 0; i <= s; i++) { 
             std::vector<N*> v = std::vector<N*>();
             A[i] = v;
-  
           }
 
           while( !store_.empty( )) {
@@ -88,63 +175,15 @@ namespace KHJ {
         }
       }
 
-      template <typename N, typename M, typename S>
-      void lazy_consolidation_policy<N, M, S>::insert( N* Q )
-      {
-        store_.push_front( Q );
-      }
-      
-      template <typename N, typename M, typename S>
-      N* 
-      lazy_consolidation_policy<N, M, S>::extract( )
-      { 
-        N* B = nullptr;
-        for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
-          if( !it->empty( )) {
-            B = store_.pop_front( );
-            if( B->height( ) != 0 ) {
-              N** st = modifier_type::split( B );
-              store_.push_front( st[0] ); store_.push_front( st[1] );
-              delete[] st;
-            }
-            break;
-          }
-        }
-        
-        /*
-        N* B = nullptr;
-        if( store_.one_heap( ) ) {
-          B = store_.pop_front( );
-          if( B->height( ) != 0 ) {
-            N** st = modifier_type::split( B );
-            store_.push_front( st[0] ); store_.push_front( st[1] );
-            if( modifier_type::compare_( (*st[0]).element(), (*st[1]).element() ) ) {
-              store_.top = st[0];
-            } else {
-              store_.top = st[1];
-            }
-            delete[] st;
-          }
-        } else {
-          B = store_.pop_front( );
-          if( B == store_.top ) {
-            N* T = B;
-            B = store_.pop_front();
-            store_.push_front( T );
-          }
-          if( B->height( ) != 0 ) {
-            N** st = modifier_type::split( B );
-            store_.push_front( st[0] ); store_.push_front( st[1] );
-            delete[] st;
-          }
-        }
-        */
-        
-        return B;    
-      }
-
-      template <typename N, typename M, typename S>
-      void lazy_consolidation_policy<N, M, S>::update_top( )
+      /**
+       * update_top( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      void lazy_root_registry<N, M, S>::update_top( )
       {
         store_.top = nullptr;
         for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
@@ -156,19 +195,24 @@ namespace KHJ {
           }
         }
       }
-   
-  
-      template <typename N, typename M, typename S>
-      void 
-      lazy_consolidation_policy<N, M, S>::fix_( store_iterator_type I )
-      { 
        
+      template<typename N, typename M, typename S>
+      void lazy_root_registry<N, M, S>::print( ) const
+      {
+        store_.print( );
+        if( store_.top != nullptr ) {
+          std::cout << "top: " << (*store_.top).element( ) << std::endl;
+        }
       }
-      
+
+      template <typename N, typename M, typename S>
+      void lazy_root_registry<N, M, S>::fix_( iterator_type I )
+      { 
+      }
+
       // swap aux
       template <typename N, typename M, typename S>
-      void 
-      lazy_consolidation_policy<N, M, S>::swap_nodes_ (N* nodes[], int i1, int i2) 
+      void lazy_root_registry<N, M, S>::swap_nodes_ (N* nodes[], int i1, int i2) 
       {
         N* temp   = nodes[i1];
         nodes[i1] = nodes[i2];

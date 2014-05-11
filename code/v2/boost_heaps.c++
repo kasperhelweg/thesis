@@ -24,7 +24,6 @@ int main( )
   std::ofstream emplace_bench_fib;
   std::ofstream erase_bench_fib;
 
-
   push_bench_binomial.open("./bench/data/binomial_push.dat");
   pop_bench_binomial.open("./bench/data/binomial_pop.dat");
   emplace_bench_binomial.open("./bench/data/binomial_emplace.dat");
@@ -39,7 +38,7 @@ int main( )
   boost::heap::fibonacci_heap<E> pq_f;
   
   double reps = 3;
-  E max_elements = pow(10, 7);
+  E max_elements = pow(10, 5);
   double sum;
   double mean;
   double sd;

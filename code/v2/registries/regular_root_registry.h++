@@ -5,50 +5,52 @@
   Author : KHJ 2014
 */
 
-#ifndef THESIS_A_ROOT_REGISTRY
-#define THESIS_A_ROOT_REGISTRY
+#ifndef THESIS_REGULAR_ROOT_REGISTRY
+#define THESIS_REGULAR_ROOT_REGISTRY
 #include <memory>
 #include "heap_utils.h++"
 
 namespace KHJ  {
   namespace thesis  {
-    namespace registry  {
-      template<typename N, typename M, typename S, typename J>
-      class root_registry {
+    namespace root_registry  {
+      template<typename N, typename M, typename S>
+      class regular_root_registry {
       public:
         typedef N node_type;
         typedef M modifier_type;
         typedef S store_type;
-        typedef J consolidation_policy;
-        
+                
         typedef typename store_type::iterator_type iterator_type;
         
-        explicit root_registry( );
-        ~root_registry( ); 
+        explicit regular_root_registry( );
+        ~regular_root_registry( ); 
         
         N*     top( ) const;
         bool empty( ) const;
         int   size( ) const;
+        void print( ) const;
+        
+        void insert( N* );
+        N*   extract( );        
+        void update_top( );        
+        void consolidate( );
         
         inline iterator_type begin( ) { return store_.begin( ); }
         inline iterator_type end( )   { return store_.end( ); }
-        
-        void insert( N* );
-        N*  extract(    );
-        
-        void consolidate( );
-        void  update_top( );
-        
-        void print( ) const;
         
         // Debug utils
         KHJ::thesis::utils::pfb<N, M> utils;
       private:
         store_type store_;
-        consolidation_policy policy_;
+        std::vector<iterator_type> hi_;
+        
+        void fix_( iterator_type );
+        void swap_nodes_( N* [], int, int );
+        
+        
       };
     }
   }
 }
-#include "root_registry.i++"
+#include "regular_root_registry.i++"
 #endif

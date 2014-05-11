@@ -1,10 +1,10 @@
-#ifndef THESIS_NUMERAL_BINARY_QUEUE
-#define THESIS_NUMERAL_BINARY_QUEUE
+#ifndef THESIS_MAGICAL_BINARY_QUEUE
+#define THESIS_MAGICAL_BINARY_QUEUE
 namespace KHJ  {
   namespace thesis  {
     namespace queue  {
       template<typename E, typename C, typename N, typename M, typename R>
-      class numeral_binary_queue {
+      class magical_binary_queue {
       public:
         typedef E element_type;
         typedef C comparator_type;
@@ -14,7 +14,7 @@ namespace KHJ  {
         
         typedef typename registry_type::iterator_type iterator_type;
                 
-        explicit numeral_binary_queue( ) : registry_( R( )) { } 
+        explicit magical_binary_queue( ) : registry_( R( )) { } 
 
         int size( ) const;
         
@@ -23,7 +23,7 @@ namespace KHJ  {
         N*  erase_min( );       //delete_min
         void    erase( N* );  //delete //should take iterator instead
         
-        void  meld( numeral_binary_queue& );       
+        void  meld( magical_binary_queue& );       
         void clear( );
         
       private:
@@ -32,5 +32,5 @@ namespace KHJ  {
     }
   }
 }
-#include "numeral_binary_queue.i++"
+#include "magical_binary_queue.i++"
 #endif

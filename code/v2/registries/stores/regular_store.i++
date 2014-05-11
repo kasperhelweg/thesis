@@ -1,0 +1,124 @@
+namespace KHJ  {
+  namespace thesis  {
+    namespace store {
+      
+      /**
+       * Constructor.
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N>
+      regular_store<N>::regular_store( ) : top( nullptr )
+      {
+        root_table_node n1, n2; 
+        root_table_.push_back( n1 ); 
+        root_table_.push_back( n2 );
+      }
+
+      /**
+       * DeConstructor.
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N>
+      regular_store<N>::~regular_store( ) 
+      { }
+
+      /**
+       * push_front( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N>
+      void regular_store<N>::push_front( N* S ) 
+      { 
+   
+      }
+
+      /**
+       * pop_front( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N>
+      N* regular_store<N>::pop_front( ) 
+      { 
+        
+      }
+
+      template <typename N>
+      int regular_store<N>::size( ) const
+      { 
+    
+      }
+
+      /**
+       * insert( I position )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N>
+      void regular_store<N>::insert( iterator_type position, N* S )
+      { 
+  
+      }
+
+      /**
+       * extract( I position )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N>
+      N* regular_store<N>::extract( iterator_type position )
+      {
+     
+      }
+
+      /**
+       * extract( N* R )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N>
+      N* regular_store<N>::extract( iterator_type position, root_list_iterator_type index )
+      {
+      
+      }
+        
+      // grow_( ).
+      
+      template <typename N>
+      void regular_store<N>::grow( ) 
+      { 
+     
+      }
+
+      // shrink_( ).
+      
+      template <typename N>
+      void regular_store<N>::shrink(  ) 
+      { 
+      }
+      
+      template<typename N>
+      void regular_store<N>::print( ) const
+      { 
+      
+      }
+    }
+  }
+}

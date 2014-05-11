@@ -1,9 +1,6 @@
-//#include <memory>
-//#include <assert.h>
-#include "heap_utils.h++"
-
 #ifndef THESIS_A_NODE_MODIFIER
 #define THESIS_A_NODE_MODIFIER
+#include "heap_utils.h++"
 namespace KHJ  {
   namespace thesis  {
     namespace modifier  {

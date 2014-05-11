@@ -1,0 +1,37 @@
+namespace KHJ  {
+  namespace thesis  {
+    namespace queue  {
+      
+      template<typename E, typename C, typename N, typename M, typename R>
+      N* regular_binary_queue<E, C, N, M, R>::find_min(  ) 
+      {
+        N* S = registry_.top( );
+        return S;
+      }
+      
+      template<typename E, typename C, typename N, typename M, typename R>
+      void regular_binary_queue<E, C, N, M, R>::insert( N* S ) 
+      {
+        registry_.insert( S );
+      }
+      
+      template<typename E, typename C, typename N, typename M, typename R>
+      N* regular_binary_queue<E, C, N, M, R>::erase_min( ) 
+      {
+        N* T = registry_.top( ); erase( T );
+        return T;
+      }
+      
+      template<typename E, typename C, typename N, typename M, typename R>
+      void regular_binary_queue<E, C, N, M, R>::erase( N* P ) 
+      {
+      }
+      
+      template<typename E, typename C, typename N, typename M, typename R>
+      int regular_binary_queue<E, C, N, M, R>::size(  ) const
+      {
+        return registry_.size( );
+      }
+    }
+  }
+}

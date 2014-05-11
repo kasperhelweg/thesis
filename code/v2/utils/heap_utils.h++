@@ -1,12 +1,12 @@
+#ifndef THESIS_HEAP_UTILS
+#define THESIS_HEAP_UTILS
 #include <stdlib.h>
 #include <math.h>
 #include <deque>
 #include <string>
 #include <sstream>
 #include <algorithm>
-
-#ifndef THESIS_HEAP_UTILS
-#define THESIS_HEAP_UTILS
+#include <iostream>
 namespace KHJ {
   namespace thesis {
     namespace utils {

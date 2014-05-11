@@ -15,7 +15,8 @@
  */
 #ifndef THESIS_HEAP_AWH_NODE
 #define THESIS_HEAP_AWH_NODE
-#include <memory>
+#include <assert.h>
+//#include <memory>
 #include <math.h>
 #include "node_awh_modifier.h++"
 namespace KHJ {

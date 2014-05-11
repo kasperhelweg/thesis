@@ -1,66 +1,117 @@
-namespace KHJ {
-  namespace thesis {
-    namespace policy {
-      template <typename N, typename M, typename S>
-      numeral_consolidation_policy<N, M, S>::
-      numeral_consolidation_policy( store_reference_type s ) : store_( s )
+namespace KHJ  {
+  namespace thesis  {
+    namespace root_registry  {
+      /**
+       * Constructor.
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      magical_root_registry<N, M, S>::magical_root_registry( ) 
       { 
         state_.reserve( 2 );
         state_[0] = store_.begin( );
         state_[1] = std::next( state_[0] );
         lo_.push_back( store_.begin( ) );
       }
-      
-      template <typename N, typename M, typename S>
-      numeral_consolidation_policy<N, M, S>::~numeral_consolidation_policy( )
-      { }
 
-      template <typename N, typename M, typename S>
-      void numeral_consolidation_policy<N, M, S>::consolidate( )
-      {
-        return;
+      /**
+       * DeConstructor.
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      magical_root_registry<N, M, S>::~magical_root_registry( ) 
+      { }
+      
+      /**
+       * top( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      N* magical_root_registry<N, M, S>::top( ) const
+      { 
+        return store_.top; 
       }
 
-      template <typename N, typename M, typename S>
-      void numeral_consolidation_policy<N, M, S>::insert( N* Q )
-      {
+      /**
+       * size( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      int magical_root_registry<N, M, S>::size( ) const
+      { 
+        return store_.size( ); 
+      }
+
+      
+      /**
+       * insert( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      void magical_root_registry<N, M, S>::insert( N* Q )
+      { 
+        if( store_.top == nullptr || 
+            modifier_type::compare_( (*Q).element(), (*store_.top).element() ) ) { 
+          store_.top = Q; 
+        } 
         store_.push_front( Q );
-        
+
         if( (*store_.begin( )).size( ) == 2 ) { 
           lo_.pop_back( ); 
         } else if( (*store_.begin( )).size( ) == 3 ) { 
           hi_.push_back( store_.begin( ) ); 
         }
-        
         if( !hi_.empty( ) ) {
-          store_iterator_type I = hi_.back( ); hi_.pop_back( );
+          iterator_type I = hi_.back( ); hi_.pop_back( );
           fix_( I );
         }       
       }
-  
-      template <typename N, typename M, typename S>
-      N* numeral_consolidation_policy<N, M, S>::extract( )
+
+      /**
+       * extract( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      N* magical_root_registry<N, M, S>::extract( )
       { 
         N* B;
     
         if( store_.size( ) == 4 ) {
-          store_iterator_type I = store_.begin( );
+          iterator_type I = store_.begin( );
           B = store_.extract( std::next( I ) );
           N** st = modifier_type::split( B );
           store_.insert( I, st[0] ); store_.insert( I, st[1] ); 
         } else if(  store_.size( ) <= 3 ) {
-          store_iterator_type I = store_.begin( );
+          iterator_type I = store_.begin( );
           B   = store_.extract( I );
         } else {
-          store_iterator_type I = store_.begin( );
+          iterator_type I = store_.begin( );
           if( !in_idle_state_( ) && !lo_.empty( ) ) {
             if( state_[0]->size( ) == 2 && state_[1]->size( ) == 2) {
               if( !hi_.empty( ) && hi_[hi_.size( ) - 1]->size( ) == 3) {
-                store_iterator_type L = lo_.back( ); lo_.pop_back( );
+                iterator_type L = lo_.back( ); lo_.pop_back( );
                 unfix_( L );
               }
             } else {
-              store_iterator_type L = lo_.back( ); lo_.pop_back( );
+              iterator_type L = lo_.back( ); lo_.pop_back( );
               unfix_( L );
             }
           }
@@ -74,12 +125,55 @@ namespace KHJ {
         
         return B;
       }
-  
-      template <typename N, typename M, typename S>
-      void numeral_consolidation_policy<N, M, S>::fix_( store_iterator_type I )
+
+      /**
+       * consolidate( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      void magical_root_registry<N, M, S>::consolidate( )
       { 
-        store_iterator_type E = std::next( I );  
-        store_iterator_type W = std::prev( I );
+        return;
+      }
+
+      /**
+       * update_top( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      void magical_root_registry<N, M, S>::update_top( )
+      { 
+        store_.top = nullptr;
+        for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
+          for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
+            if( store_.top == nullptr || 
+                modifier_type::compare_( (*(*vit)).element(),  (*store_.top).element() ) )  {          
+              store_.top = *vit;
+            }
+          }
+        }
+      }
+       
+      template<typename N, typename M, typename S>
+      void magical_root_registry<N, M, S>::print( ) const
+      {
+        store_.print( );
+        if( store_.top != nullptr ) {
+          std::cout << "top: " << (*store_.top).element( ) << std::endl;
+        }
+      }
+      
+      template <typename N, typename M, typename S>
+      void magical_root_registry<N, M, S>::fix_( iterator_type I )
+      { 
+        iterator_type E = std::next( I );  
+        iterator_type W = std::prev( I );
 
         if( E == store_.end( ) ) { store_.grow( ); --E; }
 
@@ -107,20 +201,14 @@ namespace KHJ {
           update_lo_( E );
         }
         lo_.push_back( I );
+      
       }
 
-      /**
-       * unfix_()
-       * 
-       * complexity is (probably) O(1)
-       * @author KHJ
-       *
-       */
-      template<typename N, typename M, typename S>
-      void numeral_consolidation_policy<N, M, S>::unfix_( store_iterator_type I )
+      template <typename N, typename M, typename S>
+      void magical_root_registry<N, M, S>::unfix_( iterator_type I )
       { 
-        store_iterator_type E = std::next( I );
-        store_iterator_type W = std::prev( I );
+        iterator_type E = std::next( I );
+        iterator_type W = std::prev( I );
         
         N* P   = store_.extract( E );
         N** st = modifier_type::split( P );
@@ -153,8 +241,9 @@ namespace KHJ {
         delete[] st;
       }
 
+      
       template<typename N, typename M, typename S>
-      bool numeral_consolidation_policy<N, M, S>::in_idle_state_( ) const
+      bool magical_root_registry<N, M, S>::in_idle_state_( ) const
       { 
         if( state_[0]->size() == 2 && state_[1]->size() == 1) { 
           return true;
@@ -167,7 +256,7 @@ namespace KHJ {
       }
 
       template <typename N, typename M, typename S>
-      void  numeral_consolidation_policy<N, M, S>::update_lo_( store_iterator_type E ) 
+      void magical_root_registry<N, M, S>::update_lo_( iterator_type E ) 
       {
         if( E->size( ) == 1 && lo_.empty( ) ) { 
           lo_.push_back( E );
@@ -177,25 +266,10 @@ namespace KHJ {
           hi_.push_back( E ); 
         } 
       }
-
-      template <typename N, typename M, typename S>
-      void numeral_consolidation_policy<N, M, S>::update_top( )
-      {
-        store_.top = nullptr;
-        for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
-          for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
-            if( store_.top == nullptr || 
-                modifier_type::compare_( (*(*vit)).element(),  (*store_.top).element() ) )  {          
-              store_.top = *vit;
-            }
-          }
-        }
-      }
- 
       
       // swap aux
       template <typename N, typename M, typename S>
-      void numeral_consolidation_policy<N, M, S>::swap_nodes_ (N* nodes[], int i1, int i2) 
+      void magical_root_registry<N, M, S>::swap_nodes_ (N* nodes[], int i1, int i2) 
       {
         N* temp   = nodes[i1];
         nodes[i1] = nodes[i2];
