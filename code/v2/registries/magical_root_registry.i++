@@ -12,9 +12,9 @@ namespace KHJ  {
       magical_root_registry<N, M, S>::magical_root_registry( ) 
       { 
         state_.reserve( 2 );
-        state_[0] = store_.begin( );
+        state_[0] = root_table_.begin( );
         state_[1] = std::next( state_[0] );
-        lo_.push_back( store_.begin( ) );
+        lo_.push_back( root_table_.begin( ) );
       }
 
       /**
@@ -38,7 +38,7 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       N* magical_root_registry<N, M, S>::top( ) const
       { 
-        return store_.top; 
+        return root_table_.top; 
       }
 
       /**
@@ -51,7 +51,7 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       int magical_root_registry<N, M, S>::size( ) const
       { 
-        return store_.size( ); 
+        return root_table_.size( ); 
       }
 
       
@@ -65,16 +65,16 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void magical_root_registry<N, M, S>::insert( N* Q )
       { 
-        if( store_.top == nullptr || 
-            modifier_type::compare_( (*Q).element(), (*store_.top).element() ) ) { 
-          store_.top = Q; 
+        if( root_table_.top == nullptr || 
+            modifier_type::compare_( (*Q).element(), (*root_table_.top).element() ) ) { 
+          root_table_.top = Q; 
         } 
-        store_.push_front( Q );
+        root_table_.push_front( Q );
 
-        if( (*store_.begin( )).size( ) == 2 ) { 
+        if( (*root_table_.begin( )).size( ) == 2 ) { 
           lo_.pop_back( ); 
-        } else if( (*store_.begin( )).size( ) == 3 ) { 
-          hi_.push_back( store_.begin( ) ); 
+        } else if( (*root_table_.begin( )).size( ) == 3 ) { 
+          hi_.push_back( root_table_.begin( ) ); 
         }
         if( !hi_.empty( ) ) {
           iterator_type I = hi_.back( ); hi_.pop_back( );
@@ -94,16 +94,16 @@ namespace KHJ  {
       { 
         N* B;
     
-        if( store_.size( ) == 4 ) {
-          iterator_type I = store_.begin( );
-          B = store_.extract( std::next( I ) );
+        if( root_table_.size( ) == 4 ) {
+          iterator_type I = root_table_.begin( );
+          B = root_table_.extract( std::next( I ) );
           N** st = modifier_type::split( B );
-          store_.insert( I, st[0] ); store_.insert( I, st[1] ); 
-        } else if(  store_.size( ) <= 3 ) {
-          iterator_type I = store_.begin( );
-          B   = store_.extract( I );
+          root_table_.insert( I, st[0] ); root_table_.insert( I, st[1] ); 
+        } else if(  root_table_.size( ) <= 3 ) {
+          iterator_type I = root_table_.begin( );
+          B   = root_table_.extract( I );
         } else {
-          iterator_type I = store_.begin( );
+          iterator_type I = root_table_.begin( );
           if( !in_idle_state_( ) && !lo_.empty( ) ) {
             if( state_[0]->size( ) == 2 && state_[1]->size( ) == 2) {
               if( !hi_.empty( ) && hi_[hi_.size( ) - 1]->size( ) == 3) {
@@ -115,7 +115,7 @@ namespace KHJ  {
               unfix_( L );
             }
           }
-          B = store_.extract( I );
+          B = root_table_.extract( I );
           if( !I->empty( ) && I->size( ) == 2 ) {  hi_.pop_back( );
             // Valgrind reports Invalid Read... likely cause is:  lo_[lo_.size( ) - 1]
           } else if( ( I->empty( ) || ( !I->empty() && I->size( ) == 1 )) && ( lo_[lo_.size( ) - 1]  != I ) ) {
@@ -149,12 +149,12 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void magical_root_registry<N, M, S>::update_top( )
       { 
-        store_.top = nullptr;
-        for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
+        root_table_.top = nullptr;
+        for( auto it = root_table_.begin( ) ; it != root_table_.end( ) ; it++ ) {
           for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
-            if( store_.top == nullptr || 
-                modifier_type::compare_( (*(*vit)).element(),  (*store_.top).element() ) )  {          
-              store_.top = *vit;
+            if( root_table_.top == nullptr || 
+                modifier_type::compare_( (*(*vit)).element(),  (*root_table_.top).element() ) )  {          
+              root_table_.top = *vit;
             }
           }
         }
@@ -163,9 +163,9 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void magical_root_registry<N, M, S>::print( ) const
       {
-        store_.print( );
-        if( store_.top != nullptr ) {
-          std::cout << "top: " << (*store_.top).element( ) << std::endl;
+        root_table_.print( );
+        if( root_table_.top != nullptr ) {
+          std::cout << "top: " << (*root_table_.top).element( ) << std::endl;
         }
       }
       
@@ -175,29 +175,29 @@ namespace KHJ  {
         iterator_type E = std::next( I );  
         iterator_type W = std::prev( I );
 
-        if( E == store_.end( ) ) { store_.grow( ); --E; }
+        if( E == root_table_.end( ) ) { root_table_.grow( ); --E; }
 
-        N* Q = store_.extract( I );
-        N* R = store_.extract( I );
-        N* V = store_.extract( I );
+        N* Q = root_table_.extract( I );
+        N* R = root_table_.extract( I );
+        N* V = root_table_.extract( I );
         
         N* t[3] =  { Q, R, V };     
         swap_nodes_( t, 0, modifier_type::compare_( (*t[1]).element(), (*t[0]).element() ) );
         swap_nodes_( t, 2, modifier_type::compare_( (*t[0]).element(), (*t[2]).element() ) );
         
-        if( I != store_.begin( ) ) {
+        if( I != root_table_.begin( ) ) {
           N** st = modifier_type::split( t[0] );
-          modifier_type::join_heaps( t[0], t[1], t[2]  ); store_.insert( E, t[0]  );
+          modifier_type::join_heaps( t[0], t[1], t[2]  ); root_table_.insert( E, t[0]  );
           
           if( !W->empty( ) && W->size( ) < 2 ) lo_.pop_back( );
           update_lo_( E );
           
-          store_.insert( W, st[0] ); store_.insert( W, st[1] );
+          root_table_.insert( W, st[0] ); root_table_.insert( W, st[1] );
           if( W->size( ) > 2 ) hi_.push_back( W );
           
           delete[] st;
         } else {
-          modifier_type::join_heaps( t[0], t[1], t[2]  ); store_.insert( E, t[0] );
+          modifier_type::join_heaps( t[0], t[1], t[2]  ); root_table_.insert( E, t[0] );
           update_lo_( E );
         }
         lo_.push_back( I );
@@ -210,11 +210,11 @@ namespace KHJ  {
         iterator_type E = std::next( I );
         iterator_type W = std::prev( I );
         
-        N* P   = store_.extract( E );
+        N* P   = root_table_.extract( E );
         N** st = modifier_type::split( P );
         
-        if( E->empty( ) && E == store_.last( ) ) {
-          lo_.pop_back( ); store_.shrink( );
+        if( E->empty( ) && E == root_table_.last( ) ) {
+          lo_.pop_back( ); root_table_.shrink( );
         } else {          
           if( !E->empty( ) && E->size( ) == 1 ) {
             lo_.push_back( E );
@@ -222,13 +222,13 @@ namespace KHJ  {
             hi_.pop_back( );
           }
         }
-        if( I != store_.begin( ) ) {
+        if( I != root_table_.begin( ) ) {
           if( !W->empty( ) && W->size( ) >= 3 ) hi_.pop_back( ); 
           
-          N* Q = store_.extract( W );
-          N* R = store_.extract( W );
+          N* Q = root_table_.extract( W );
+          N* R = root_table_.extract( W );
           
-          if( !W->empty( ) && W->size( ) <= 1 && W != store_.begin( ) ) lo_.push_back( W ); 
+          if( !W->empty( ) && W->size( ) <= 1 && W != root_table_.begin( ) ) lo_.push_back( W ); 
          
           modifier_type::join_heaps( P, Q, R  );
           modifier_type::siftdown( P );
@@ -236,7 +236,7 @@ namespace KHJ  {
           P = P->find_root( ); 
         }
 
-        store_.insert( I, P ); store_.insert( I, st[0] ); store_.insert( I, st[1] );
+        root_table_.insert( I, P ); root_table_.insert( I, st[0] ); root_table_.insert( I, st[1] );
         hi_.push_back( I );       
         delete[] st;
       }
@@ -248,7 +248,7 @@ namespace KHJ  {
         if( state_[0]->size() == 2 && state_[1]->size() == 1) { 
           return true;
         } else if( state_[0]->size( ) == 1 && state_[1]->size( ) == 2) {
-          if( lo_.size( ) == 1 || lo_[lo_.size( ) - 2] == store_.last( ) ) {            
+          if( lo_.size( ) == 1 || lo_[lo_.size( ) - 2] == root_table_.last( ) ) {            
             return true;
           }
         }

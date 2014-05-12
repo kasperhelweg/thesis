@@ -38,13 +38,13 @@ namespace KHJ  {
           } 
           if( is_root || (*B).is_root( ) ){
             for( auto it = registry_.begin( ) ; it != registry_.end( ) ; it++ ) {
-              for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
-                if( !(*(*vit)).is_root( ) ) {
-                  *vit = (*(*vit)).find_root();
-                } else if( (*vit) == P  ) {
-                  *vit = (*B).find_root( ); 
+             
+                if( !(*(*it)).is_root( ) ) {
+                  *it = (*(*it)).find_root();
+                } else if( (*it) == P  ) {
+                  *it = (*B).find_root( ); 
                 }
-              }
+              
             }
           }
         }

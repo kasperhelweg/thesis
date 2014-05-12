@@ -7,7 +7,7 @@
 
 #ifndef THESIS_REGULAR_ROOT_REGISTRY
 #define THESIS_REGULAR_ROOT_REGISTRY
-#include <memory>
+#include <forward_list>
 #include "heap_utils.h++"
 
 namespace KHJ  {
@@ -18,9 +18,9 @@ namespace KHJ  {
       public:
         typedef N node_type;
         typedef M modifier_type;
-        typedef S store_type;
+        typedef S root_table_type;
                 
-        typedef typename store_type::iterator_type iterator_type;
+        typedef typename root_table_type::iterator_type iterator_type;
         
         explicit regular_root_registry( );
         ~regular_root_registry( ); 
@@ -35,19 +35,17 @@ namespace KHJ  {
         void update_top( );        
         void consolidate( );
         
-        inline iterator_type begin( ) { return store_.begin( ); }
-        inline iterator_type end( )   { return store_.end( ); }
+        inline iterator_type begin( ) { return root_table_.begin( ); }
+        inline iterator_type end( )   { return root_table_.end( ); }
         
         // Debug utils
         KHJ::thesis::utils::pfb<N, M> utils;
       private:
-        store_type store_;
-        std::vector<iterator_type> hi_;
-        
-        void fix_( iterator_type );
+        root_table_type root_table_;
+        std::forward_list<iterator_type> hi_;
+        std::forward_list<iterator_type> walls_;
+                
         void swap_nodes_( N* [], int, int );
-        
-        
       };
     }
   }

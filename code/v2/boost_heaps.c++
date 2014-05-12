@@ -38,7 +38,7 @@ int main( )
   boost::heap::fibonacci_heap<E> pq_f;
   
   double reps = 3;
-  E max_elements = pow(10, 5);
+  E max_elements = pow(10, 7);
   double sum;
   double mean;
   double sd;

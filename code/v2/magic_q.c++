@@ -1,6 +1,6 @@
 #include "heap_a_node.h++"
 #include "node_a_modifier.h++"
-#include "paper_store.h++"
+#include "paper_root_table.h++"
 #include "magical_root_registry.h++"
 #include "magical_binary_queue.h++"
 #include "meldable_priority_queue.h++"
@@ -27,7 +27,7 @@ typedef KHJ::thesis::modifier::node_a_modifier<N, C1> M;
 // Allocator
 typedef std::allocator<N> A;
 // Storage
-typedef KHJ::thesis::store::paper_store<N> S;
+typedef KHJ::thesis::root_table::paper_root_table<N> S;
 /* LAZY BINARY QUEUE */
 // Registry
 typedef KHJ::thesis::root_registry::magical_root_registry<N, M, S> F;

@@ -33,7 +33,7 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       N* regular_root_registry<N, M, S>::top( ) const
       { 
-        return store_.top; 
+        return root_table_.top; 
       }
 
       /**
@@ -46,7 +46,7 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       int regular_root_registry<N, M, S>::size( ) const
       { 
-        return store_.size( ); 
+        return root_table_.size( ); 
       }
 
       
@@ -60,12 +60,12 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void regular_root_registry<N, M, S>::insert( N* Q )
       { 
-        if( store_.top == nullptr || 
-            modifier_type::compare_( (*Q).element(), (*store_.top).element() ) ) { 
-          store_.top = Q; 
+        if( root_table_.top == nullptr || 
+            modifier_type::compare_( (*Q).element(), (*root_table_.top).element() ) ) { 
+          root_table_.top = Q; 
         } 
         
-        store_.push_front( Q );
+        root_table_.push_front( Q );
       }
 
       /**
@@ -78,24 +78,7 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       N* regular_root_registry<N, M, S>::extract( )
       { 
-        N* B = nullptr;               
-        for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
-          if( !it->empty( )) {
-            B = store_.extract( it );
-            if( B->height( ) != 0 ) {
-              N** st = modifier_type::split( B );
-              store_.insert( --it, st[0] ); store_.insert( it, st[1] );
-              if( it->size( ) >= 3 ) { fix_( it ); } 
-              delete[] st;
-            }
-            break;
-          }
-        }
-        if( (*B).element( ) == (*store_.top).element( ) ) {
-          modifier_type::siftup( store_.top );
-          store_.top = B;
-        }
-        return B;
+      
       }
        
       /**
@@ -108,16 +91,7 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void regular_root_registry<N, M, S>::consolidate( )
       { 
-        if( (*store_.begin( )).size( ) == 3 )
-          hi_.push_back( store_.begin( ) ); 
-        while( 1 ) {
-          if( !hi_.empty( ) ) {
-            iterator_type I = hi_.back( ); hi_.pop_back( );
-            fix_( I );
-          } else {
-            break;
-          }
-        }        
+      
       }
 
       /**
@@ -130,51 +104,13 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void regular_root_registry<N, M, S>::update_top( )
       {
-        store_.top = nullptr;
-        for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
-          for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
-            if( store_.top == nullptr || 
-                modifier_type::compare_( (*(*vit)).element(),  (*store_.top).element() ) )  {          
-              store_.top = *vit;
-            }
-          }
-        }
+      
       }
        
       template<typename N, typename M, typename S>
       void regular_root_registry<N, M, S>::print( ) const
       {
-        store_.print( );
-        if( store_.top != nullptr ) {
-          std::cout << "top: " << (*store_.top).element( ) << std::endl;
-        }
-      }
-
-      template <typename N, typename M, typename S>
-      void regular_root_registry<N, M, S>::fix_( iterator_type I )
-      { 
-        iterator_type E = std::next( I );  
-        iterator_type W = std::prev( I );
-        
-        if( E == store_.end( ) ) { store_.grow( ); --E; }
-        
-        N* Q = store_.extract( I );
-        N* R = store_.extract( I );
-        N* V = store_.extract( I );
-        
-        N* t[3] = { Q, R, V };     
-        swap_nodes_( t, 0, modifier_type::compare_( (*t[1]).element(), (*t[0]).element() ) );
-        swap_nodes_( t, 2, modifier_type::compare_( (*t[0]).element(), (*t[2]).element() ) );
-        
-        if( I != store_.begin( ) ) {
-          N** st = modifier_type::split( t[0] );
-          modifier_type::join_heaps( t[0], t[1], t[2]  ); store_.insert( E, t[0]  );
-          store_.insert( W, st[0] ); store_.insert( W, st[1] );
-          delete[] st;
-        } else {
-          modifier_type::join_heaps( t[0], t[1], t[2]  ); store_.insert( E, t[0] );
-        }
-        if( E->size( ) == 3 ) { hi_.push_back( E ); }
+      
       }
 
       // swap aux

@@ -18,9 +18,9 @@ namespace KHJ  {
       public:
         typedef N node_type;
         typedef M modifier_type;
-        typedef S store_type;
+        typedef S root_table_type;
                 
-        typedef typename store_type::iterator_type iterator_type;
+        typedef typename root_table_type::iterator_type iterator_type;
         
         explicit eager_root_registry( );
         ~eager_root_registry( ); 
@@ -32,16 +32,16 @@ namespace KHJ  {
         
         void insert( N* );
         N*   extract( );        
-        void update_top( );        
         void consolidate( );
-        
-        inline iterator_type begin( ) { return store_.begin( ); }
-        inline iterator_type end( )   { return store_.end( ); }
+        void update_top( );        
+                
+        inline iterator_type begin( ) { return root_table_.begin( ); }
+        inline iterator_type end( )   { return root_table_.end( ); }
         
         // Debug utils
         KHJ::thesis::utils::pfb<N, M> utils;
       private:
-        store_type store_;
+        root_table_type root_table_;
         std::vector<iterator_type> hi_;
         
         void fix_( iterator_type );

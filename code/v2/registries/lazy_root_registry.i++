@@ -33,7 +33,7 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       N* lazy_root_registry<N, M, S>::top( ) const
       { 
-        return store_.top; 
+        return root_list_.top; 
       }
 
       /**
@@ -46,7 +46,7 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       int lazy_root_registry<N, M, S>::size( ) const
       { 
-        return store_.size( ); 
+        return root_list_.size( ); 
       }
 
       
@@ -60,11 +60,11 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void lazy_root_registry<N, M, S>::insert( N* Q )
       { 
-        if( store_.top == nullptr || 
-            modifier_type::compare_( (*Q).element(), (*store_.top).element() ) ) { 
-          store_.top = Q; 
+        if( root_list_.top == nullptr || 
+            modifier_type::compare_( (*Q).element(), (*root_list_.top).element() ) ) { 
+          root_list_.top = Q; 
         } 
-        store_.push_front( Q );
+        root_list_.push_front( Q );
       }
 
       /**
@@ -78,18 +78,15 @@ namespace KHJ  {
       N* lazy_root_registry<N, M, S>::extract( )
       { 
         N* B = nullptr;
-        for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
-          if( !it->empty( )) {
-            B = store_.pop_front( );
-            if( B->height( ) != 0 ) {
-              N** st = modifier_type::split( B );
-              store_.push_front( st[0] ); store_.push_front( st[1] );
-              delete[] st;
-            }
-            break;
+        
+        if( !root_list_.empty( ) ) {
+          B = root_list_.pop_front( );
+          if( B->height( ) != 0 ) {
+            N** st = modifier_type::split( B );
+            root_list_.push_front( st[0] ); root_list_.push_front( st[1] );
+            delete[] st;
           }
         }
-        
         return B;    
       }
        
@@ -103,20 +100,20 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void lazy_root_registry<N, M, S>::consolidate( )
       { 
-        //int s = floor( log2( store_.size( ) ) + 1   );
+        //int s = floor( log2( root_list_.size( ) ) + 1   );
 
         //Alloc array and initialize
         int i = 0, w = 0, c = 0;
-        int s = floor( log2( store_.size( ) ) + 1   );
+        int s = floor( log2( root_list_.size( ) ) + 1   );
     
         int C[s]; for( i = 0 ; i < s; i++) {  C[i] = 0; }
         
-        for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
-          for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
-            int h = (*vit)->height( );
+        for( auto it = root_list_.begin( ) ; it != root_list_.end( ) ; it++ ) {
+         
+            int h = (*it)->height( );
             C[h] += 1;
             if ( C[h] > 2 ) { c = 1; break; }
-          }
+          
         }
         
         if( c ) {          
@@ -126,9 +123,9 @@ namespace KHJ  {
             A[i] = v;
           }
 
-          while( !store_.empty( )) {
+          while( !root_list_.empty( )) {
   
-            N* Q  = store_.pop_front( );
+            N* Q  = root_list_.pop_front( );
             i = (*Q).height( );
             A[i].push_back(Q);
   
@@ -168,7 +165,7 @@ namespace KHJ  {
           for( i = s - 1 ; i >= 0; i--) { 
             for( auto it = A[i].begin( ); it != A[i].end( ); ++it) {
               N* v = (*it); 
-              store_.push_front( v );
+              root_list_.push_front( v );
             } 
             A[i].clear();
           }
@@ -185,23 +182,23 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void lazy_root_registry<N, M, S>::update_top( )
       {
-        store_.top = nullptr;
-        for( auto it = store_.begin( ) ; it != store_.end( ) ; it++ ) {
-          for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
-            if( store_.top == nullptr || 
-                modifier_type::compare_( (*(*vit)).element(),  (*store_.top).element() ) )  {          
-              store_.top = *vit;
+        root_list_.top = nullptr;
+        for( auto it = root_list_.begin( ) ; it != root_list_.end( ) ; it++ ) {
+         
+            if( root_list_.top == nullptr || 
+                modifier_type::compare_( (*(*it)).element(),  (*root_list_.top).element() ) )  {          
+              root_list_.top = *it;
             }
-          }
+         
         }
       }
        
       template<typename N, typename M, typename S>
       void lazy_root_registry<N, M, S>::print( ) const
       {
-        store_.print( );
-        if( store_.top != nullptr ) {
-          std::cout << "top: " << (*store_.top).element( ) << std::endl;
+        root_list_.print( );
+        if( root_list_.top != nullptr ) {
+          std::cout << "top: " << (*root_list_.top).element( ) << std::endl;
         }
       }
 

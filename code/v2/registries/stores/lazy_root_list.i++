@@ -1,6 +1,6 @@
 namespace KHJ  {
   namespace thesis  {
-    namespace store {
+    namespace root_list {
       
       /**
        * Constructor.
@@ -10,9 +10,9 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      lazy_store<N>::lazy_store( ) : top( nullptr ), size_( 0 )
+      lazy_root_list<N>::lazy_root_list( ) : top( nullptr ), size_( 0 )
       {
-        head_.push_front( store_ );
+        
       }
 
       /**
@@ -23,7 +23,7 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      lazy_store<N>::~lazy_store( ) 
+      lazy_root_list<N>::~lazy_root_list( ) 
       { }
 
       /**
@@ -34,9 +34,9 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      void lazy_store<N>::push_front( N* S ) 
+      void lazy_root_list<N>::push_front( N* S ) 
       { 
-        (*(begin( ))).push_back( S );
+        root_list_.push_back( S );
         size_ += pow( 2, (*S).height( ) + 1) - 1;
       }
 
@@ -48,42 +48,40 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      N* lazy_store<N>::pop_front( ) 
+      N* lazy_root_list<N>::pop_front( ) 
       { 
-        N* S = (*(begin( ))).back( ); 
-        (*(begin( ))).pop_back( ); 
+        N* S = root_list_.back( ); 
+        root_list_.pop_back( ); 
         size_ -= pow( 2, (*S).height( ) + 1) - 1;
         return S;
       }
 
       template <typename N>
-      int lazy_store<N>::size( ) const
+      int lazy_root_list<N>::size( ) const
       { 
         return size_;
       }
 
       template <typename N>
-      bool lazy_store<N>::empty( ) const
+      bool lazy_root_list<N>::empty( ) const
       { 
         return size_ == 0;
       }
 
       template <typename N>
-      bool lazy_store<N>::one_heap( ) const
+      bool lazy_root_list<N>::one_heap( ) const
       { 
-        return (*begin()).size() == 1;
+        return root_list_.size( ) == 1;
       }
       
       template<typename N>
-      void lazy_store<N>::print( ) const
+      void lazy_root_list<N>::print( ) const
       { 
         std::cout << "size: " << size( ) << std::endl;     
         std::cout << "-----------------" << std::endl ;
         std::cout << "< ";
         for( auto it = begin( ); it != end( ); ++it) {
-          for( auto vit = (*it).begin( ); vit != (*it).end( ); ++vit) {
-            std::cout << (*vit)->height( ) << " ";
-          }
+          std::cout << (*it)->height( ) << " ";
         } 
         std::cout << ">" << std::endl;     
       }

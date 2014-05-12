@@ -1,5 +1,5 @@
-#ifndef THESIS_REGULAR_STORE
-#define THESIS_REGULAR_STORE
+#ifndef THESIS_PAPER_ROOT_TABLE
+#define THESIS_PAPER_ROOT_TABLE
 #include <list>
 #include <forward_list>
 #include <vector>
@@ -7,22 +7,18 @@
 
 namespace KHJ {
   namespace thesis {
-    namespace store {
+    namespace root_table {
             
       template <typename N>        
-      class regular_store {        
-
-        struct root_list_node {
-          
-        };
+      class paper_root_table {        
 
         // Template of two types: Container and Adapter
         struct root_table_node {
-          typedef std::vector<root_list_node> root_list_type;
+          typedef std::vector<N*> root_list_type;
           typedef typename root_list_type::iterator       iterator_type;
           typedef typename root_list_type::const_iterator const_iterator_type;
           
-          root_table_node( ) : size_( 0 ), root_list_( root_list_type( ) ) { }
+          root_table_node( ) : size_( 0 ), root_list_( root_list_type( ) ) {}
           
           int size_;
           root_list_type root_list_;       
@@ -41,28 +37,24 @@ namespace KHJ {
       public:        
         typedef std::list<root_table_node> root_table_type;
 
-        typedef typename root_table_type::iterator       
-        iterator_type;
-        typedef typename root_table_type::const_iterator 
-        const_iterator_type;
+        typedef typename root_table_type::iterator iterator_type;
+        typedef typename root_table_type::const_iterator const_iterator_type;
         
-        typedef typename root_table_node::iterator_type       
-        root_list_iterator_type;
-        typedef typename root_table_node::const_iterator_type 
-        const_root_list_iterator_type;
+        typedef typename root_table_node::iterator_type node_iterator_type;
+        typedef typename root_table_node::const_iterator_type const_node_iterator_type;
         
-         regular_store( );
-        ~regular_store( );
+         paper_root_table( );
+        ~paper_root_table( );
 
         N*   top; 
         int  size( )  const; 
         bool empty( ) const; 
 
-        void push_front( N* S );
-        N*    pop_front( );
-        void     insert( iterator_type, N* );     
-        N*      extract( iterator_type );
-        N*      extract( iterator_type, root_list_iterator_type );
+        void push_front( N* S );  // inject
+        N*    pop_front( );       // eject
+        void     insert( iterator_type, N* ); // insert_root     
+        N*      extract( iterator_type );     // remove_root
+        N*      extract( iterator_type, node_iterator_type );
           
         /* should return custom iterator if need be */
         inline iterator_type begin( ) 
@@ -89,5 +81,5 @@ namespace KHJ {
     }
   }
 }
-#include "regular_store.i++"
+#include "paper_root_table.i++"
 #endif

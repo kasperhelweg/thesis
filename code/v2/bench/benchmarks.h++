@@ -40,7 +40,7 @@ namespace KHJ  {
         std::vector<E>  data;
         std::vector<N*> nodes;
         
-        E max_elements = pow(10, 5);
+        E max_elements = pow(10, 7);
         E     elements_ = 1000;
         
         double reps    = 3;

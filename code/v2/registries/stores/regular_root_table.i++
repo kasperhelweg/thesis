@@ -1,6 +1,6 @@
 namespace KHJ  {
   namespace thesis  {
-    namespace store {
+    namespace root_table {
       
       /**
        * Constructor.
@@ -10,11 +10,10 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      regular_store<N>::regular_store( ) : top( nullptr )
+      regular_root_table<N>::regular_root_table( ) : top( nullptr )
       {
-        root_table_node n1, n2; 
+        root_table_node n1; 
         root_table_.push_back( n1 ); 
-        root_table_.push_back( n2 );
       }
 
       /**
@@ -25,7 +24,7 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      regular_store<N>::~regular_store( ) 
+      regular_root_table<N>::~regular_root_table( ) 
       { }
 
       /**
@@ -36,7 +35,7 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      void regular_store<N>::push_front( N* S ) 
+      void regular_root_table<N>::push_front( N* S ) 
       { 
    
       }
@@ -49,13 +48,13 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      N* regular_store<N>::pop_front( ) 
+      N* regular_root_table<N>::pop_front( ) 
       { 
         
       }
 
       template <typename N>
-      int regular_store<N>::size( ) const
+      int regular_root_table<N>::size( ) const
       { 
     
       }
@@ -68,7 +67,7 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      void regular_store<N>::insert( iterator_type position, N* S )
+      void regular_root_table<N>::insert( iterator_type position, N* S )
       { 
   
       }
@@ -81,7 +80,7 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      N* regular_store<N>::extract( iterator_type position )
+      N* regular_root_table<N>::extract( iterator_type position )
       {
      
       }
@@ -94,7 +93,7 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      N* regular_store<N>::extract( iterator_type position, root_list_iterator_type index )
+      N* regular_root_table<N>::extract( iterator_type position, root_list_iterator_type index )
       {
       
       }
@@ -102,7 +101,7 @@ namespace KHJ  {
       // grow_( ).
       
       template <typename N>
-      void regular_store<N>::grow( ) 
+      void regular_root_table<N>::grow( ) 
       { 
      
       }
@@ -110,12 +109,12 @@ namespace KHJ  {
       // shrink_( ).
       
       template <typename N>
-      void regular_store<N>::shrink(  ) 
+      void regular_root_table<N>::shrink(  ) 
       { 
       }
       
       template<typename N>
-      void regular_store<N>::print( ) const
+      void regular_root_table<N>::print( ) const
       { 
       
       }

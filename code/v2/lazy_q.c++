@@ -1,6 +1,6 @@
 #include "heap_awh_node.h++"
 #include "node_awh_modifier.h++"
-#include "lazy_store.h++"
+#include "lazy_root_list.h++"
 #include "lazy_root_registry.h++"
 #include "lazy_binary_queue.h++"
 #include "meldable_priority_queue.h++"
@@ -28,7 +28,7 @@ typedef KHJ::thesis::modifier::node_awh_modifier<N, C1> M;
 // Allocator
 typedef std::allocator<N> A;
 // Storage
-typedef KHJ::thesis::store::lazy_store<N> S;
+typedef KHJ::thesis::root_list::lazy_root_list<N> S;
 typedef KHJ::thesis::root_registry::lazy_root_registry<N, M, S> F;
 /* LAZY BINARY QUEUE */
 typedef KHJ::thesis::queue::lazy_binary_queue<E, C1, N, M, F> R;

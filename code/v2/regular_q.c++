@@ -1,11 +1,13 @@
 #include "heap_a_node.h++"
 #include "node_a_modifier.h++"
-#include "regular_store.h++"
+#include "regular_root_table.h++"
 #include "regular_root_registry.h++"
 #include "regular_binary_queue.h++"
 #include "meldable_priority_queue.h++"
 
 #include "benchmarks.h++"
+
+#include <bitset>
 
 static long long comps;
 template <typename T>
@@ -27,7 +29,7 @@ typedef KHJ::thesis::modifier::node_a_modifier<N, C1> M;
 // Allocator
 typedef std::allocator<N> A;
 // Storage
-typedef KHJ::thesis::store::regular_store<N> S;
+typedef KHJ::thesis::root_table::regular_root_table<N> S;
 /* LAZY BINARY QUEUE */
 typedef KHJ::thesis::root_registry::regular_root_registry<N, M, S> F;
 // eager binary queue
@@ -42,11 +44,17 @@ int main( )
   B benchmarker( comps, "regular" );
   Q regular_Q;
 
-  benchmarker.push( regular_Q );
-  //assert( eager_Q.size( ) == 0 );
-  benchmarker.pop( regular_Q );
-  benchmarker.emplace( regular_Q );
-  benchmarker.erase( regular_Q );
+  unsigned long x = 1;
+
+  std::cout << "x size = " << sizeof( x ) << std::endl;
+  std::cout << "x = " << (std::bitset<64>) x << std::endl;
+
+  //benchmarker.push( regular_Q );
+  
+  //benchmarker.pop( regular_Q );
+  //benchmarker.emplace( regular_Q );
+  //benchmarker.erase( regular_Q );
  
   return 0;
+
 }
