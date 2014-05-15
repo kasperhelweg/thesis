@@ -51,48 +51,49 @@ namespace KHJ  {
 
       
       /**
-       * insert( )
+       * inject( )
        * 
        * complexity is (probably) O(1)
        * @author KHJ
        *
        */
       template<typename N, typename M, typename S>
-      void eager_root_registry<N, M, S>::insert( N* Q )
+      void eager_root_registry<N, M, S>::inject( N* Q )
       { 
         if( root_table_.top == nullptr || 
-            modifier_type::compare_( (*Q).element(), (*root_table_.top).element() ) ) { 
+            M::compare_( (*Q).element(), (*root_table_.top).element() ) ) { 
           root_table_.top = Q; 
         } 
         
-        root_table_.push_front( Q );
+        root_table_.inject( Q );
       }
 
       /**
-       * extract( )
+       * eject( )
        * 
        * complexity is (probably) O(1)
        * @author KHJ
        *
        */
       template<typename N, typename M, typename S>
-      N* eager_root_registry<N, M, S>::extract( )
+      N* eager_root_registry<N, M, S>::eject( )
       { 
         N* B = nullptr;               
         for( auto it = root_table_.begin( ) ; it != root_table_.end( ) ; it++ ) {
-          if( !it->empty( )) {
-            B = root_table_.extract( it );
-            if( B->height( ) != 0 ) {
-              N** st = modifier_type::split( B );
-              root_table_.insert( --it, st[0] ); root_table_.insert( it, st[1] );
-              if( it->size( ) >= 3 ) { fix_( it ); } 
+          if( !(*it).empty( )) {
+            B = root_table_.remove_root( it );
+            if( (*B).height( ) != 0 ) {
+              N** st = M::split( B );
+              root_table_.insert_root( --it, st[0] ); 
+              root_table_.insert_root( it, st[1] );
+              if( (*it).size( ) >= 3 ) { fix_( it ); } 
               delete[] st;
             }
             break;
           }
         }
         if( (*B).element( ) == (*root_table_.top).element( ) ) {
-          modifier_type::siftup( root_table_.top );
+          M::siftup( root_table_.top );
           root_table_.top = B;
         }
         return B;
@@ -112,8 +113,8 @@ namespace KHJ  {
           hi_.push_back( root_table_.begin( ) ); 
         while( 1 ) {
           if( !hi_.empty( ) ) {
-            iterator_type I = hi_.back( ); hi_.pop_back( );
-            fix_( I );
+            I j = hi_.back( ); hi_.pop_back( );
+            fix_( j );
           } else {
             break;
           }
@@ -134,10 +135,8 @@ namespace KHJ  {
         for( auto it = root_table_.begin( ) ; it != root_table_.end( ) ; it++ ) {
           for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
             if( root_table_.top == nullptr || 
-                modifier_type::compare_( (*(*vit)).element(),  (*root_table_.top).element() ) )  {          
-              root_table_.top = *vit;
-            }
-          }
+                M::compare_( (*(*vit)).element(), (*root_table_.top).element() ) )  {          
+              root_table_.top = *vit; } } 
         }
       }
        
@@ -151,30 +150,33 @@ namespace KHJ  {
       }
 
       template <typename N, typename M, typename S>
-      void eager_root_registry<N, M, S>::fix_( iterator_type I )
+      void eager_root_registry<N, M, S>::fix_( I j )
       { 
-        iterator_type E = std::next( I );  
-        iterator_type W = std::prev( I );
+        I e = std::next( j );  
+        I w = std::prev( j );
         
-        if( E == root_table_.end( ) ) { root_table_.grow( ); --E; }
+        if( e == root_table_.end( ) ) { root_table_.grow( ); --e; }
         
-        N* Q = root_table_.extract( I );
-        N* R = root_table_.extract( I );
-        N* V = root_table_.extract( I );
+        N* Q = root_table_.remove_root( j );
+        N* R = root_table_.remove_root( j );
+        N* V = root_table_.remove_root( j );
         
         N* t[3] = { Q, R, V };     
-        swap_nodes_( t, 0, modifier_type::compare_( (*t[1]).element(), (*t[0]).element() ) );
-        swap_nodes_( t, 2, modifier_type::compare_( (*t[0]).element(), (*t[2]).element() ) );
-        
-        if( I != root_table_.begin( ) ) {
-          N** st = modifier_type::split( t[0] );
-          modifier_type::join_heaps( t[0], t[1], t[2]  ); root_table_.insert( E, t[0]  );
-          root_table_.insert( W, st[0] ); root_table_.insert( W, st[1] );
+        swap_nodes_( t, 0, M::compare_( 
+        (*t[1]).element(), (*t[0]).element() ) );
+        swap_nodes_( t, 2, M::compare_( 
+        (*t[0]).element(), (*t[2]).element() ) );       
+        if( j != root_table_.begin( ) ) {
+          N** st = M::split( t[0] );
+          M::join_heaps( t[0], t[1], t[2]  ); 
+          root_table_.insert_root( e, t[0]  );
+          root_table_.insert_root( w, st[0] ); 
+          root_table_.insert_root( w, st[1] );
           delete[] st;
         } else {
-          modifier_type::join_heaps( t[0], t[1], t[2]  ); root_table_.insert( E, t[0] );
+          M::join_heaps( t[0], t[1], t[2]  ); root_table_.insert_root( e, t[0] );
         }
-        if( E->size( ) == 3 ) { hi_.push_back( E ); }
+        if( (*e).size( ) == 3 ) { hi_.push_back( e ); }
       }
 
       // swap aux

@@ -7,9 +7,8 @@
 
 #ifndef THESIS_REGULAR_ROOT_REGISTRY
 #define THESIS_REGULAR_ROOT_REGISTRY
-#include <forward_list>
+#include <list>
 #include "heap_utils.h++"
-
 namespace KHJ  {
   namespace thesis  {
     namespace root_registry  {
@@ -20,32 +19,60 @@ namespace KHJ  {
         typedef M modifier_type;
         typedef S root_table_type;
                 
-        typedef typename root_table_type::iterator_type iterator_type;
+        typedef typename root_table_type::iterator_type 
+        iterator_type;
+        typedef iterator_type I;
+        typedef typename root_table_type::root_list_node 
+        root_list_node;
+        typedef typename root_table_type::root_list_iterator_type 
+        root_list_iterator_type;
+        typedef root_list_iterator_type RLI;
         
         explicit regular_root_registry( );
         ~regular_root_registry( ); 
         
-        N*     top( ) const;
-        bool empty( ) const;
-        int   size( ) const;
-        void print( ) const;
+        int 
+        size_;
         
-        void insert( N* );
-        N*   extract( );        
-        void update_top( );        
-        void consolidate( );
+        N*     
+        top()   const;
+        bool 
+        empty() const;
+        int   
+        size()  const;
+        void 
+        print() const;
         
-        inline iterator_type begin( ) { return root_table_.begin( ); }
-        inline iterator_type end( )   { return root_table_.end( ); }
+        void     
+        inject(N*);
+        N*        
+        eject();        
+        void 
+        update_top(); 
+        void 
+        update_top(N*); 
+                
+        inline iterator_type 
+        begin() { return root_table_.begin( ); }
+        inline iterator_type 
+        end()   { return root_table_.end( ); }
         
         // Debug utils
         KHJ::thesis::utils::pfb<N, M> utils;
       private:
-        root_table_type root_table_;
-        std::forward_list<iterator_type> hi_;
-        std::forward_list<iterator_type> walls_;
-                
-        void swap_nodes_( N* [], int, int );
+        root_table_type 
+        root_table_;
+        std::list<iterator_type> 
+        hi_;
+        std::list<iterator_type> 
+        wall_;
+        
+        void   
+        transfer_(iterator_type, N*);
+        void     
+        reduce_(iterator_type);
+        void 
+        swap_nodes_(N* [], int, int);
       };
     }
   }

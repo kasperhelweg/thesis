@@ -20,40 +20,61 @@ namespace KHJ  {
         typedef M modifier_type;
         typedef S root_table_type;
                 
-        typedef typename root_table_type::iterator_type iterator_type;
+        typedef typename root_table_type::iterator_type 
+        iterator_type;
+        typedef iterator_type I;
         
         explicit magical_root_registry( );
         ~magical_root_registry( ); 
         
-        N*     top( ) const;
-        bool empty( ) const;
-        int   size( ) const;
-        void print( ) const;
+        N*     
+        top()   const;
+        bool 
+        empty() const;
+        int   
+        size()  const;
+        void 
+        print() const;
         
-        void insert( N* );
-        N*   extract( );        
-        void update_top( );        
-        void consolidate( );
+        N*    
+        eject();        
+        void 
+        inject(N*);
+        void 
+        update_top();        
+        void 
+        update_top(N*);        
         
-        inline iterator_type begin( ) { return root_table_.begin( ); }
-        inline iterator_type end( )   { return root_table_.end( ); }
+        inline iterator_type 
+        begin( ) { return root_table_.begin( ); }
+        inline iterator_type 
+        end( )   { return root_table_.end( ); }
         
         // Debug utils
         KHJ::thesis::utils::pfb<N, M> utils;
       private:
-        root_table_type root_table_;
-        std::vector<iterator_type> hi_;
-        std::vector<iterator_type> lo_;
+        root_table_type 
+        root_table_;
+        std::vector<iterator_type> 
+        hi_;
+        std::vector<iterator_type> 
+        lo_;
 
-        std::vector<iterator_type> state_;
+        std::vector<iterator_type> 
+        state_;
         
-        void fix_( iterator_type );
-        void unfix_( iterator_type );
+        void 
+        fix_( iterator_type );
+        void 
+        unfix_( iterator_type );
 
-        bool in_idle_state_( ) const;
-        void update_lo_( iterator_type );
+        bool 
+        in_idle_state_( ) const;
+        void 
+        update_lo_( iterator_type );
     
-        void swap_nodes_( N* [], int, int );
+        void 
+        swap_nodes_( N* [], int, int );
       };
     }
   }

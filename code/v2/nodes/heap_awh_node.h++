@@ -53,7 +53,7 @@ namespace KHJ {
         int   height_;
         N*      left_;
         N*     right_;
-
+        
         // Should be friends will all modifier types...
         template<typename N, typename C> 
         friend class KHJ::thesis::modifier::node_awh_modifier;

@@ -48,7 +48,6 @@ namespace KHJ  {
       { 
         return root_table_.size( ); 
       }
-
       
       /**
        * insert( )
@@ -58,16 +57,41 @@ namespace KHJ  {
        *
        */
       template<typename N, typename M, typename S>
-      void regular_root_registry<N, M, S>::insert( N* Q )
+      void regular_root_registry<N, M, S>::inject( N* Q )
       { 
-        if( root_table_.top == nullptr || 
-            modifier_type::compare_( (*Q).element(), (*root_table_.top).element() ) ) { 
-          root_table_.top = Q; 
-        } 
+        I k = root_table_.end( );
+        I j = root_table_.end( );
         
-        root_table_.push_front( Q );
+        if( !wall_.empty( ) ) k = wall_.front( );
+        if( !hi_.empty( ) )   j = hi_.front( );   
+        if( (j != root_table_.end( ) && j != k ) && 
+            ( k == root_table_.end( ) || (*j).p_ < (*k).p_ ) ) {
+          transfer_( j, Q ); j++;
+          if( (*j).size( ) == 2  ) 
+            hi_.push_front( j );
+          reduce_( j );
+          if( (*(*j).begin( )).b_ > 0 ) 
+            wall_.push_front( j );
+          if( (*--j).size_ == 0 && j != root_table_.begin( ) )
+            root_table_.shrink( j );
+        } else {
+          root_table_.inject( Q );
+          if( k != root_table_.end( ) ) {
+            reduce_( k );
+            if( (*(*k).begin( )).b_ == 0 )
+              wall_.pop_front( );
+          }
+          if( (*root_table_.begin( )).size( ) == 2  ) 
+            hi_.push_front( begin( ) );           
+        }
+        if( root_table_.top == nullptr || 
+            M::compare_( 
+            (*Q).element(), (*root_table_.top).element() ) ) { 
+          root_table_.top = Q; 
+        }
+        root_table_.size_++;
       }
-
+      
       /**
        * extract( )
        * 
@@ -76,11 +100,52 @@ namespace KHJ  {
        *
        */
       template<typename N, typename M, typename S>
-      N* regular_root_registry<N, M, S>::extract( )
-      { 
+      N* regular_root_registry<N, M, S>::eject( )
+      {
+        N* B; I k; N** st; char s;
+        I j = root_table_.begin( );
+        
+        if( (*j).size_ == 0 ) ++j;        
+        if( j == wall_.front( ) ) {
+          reduce_( j );
+          if( (*(*j).begin( )).b_ == 0 )
+            wall_.pop_front( );
+        }
+        root_list_node l = root_table_.remove_root( j ); 
+        B = l.hp_;
+        if( j == hi_.front( ) )      
+          hi_.pop_front( );
+        if( j  == wall_.front( ) ) 
+          wall_.pop_front( );
+        if( j != root_table_.begin( ) ) {
+          k = --j; 
+          if( (*++j).p_ - 1 > (*k).p_ ) 
+            root_table_.test( j, (*j).p_ - 1 ); --j;
+          st = M::split( l.hp_ ); 
+          s = l.bittrace_ & (1 << 0);
+          swap_nodes_( st, 0, s );
+          root_table_.insert_root( j, st[1], nullptr, 0, 0 );       
+          root_table_.insert_root( j, st[0], l.sp_, l.b_, l.bittrace_ >> 1 );       
       
+          /*
+          if( s == 0 ) {
+            root_table_.insert_root( j, st[1], nullptr, 0, 0 );       
+            root_table_.insert_root( j, st[0], l.sp_, l.b_, l.bittrace_ >> 1 );       
+          } else {
+            root_table_.insert_root( j, st[0], nullptr, 0, 0 );       
+            root_table_.insert_root( j, st[1], l.sp_, l.b_, l.bittrace_ >> 1 );       
+          }
+            */
+          delete[] st; hi_.push_front( j );   
+          if( (*(*j).begin( )).b_ > 0 ) 
+            wall_.push_front( j );
+          if( (*++j).size_ == 0  )
+            root_table_.shrink( j );
+        }
+        root_table_.size_--;
+        return B;
       }
-       
+      
       /**
        * consolidate( )
        * 
@@ -89,11 +154,40 @@ namespace KHJ  {
        *
        */
       template<typename N, typename M, typename S>
-      void regular_root_registry<N, M, S>::consolidate( )
-      { 
-      
+      void regular_root_registry<N, M, S>::transfer_( I j, N* Q )
+      {
+        I k = std::next( j ); 
+        if( (*k).p_ != (*j).p_ + 1 ) { 
+          root_table_.test( k, (*j).p_ + 1 ); --k;
+        }        
+        root_list_node l0 = root_table_.remove_root( j ); 
+        root_list_node l1 = root_table_.remove_root( j );
+        
+        M::join_heaps( Q, l0.hp_, l1.hp_ );        
+        root_table_.insert_root( k, Q, Q, (*j).p_ + 1, 0 );       
+        hi_.pop_front( );
       }
-
+      
+      template<typename N, typename M, typename S>
+      void regular_root_registry<N, M, S>::reduce_( I p )
+      {
+        RLI l = (*p).begin( );  
+        unsigned short lvl = (*p).p_ - (*l).b_; 
+              
+        if( (*l).sp_ != nullptr ) {
+          char d = M::incremental_siftdown( (*l).sp_ ); 
+          if( d != -1 ) {
+            (*l).bittrace_ |= d << lvl;
+            if( lvl == 0 )
+              (*l).hp_ = (*(*l).sp_).parent( );
+          } else {
+            (*l).sp_ = nullptr; 
+            (*l).bittrace_ = 0;
+          }
+        }
+        (*l).b_--;
+      }
+      
       /**
        * update_top( )
        * 
@@ -104,13 +198,38 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void regular_root_registry<N, M, S>::update_top( )
       {
-      
+        root_table_.top = nullptr;
+        for( auto it = root_table_.begin( ) ; it != root_table_.end( ) ; it++ ) {
+          for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
+            if( root_table_.top == nullptr || 
+                M::compare_( (*vit).hp_->element(),  (*root_table_.top).element() ) )  {          
+              root_table_.top = (*vit).hp_; } } 
+        }
+      }
+
+      template<typename N, typename M, typename S>
+      void regular_root_registry<N, M, S>::update_top( N* Q )
+      {
+        root_table_.top = Q;
       }
        
       template<typename N, typename M, typename S>
       void regular_root_registry<N, M, S>::print( ) const
       {
-      
+        root_table_.print( );
+        std::cout << "--------------" << std::endl;
+        for( auto it = hi_.begin( ); it != hi_.end( ); ++it){
+          std::cout << "hi: "  << (*(*it)).p_ << " ";
+        }
+        std::cout << std::endl;
+        std::cout << "--------------" << std::endl;
+        for( auto it = wall_.begin( ); it != wall_.end( ); ++it){
+          std::cout << "wall: "  << (*(*it)).p_ << " ";
+          
+        }
+        std::cout << std::endl;
+        std::cout << "--------------" << std::endl;
+        
       }
 
       // swap aux

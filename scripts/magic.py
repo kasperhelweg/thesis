@@ -9,7 +9,7 @@ class linked_list( object ):
   def __init__( self ):
     self.head = None
 
-  def push( self, element ):
+  def append( self, element ):
     n          = list_node( )
     n. element = element
     n.next     = self.head
@@ -42,7 +42,7 @@ class linked_list( object ):
       n = n.next
     return s
 
-  def show( self ):
+  def p( self ):
     l = []
     n = self.head
     while not n == None:
@@ -53,71 +53,93 @@ class linked_list( object ):
 hi = linked_list( )
 lo = linked_list( )
 
+
+
 def increment( D ): 
-  D[0] += 1  
-  if D[0]   == 1 and lo.peak( 1 ) != 0: lo.push( 0 ) 
-  elif D[0] == 2: lo.pop( )  
-  if D[0] == 3: D = fix( D, 0 )
+  
+  D[0] += 1 
+  s     = get_state( D )
+    
+  if D[0] == 3: 
+    D = fix( D, 0 )
   else:
-    j = hi.pop( )
-    if not j == None:
-      D = fix( D, j  )
+    if s == '31':
+      D = fix(D, 0)
+    elif s == '32':
+      D = fix(D, 0)
+    elif s == '13':
+      D = fix(D,1)
+      if D[2] == 1:
+        lo.append(2)
+      elif D[2] == 2:
+        lo.pop()
+      elif D[2] == 3:
+        hi.append( 2 )
+    elif s == '40':
+      D = fix(D, 0)
+    elif s == '21':
+      j = hi.pop( )
+      if not j == None:
+        D = fix(D, j)
+        if D[j+1] == 1:
+          lo.append(j+1)
+        elif D[j+1] == 2:
+          lo.pop()
+        
+        elif D[j+1] == 3:
+          hi.append( j+1 )
+        
+        lo.append(j)
+    elif s == '33':
+      D = fix(D,0)
+    elif s == '14':
+      D = fix(D,1)
+      if D[2] == 2:
+        lo.pop()
+    elif s == '41':
+      D = fix(D,0)
+    elif s == '22':
+      j = hi.pop()
+      if not j == None:
+        D = fix(D,j)
+        if D[j+1] == 3:
+          hi.append(j+1)
+        if D[j-1] >= 3:
+          hi.append(j-1)
+        if D[j-1] == 3:
+          lo.pop()
   return D
 
 def fix( D, j ):
   D[j] -= 3
-  if j != 0:
-    if D[j-1] <= 1: lo.pop( )
-    D[j-1] += 2  
   if len( D ) - 1 <= j: D.append( 0 ) # grow list
-  D[j+1] += 1  
-  if D[j+1] == 1 and not lo.peak( 1 ) == j + 1:
-    lo.push( j + 1 )
-  elif D[j+1] == 2:
-    lo.pop()
-  elif D[j+1] == 3:
-    hi.push( j + 1  )
+  D[j+1] += 1 
   if j != 0:
-    if D[j-1] >= 3: hi.push( j-1 )
-  if D[j] <= 1: lo.push( j )
+    D[j-1] += 2
   return D
 
 def decrement( D ):
   if not is_idle( D ):
     if get_state( D ) == '22':
       if not hi.empty() and D[hi.peak( 1 )] == 3:
-        j = lo.pop( )
         D = unfix( D, j )
     else:
       j = lo.pop( )
       if not j == None:
         D = unfix( D, j  )
   D[0] -= 1
-  if D[0] == 2: hi.pop( )
-  elif D[0] <= 1 and lo.peak( 1 ) != 0: lo.push( 0 )
 
   return D
+  #--------------------
 
 def unfix( D, j ):
-  # shrink list
+  D[j] += 3
   D[j+1] -= 1
   l = len( D )
   if j + 1 == l - 1 and D[l-1] == 0: 
-    lo.pop()
     D.pop()
-  else:
-    if D[j+1] == 1:
-      lo.push( j + 1 )
-    elif D[j+1] == 2:
-      hi.pop( )
   if j != 0: 
-    if D[j-1] >= 3:
-      hi.pop( )
     D[j-1] -= 2
-    if D[j-1] <= 1 and not j - 1 == 0:
-      lo.push( j - 1 )
-  D[j] += 3
-  if D[j] >= 3: hi.push( j )
 
   return D
 
@@ -153,27 +175,42 @@ def high( D ):
   h = next((x for x in D if x == 3 or x == 4), False)
   return h
 
+def to_binary( D ):
+  B = []
+  for i ,d in enumerate( D ):
+    B.append(int(bin(d)[2:]))
+  return B
+
 D = [2,1]
-n = 100000
+n = 100
 print("------------------------------------ INC")
 print( str( value_of(D) ) + ": " + str(D) )
+  #print("is idle: " + str( is_idle( D ) ))
 for i in range( 0, n - 5 ):
   D = increment( D )
   print( str( value_of(D) ) + ": " + str(D) )
+  print("hi: " + str(hi.p()))
+  print("lo: " + str(lo.p()))
+  #print("is idle: " + str( is_idle( D ) ))
 
 print("------------------------------------")
 print( str( value_of(D) ) + ": " + str(D) )
-print(hi.show())
-print(lo.show())
+print(hi.p())
+print(lo.p())
 
+
+'''
 print("------------------------------------ DEC")
 for i in range( 0, n - 5 ):
   D = decrement( D )
   print( str( value_of(D) ) + ": " + str(D) )
-
+  #print("is idle: " + str( is_idle( D ) ))
+  #print(hi.p())
+  #print(lo.p())
+'''
 print("------------------------------------")
 print( str( value_of(D) ) + ": " + str(D) )
-print(hi.show())
-print(lo.show())
+print(hi.p())
+print(lo.p())
 
 print( "--Program magic_skew--" )

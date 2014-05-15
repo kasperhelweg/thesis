@@ -12,7 +12,7 @@ namespace KHJ  {
       template<typename E, typename C, typename N, typename M, typename R>
       void eager_binary_queue<E, C, N, M, R>::insert( N* S ) 
       {
-        registry_.insert( S );
+        registry_.inject( S );
         registry_.consolidate( );
       }
       
@@ -26,7 +26,7 @@ namespace KHJ  {
       template<typename E, typename C, typename N, typename M, typename R>
       void eager_binary_queue<E, C, N, M, R>::erase( N* P ) 
       {
-        N* B = registry_.extract( );
+        N* B = registry_.eject( );
         bool is_root = (*P).is_root( );
         
         if( B != P  ) {

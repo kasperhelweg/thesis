@@ -5,3 +5,4 @@ gnuplot plots_erase_po.gp
 gnuplot plots_emplace_po.gp
 
 gnuplot plots_emplace.gp
+gnuplot plots_pop.gp

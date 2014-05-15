@@ -25,6 +25,8 @@ namespace KHJ  {
         
         void  meld( regular_binary_queue& );       
         void clear( );
+
+        void print( );
         
       private:
         registry_type registry_;

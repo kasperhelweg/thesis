@@ -14,9 +14,12 @@ namespace KHJ {
 
         // Template of two types: Container and Adapter
         struct root_table_node {
-          typedef std::vector<N*> root_list_type;
-          typedef typename root_list_type::iterator       iterator_type;
-          typedef typename root_list_type::const_iterator const_iterator_type;
+          typedef std::vector<N*> 
+          root_list_type;
+          typedef typename root_list_type::iterator       
+          iterator_type;
+          typedef typename root_list_type::const_iterator 
+          const_iterator_type;
           
           root_table_node( ) : size_( 0 ), root_list_( root_list_type( ) ) {}
           
@@ -37,24 +40,37 @@ namespace KHJ {
       public:        
         typedef std::list<root_table_node> root_table_type;
 
-        typedef typename root_table_type::iterator iterator_type;
-        typedef typename root_table_type::const_iterator const_iterator_type;
+        typedef typename root_table_type::iterator 
+        iterator_type;
+        typedef typename root_table_type::const_iterator 
+        const_iterator_type;
         
-        typedef typename root_table_node::iterator_type node_iterator_type;
-        typedef typename root_table_node::const_iterator_type const_node_iterator_type;
+        typedef typename root_table_node::iterator_type 
+        node_iterator_type;
+        typedef typename root_table_node::const_iterator_type 
+        const_node_iterator_type;
         
-         paper_root_table( );
+        paper_root_table( );
         ~paper_root_table( );
 
-        N*   top; 
-        int  size( )  const; 
-        bool empty( ) const; 
+        N* top; 
+        int size_;
+        
+        int  
+        size( )  const; 
+        bool 
+        empty( ) const; 
 
-        void push_front( N* S );  // inject
-        N*    pop_front( );       // eject
-        void     insert( iterator_type, N* ); // insert_root     
-        N*      extract( iterator_type );     // remove_root
-        N*      extract( iterator_type, node_iterator_type );
+        void 
+        inject( N* S );  // inject
+        N* 
+        eject( );       // eject
+        void 
+        insert_root( iterator_type, N* ); // insert_root     
+        N* 
+        remove_root( iterator_type );     // remove_root
+        N* 
+        remove_root( iterator_type, node_iterator_type );
           
         /* should return custom iterator if need be */
         inline iterator_type begin( ) 

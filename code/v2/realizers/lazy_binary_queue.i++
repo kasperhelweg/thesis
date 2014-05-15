@@ -12,7 +12,7 @@ namespace KHJ  {
       template<typename E, typename C, typename N, typename M, typename R>
       void lazy_binary_queue<E, C, N, M, R>::insert( N* S ) 
       {
-        registry_.insert( S );
+        registry_.inject( S );
       }
     
       template<typename E, typename C, typename N, typename M, typename R>
@@ -25,9 +25,8 @@ namespace KHJ  {
       template<typename E, typename C, typename N, typename M, typename R>
       void lazy_binary_queue<E, C, N, M, R>::erase( N* P ) 
       {
-        N* B = registry_.extract( );
+        N* B = registry_.eject( );
         bool is_root = (*P).is_root( );
-        
         if( B->element( ) == registry_.top( )->element( ) )
           modifier_type::siftup( registry_.top( ) );
         if( B != P  ) {
@@ -38,16 +37,11 @@ namespace KHJ  {
           } 
           if( is_root || (*B).is_root( ) ){
             for( auto it = registry_.begin( ) ; it != registry_.end( ) ; it++ ) {
-             
-                if( !(*(*it)).is_root( ) ) {
+              if( !(*(*it)).is_root( ) ) {
                   *it = (*(*it)).find_root();
                 } else if( (*it) == P  ) {
                   *it = (*B).find_root( ); 
-                }
-              
-            }
-          }
-        }
+                } } } }
         registry_.consolidate( );
         if( P == registry_.top( ) ) { registry_.update_top( ); }
       }

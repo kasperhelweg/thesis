@@ -11,14 +11,20 @@
 namespace KHJ {
   namespace thesis {
     namespace root_table {
-      template <typename N>        
-      class regular_root_table {        
-        
+      template <typename N>     
+      class regular_root_table {
+      public:
         struct root_list_node {
-          N* hp_;
-          N* sp_;
-          unsigned long bittrace_;
+          N* hp_;   
+          N* sp_;             
+          unsigned short b_;        // bricks - assumption, height of a wall is <= 65535
+          unsigned long bittrace_; // assumption, at most 64 levels in a heap.
           
+          root_list_node( N* S, N* sp, unsigned short b = 0, unsigned long bittrace = 0 ) : hp_( S ), sp_( sp ), b_( b ), bittrace_( bittrace ) 
+          { }
+          ~root_list_node( ) 
+          { }
+
           void print_bittrace( ) const
           {
             std::cout << "bittrace: " << (std::bitset<64>) bittrace_ << std::endl;
@@ -34,10 +40,11 @@ namespace KHJ {
           typedef typename root_list_type::const_iterator 
           const_iterator_type;
           
-          root_table_node( ) : size_( 0 ), root_list_( root_list_type( ) ) { }
+          root_table_node( unsigned short p ) : size_( 0 ), p_( p ), root_list_( root_list_type( ) ) { }
           
           int size_;
-          root_list_type root_list_;       
+          unsigned short p_;
+          root_list_type root_list_;
           
           int size( ) const 
           { return size_; }
@@ -52,7 +59,7 @@ namespace KHJ {
 
       public:        
         typedef std::list<root_table_node> root_table_type;
-        
+                        
         typedef typename root_table_type::iterator       
         iterator_type;
         typedef typename root_table_type::const_iterator 
@@ -63,18 +70,20 @@ namespace KHJ {
         typedef typename root_table_node::const_iterator_type 
         const_root_list_iterator_type;
         
-         regular_root_table( );
+        regular_root_table( );
         ~regular_root_table( );
-
+        
         N*   top; 
+        int size_;
+
         int  size( )  const; 
         bool empty( ) const; 
-
-        void push_front( N* S );
-        N*    pop_front( );
-        void     insert( iterator_type, N* );     
-        N*      extract( iterator_type );
-        N*      extract( iterator_type, root_list_iterator_type );
+        
+        void inject( N* S );
+        N* eject( );
+        void insert_root( iterator_type, N*, N*, unsigned short, unsigned long );     
+        root_list_node remove_root( iterator_type );
+        root_list_node remove_root( iterator_type, root_list_iterator_type );
           
         /* should return custom iterator if need be */
         inline iterator_type begin( ) 
@@ -90,8 +99,9 @@ namespace KHJ {
         inline const_iterator_type last( )  const 
         { return std::prev( root_table_.end( ) );   }
         
-        void   grow( );  
-        void shrink( );  
+        void   test( iterator_type , unsigned short );  
+        void   grow( unsigned short );  
+        void shrink( iterator_type );  
         
         void print( ) const;  
         

@@ -1,14 +1,10 @@
-//#include <memory>
-//#include <assert.h>
-
-
 #ifndef THESIS_AWH_NODE_MODIFIER
 #define THESIS_AWH_NODE_MODIFIER
 #include "heap_utils.h++"
 namespace KHJ  {
   namespace thesis  {
     namespace modifier  {
-      template <typename N, typename C>
+      template <typename V, typename N, typename C>
       class node_awh_modifier {     
         // Debug utils
         template<typename node_type, typename M> 
@@ -31,9 +27,10 @@ namespace KHJ  {
           (*L).right_ = R; 
           (*R).right_ = S; (*R).color_ = 1;
           (*S).left_  = L;
-
-          //(*S).height_ += 1;
-          (*S).height_ += (*L).height_;
+          
+          (*S).height_ = (*L).height_ + 1;
+          
+          assert( (*S).height_ == (*S).height());
         }
         
         /**
@@ -58,9 +55,10 @@ namespace KHJ  {
          */
         static N* replace( N* S, N* O )
         {
-          (*O).left_  = (*S).left_;
-          (*O).right_ = (*S).right_;
-          (*O).color_ = (*S).color_;
+          (*O).left_   = (*S).left_;
+          (*O).right_  = (*S).right_;
+          (*O).color_  = (*S).color_;
+          (*O).height_ = (*S).height_;
           
           if( (*O).is_root( ) && (*O).is_leaf( ) ) { /* no-op */ }
           else if( !(*O).is_root( ) && !(*O).is_leaf( ) ) {
@@ -82,16 +80,20 @@ namespace KHJ  {
               }
             }
           }
-
-          (*S).left_  = nullptr;
-          (*S).right_ = nullptr;          
+          (*S).left_   = nullptr;
+          (*S).right_  = nullptr;
+          (*S).height_ = 0;
+                    
           return S;
+        }
+
+        static void replace_elment( N* S, V v )
+        {
+          (*S).element_ = v;
         }
         
         static N** split( N* S )
         {
-          //std::unique_ptr<N*[]> st(new N*[2]);
-
           N** st = new N*[2];
           st[0]  = (*S).left_ ;
           st[1]  = (*(*S).left_).right_; (*st[1]).color_ = 0;
@@ -101,6 +103,11 @@ namespace KHJ  {
           (*S).left_      = nullptr; 
           
           (*S).height_ = 0;
+
+        
+          assert( (*S).height_ == (*S).height());
+          assert( (*st[1]).height_ == (*st[1]).height());
+     
           return st;
         }
 
@@ -109,6 +116,10 @@ namespace KHJ  {
           N* O = (*S).parent( );
           while( !(*S).is_root( ) && ( compare_( (*S).element(), (*O).element() ) ) ) {
             exchange_( S, O ); 
+            int h = (*O).height_;
+            (*O).height_ = (*S).height_;
+            (*S).height_ = h;
+       
             O = (*S).parent( );
           }
         }
@@ -127,10 +138,34 @@ namespace KHJ  {
             }
             if( compare_( (*O).element(),  (*S).element() ) ) {
               exchange_( O, S ); 
+              int h = (*O).height_;
+              (*O).height_ = (*S).height_;
+              (*S).height_ = h;             
             } else { 
               break; 
             }
           }
+        }
+
+        static int incremental_siftdown( N* S )
+        {
+          N* L; N* R; N* O;  
+          char d = -1;
+
+          if( !(*S).is_leaf( )  ) {
+            L = (*S).left_;
+            R = (*(*S).left_).right_;
+            if( compare_( (*L).element(), (*R).element() ) ) {
+              O = L;
+            } else { 
+              O = R; 
+            }
+            if( compare_( (*O).element(),  (*S).element() ) ) {
+              exchange_( O, S ); 
+              d = (O == R);
+            } 
+          }
+          return d;
         }
 
       private:

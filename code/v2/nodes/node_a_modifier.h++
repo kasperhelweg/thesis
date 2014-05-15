@@ -4,7 +4,7 @@
 namespace KHJ  {
   namespace thesis  {
     namespace modifier  {
-      template <typename N, typename C>
+      template <typename V, typename N, typename C>
       class node_a_modifier {     
         // Debug utils
         template<typename node_type, typename M> 
@@ -13,6 +13,7 @@ namespace KHJ  {
       public:
         typedef N node_type;
         typedef C comparator_type;
+        typedef V value_type;
         constexpr static comparator_type compare_ = C( );
               
         /**
@@ -80,23 +81,11 @@ namespace KHJ  {
           return S;
         }
         
-        /*
-        static std::unique_ptr<N*[]> split( N* S )
+        static void replace_elment( N* S, V v )
         {
-          std::unique_ptr<N*[]> st(new N*[2]);
-
-          //N** st = new N*[2];
-          st[0]  = (*S).left_ ;
-          st[1]  = (*(*S).left_).right_; (*st[1]).color_ = 0;
-
-          (*st[1]).right_ = nullptr; 
-          (*st[0]).right_ = nullptr; 
-          (*S).left_      = nullptr; 
-        
-          return st;
+          (*S).element_ = v;
         }
-        */
-
+     
         static N** split( N* S )
         {
           //std::unique_ptr<N*[]> st(new N*[2]);

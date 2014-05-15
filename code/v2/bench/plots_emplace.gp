@@ -6,6 +6,7 @@ set output "./figures/emplace.ps"
 set terminal postscript eps color
 
 plot "./data/magic_emplace.dat" using 1:2 title 'Magic Binary Queue Emplace' w linespoints pointtype 9, \
+     "./data/regular_emplace.dat" using 1:2 title 'Regular Binary Queue Emplace' w linespoints pointtype 4, \
      "./data/lazy_emplace.dat" using 1:2 title 'Lazy Binary Queue Emplace' w linespoints pointtype 8, \
      "./data/eager_emplace.dat" using 1:2 title 'Eager Binary Queue Emplace' w linespoints pointtype 7, \
      "./data/binomial_emplace.dat" using 1:2 title 'Boost Binomial Queue Emplace' w linespoints pointtype 6, \

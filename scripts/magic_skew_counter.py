@@ -9,7 +9,7 @@ class linked_list( object ):
   def __init__( self ):
     self.head = None
 
-  def append( self, element ):
+  def push( self, element ):
     n          = list_node( )
     n. element = element
     n.next     = self.head
@@ -42,7 +42,7 @@ class linked_list( object ):
       n = n.next
     return s
 
-  def p( self ):
+  def show( self ):
     l = []
     n = self.head
     while not n == None:
@@ -55,42 +55,31 @@ lo = linked_list( )
 
 def increment( D ): 
   D[0] += 1  
-  #if D[0] == 1 and the first low digit is not D[0] : push D[0] 
-  if D[0]   == 1 and lo.peak( 1 ) != 0: lo.append( 0 ) 
-  elif D[0] == 2: lo.pop( )
-  
+  if D[0]   == 1 and lo.peak( 1 ) != 0: lo.push( 0 ) 
+  elif D[0] == 2: lo.pop( )  
   if D[0] == 3: D = fix( D, 0 )
   else:
     j = hi.pop( )
     if not j == None:
       D = fix( D, j  )
-    
   return D
 
 def fix( D, j ):
   D[j] -= 3
-  #--------------------
   if j != 0:
     if D[j-1] <= 1: lo.pop( )
     D[j-1] += 2  
-  #--------------------
-
-  #--------------------
   if len( D ) - 1 <= j: D.append( 0 ) # grow list
   D[j+1] += 1  
-  #--------------------
   if D[j+1] == 1 and not lo.peak( 1 ) == j + 1:
-    lo.append( j + 1 )
+    lo.push( j + 1 )
   elif D[j+1] == 2:
     lo.pop()
   elif D[j+1] == 3:
-    hi.append( j + 1  )
-  #--------------------
- 
+    hi.push( j + 1  )
   if j != 0:
-    if D[j-1] >= 3: hi.append( j-1 )
-
-  if D[j] <= 1: lo.append( j )
+    if D[j-1] >= 3: hi.push( j-1 )
+  if D[j] <= 1: lo.push( j )
   return D
 
 def decrement( D ):
@@ -103,17 +92,13 @@ def decrement( D ):
       j = lo.pop( )
       if not j == None:
         D = unfix( D, j  )
-  
-  #--------------------
   D[0] -= 1
   if D[0] == 2: hi.pop( )
-  elif D[0] <= 1 and lo.peak( 1 ) != 0: lo.append( 0 )
+  elif D[0] <= 1 and lo.peak( 1 ) != 0: lo.push( 0 )
 
   return D
-  #--------------------
 
 def unfix( D, j ):
-  #--------------------
   # shrink list
   D[j+1] -= 1
   l = len( D )
@@ -122,24 +107,17 @@ def unfix( D, j ):
     D.pop()
   else:
     if D[j+1] == 1:
-      lo.append( j + 1 )
+      lo.push( j + 1 )
     elif D[j+1] == 2:
       hi.pop( )
-  #--------------------
-
-  #--------------------
   if j != 0: 
     if D[j-1] >= 3:
       hi.pop( )
     D[j-1] -= 2
     if D[j-1] <= 1 and not j - 1 == 0:
-      lo.append( j - 1 )
-  #--------------------
-
-  #--------------------
+      lo.push( j - 1 )
   D[j] += 3
-  if D[j] >= 3: hi.append( j )
-  #--------------------
+  if D[j] >= 3: hi.push( j )
 
   return D
 
@@ -175,42 +153,27 @@ def high( D ):
   h = next((x for x in D if x == 3 or x == 4), False)
   return h
 
-def to_binary( D ):
-  B = []
-  for i ,d in enumerate( D ):
-    B.append(int(bin(d)[2:]))
-  return B
-
 D = [2,1]
-n = 1000
+n = 100000
 print("------------------------------------ INC")
 print( str( value_of(D) ) + ": " + str(D) )
-  #print("is idle: " + str( is_idle( D ) ))
 for i in range( 0, n - 5 ):
   D = increment( D )
   print( str( value_of(D) ) + ": " + str(D) )
-  #print(hi.p())
-  #print(lo.p())
-  #print("is idle: " + str( is_idle( D ) ))
 
 print("------------------------------------")
 print( str( value_of(D) ) + ": " + str(D) )
-print(hi.p())
-print(lo.p())
-
-
+print(hi.show())
+print(lo.show())
 
 print("------------------------------------ DEC")
 for i in range( 0, n - 5 ):
   D = decrement( D )
   print( str( value_of(D) ) + ": " + str(D) )
-  #print("is idle: " + str( is_idle( D ) ))
-  #print(hi.p())
-  #print(lo.p())
 
 print("------------------------------------")
 print( str( value_of(D) ) + ": " + str(D) )
-print(hi.p())
-print(lo.p())
+print(hi.show())
+print(lo.show())
 
 print( "--Program magic_skew--" )

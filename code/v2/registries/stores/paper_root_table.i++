@@ -10,7 +10,7 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      paper_root_table<N>::paper_root_table( ) : top( nullptr )
+      paper_root_table<N>::paper_root_table( ) : top( nullptr ), size_( 0 )
       {
         root_table_node n1, n2; 
         root_table_.push_back( n1 ); 
@@ -29,87 +29,83 @@ namespace KHJ  {
       { }
 
       /**
-       * push_front( )
+       * inject( )
        * 
        * complexity is (probably) O(1)
        * @author KHJ
        *
        */
       template<typename N>
-      void paper_root_table<N>::push_front( N* S ) 
+      void paper_root_table<N>::inject( N* S ) 
       { 
         (*(begin( ))).root_list_.push_back( S ); 
         (*begin( )).size_++;
+        ++size_;
       }
 
       /**
-       * pop_front( )
+       * eject( )
        * 
        * complexity is (probably) O(1)
        * @author KHJ
        *
        */
       template<typename N>
-      N* paper_root_table<N>::pop_front( ) 
+      N* paper_root_table<N>::eject( ) 
       { 
-        N* S = (*(begin( ))).root_list_.back( S ); 
-        (*(begin( ))).root_list_.pop_back( S ); 
-        (*begin( )).size_--;
+        N* S = (*(begin( ))).root_list_.back( ); 
+        (*(begin( ))).root_list_.pop_back( ); 
+        --(*begin( )).size_;
+        --size_;
         return S;
       }
 
       template <typename N>
       int paper_root_table<N>::size( ) const
       { 
-        int s = 0, i = 0;
-        
-        for( auto it = begin( ); it != end( ); ++it) {
-          s += it->size( ) * (pow(2, i+1) - 1);
-          ++i;
-        } 
-
-        return s;
+        return size_;
       }
 
       /**
-       * insert( I position )
+       * insert_root( I position )
        * 
        * complexity is (probably) O(1)
        * @author KHJ
        *
        */
       template<typename N>
-      void paper_root_table<N>::insert( iterator_type position, N* S )
+      void paper_root_table<N>::insert_root( iterator_type position, N* S )
       { 
         (*position).root_list_.push_back( S );
         (*position).size_++;
       }
 
       /**
-       * extract( I position )
+       * remove_root( I position )
        * 
        * complexity is (probably) O(1)
        * @author KHJ
        *
        */
       template<typename N>
-      N* paper_root_table<N>::extract( iterator_type position )
+      N* paper_root_table<N>::remove_root( iterator_type position )
       {
-        N* S = (*position).root_list_.back( ); (*position).root_list_.pop_back( );
+        N* S = (*position).root_list_.back( ); 
+        (*position).root_list_.pop_back( );
         (*position).size_--;
         
         return S;
       }
 
       /**
-       * extract( N* R )
+       * remove_root( N* R )
        * 
        * complexity is (probably) O(1)
        * @author KHJ
        *
        */
       template<typename N>
-      N* paper_root_table<N>::extract( iterator_type position, node_iterator_type index )
+      N* paper_root_table<N>::remove_root( iterator_type position, node_iterator_type index )
       {
         int i = index - (*position).begin( ); 
         N* S = (*position).root_list_[i]; (*position).root_list_.erase( index );

@@ -20,31 +20,46 @@ namespace KHJ  {
         typedef M modifier_type;
         typedef S root_list_type;
                 
-        typedef typename root_list_type::iterator_type iterator_type;
+        typedef typename root_list_type::iterator_type 
+        iterator_type;
+        typedef iterator_type I;
         
         explicit lazy_root_registry( );
         ~lazy_root_registry( ); 
         
-        N*     top( ) const;
-        bool empty( ) const;
-        int   size( ) const;
-        void print( ) const;
+        N*     
+        top()   const;
+        bool 
+        empty() const;
+        int   
+        size()  const;
+        void 
+        print() const;
         
-        void insert( N* );
-        N*   extract( );        
-        void update_top( );        
-        void consolidate( );
+        void 
+        inject(N*);
+        N*   
+        eject();        
+        void 
+        update_top();        
+        void 
+        consolidate();
         
-        inline iterator_type begin( ) { return root_list_.begin( ); }
-        inline iterator_type end( )   { return root_list_.end( ); }
+        inline iterator_type 
+        begin( ) { return root_list_.begin( ); }
+        inline iterator_type 
+        end( )   { return root_list_.end( ); }
         
         // Debug utils
         KHJ::thesis::utils::pfb<N, M> utils;
       private:
-        root_list_type root_list_;
+        root_list_type 
+        root_list_;
               
-        void fix_( iterator_type );
-        void swap_nodes_( N* [], int, int );
+        void 
+        fix_(iterator_type);
+        void 
+        swap_nodes_(N* [], int, int);
       };
     }
   }

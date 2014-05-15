@@ -6,6 +6,7 @@ set output "./figures/pop_po.ps"
 set terminal postscript eps color
 
 plot "./data/magic_pop.dat" using 1:($2/$1) title 'Magic Binary Queue Pop' w linespoints pointtype 9, \
+     "./data/regular_pop.dat" using 1:($2/$1) title 'Regular Binary Queue Pop' w linespoints pointtype 4, \
      "./data/lazy_pop.dat" using 1:($2/$1) title 'Lazy Binary Queue Pop' w linespoints pointtype 8, \
      "./data/eager_pop.dat" using 1:($2/$1) title 'Eager Binary Queue Pop' w linespoints pointtype 7, \
      "./data/binomial_pop.dat" using 1:($2/$1) title 'Boost Binomial Queue Pop' w linespoints pointtype 6, \

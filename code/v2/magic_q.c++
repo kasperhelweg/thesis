@@ -23,7 +23,7 @@ typedef std::less<E> C;
 typedef counting_comparator<E> C1;
 typedef KHJ::thesis::heap_node::heap_a_node<E> N;
 // Node modifier
-typedef KHJ::thesis::modifier::node_a_modifier<N, C1> M;
+typedef KHJ::thesis::modifier::node_a_modifier<E, N, C1> M;
 // Allocator
 typedef std::allocator<N> A;
 // Storage

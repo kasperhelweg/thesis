@@ -121,7 +121,8 @@ namespace KHJ  {
       template <typename E>
       typename heap_awh_node<E>::N* heap_awh_node<E>::left_child( ) const
       {
-        assert(!is_leaf( )); return left_;
+        //assert(!is_leaf( )); 
+        return left_;
       }
 
       /**
@@ -134,7 +135,8 @@ namespace KHJ  {
       template <typename E>
       typename heap_awh_node<E>::N* heap_awh_node<E>::right_child( ) const
       {
-        assert(!is_leaf( )); return (*left_).right_;
+        //assert(!is_leaf( )); 
+        return (*left_).right_;
       }
 
       /**
@@ -166,14 +168,16 @@ namespace KHJ  {
       template <typename E>
       int heap_awh_node<E>::height( ) const
       {
-         int h = 0;
+        return height_;
+        /*
+        int h = 0;
         N* r((N*)this);  
         while( !(*r).is_leaf( ) ) {
           r = (*r).left_; h++;
         }
-        assert((*r).is_leaf( ));
         return h;
         //return height_;
+        */
       }
 
       /**

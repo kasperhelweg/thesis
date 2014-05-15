@@ -22,30 +22,41 @@ namespace KHJ {
          lazy_root_list( );
         ~lazy_root_list( );
 
-        N*     top;
-        
-        int      size( ) const; 
-        bool one_heap( ) const; 
-        bool    empty( ) const; 
+        N*  top;
+        int size_;
 
-        void push_front( N* S );
-        N*    pop_front( );    
+        int      
+        size( )  const; 
+        bool    
+        empty( ) const; 
+        bool 
+        one_heap( ) const; 
+    
+        void 
+        inject( N* S );
+        N*    
+        eject( );    
+
+        void 
+        insert_root( iterator_type, N* );
+        N* 
+        remove_root( iterator_type );
           
         /* maybe only support const iterators since "head_" is not supposed to be modified? */
-        inline iterator_type begin( ) 
-        { return root_list_.begin( ); }
-        inline iterator_type end( ) 
-        { return root_list_.end( ); }
+        inline iterator_type 
+        begin( ) { return root_list_.begin( ); }
+        inline iterator_type 
+        end( ) { return root_list_.end( ); }
         
-        inline const_iterator_type begin( ) const 
-        { return root_list_.begin( ); }
-        inline const_iterator_type   end( ) const 
-        { return root_list_.end( );   }
+        inline const_iterator_type 
+        begin( ) const { return root_list_.begin( ); }
+        inline const_iterator_type   
+        end( ) const { return root_list_.end( );   }
         
-        void print( ) const;  
+        void 
+        print( ) const;  
         
       private:  
-        int         size_;
         root_list_type root_list_;
       };
     }

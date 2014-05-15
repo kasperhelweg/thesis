@@ -12,22 +12,33 @@ namespace KHJ  {
         typedef M modifier_type;
         typedef R registry_type;
         
-        typedef typename registry_type::iterator_type iterator_type;
+        typedef typename registry_type::iterator_type 
+        iterator_type;
                 
         explicit magical_binary_queue( ) : registry_( R( )) { } 
 
-        int size( ) const;
+        int 
+        size() const;
         
-        N*   find_min( );       //find-min
-        void   insert( N* ); //insert //should return iterator instead
-        N*  erase_min( );       //delete_min
-        void    erase( N* );  //delete //should take iterator instead
+        N*   
+        find_min();       
+        void   
+        insert(N*); 
+        N*  
+        erase_min();
+        void
+        decrease_key(N*, E);
+        void    
+        erase(N*);  
         
-        void  meld( magical_binary_queue& );       
-        void clear( );
+        void  
+        meld(magical_binary_queue&);       
+        void 
+        clear();
         
       private:
-        registry_type registry_;
+        registry_type 
+        registry_;
       };
     }
   }

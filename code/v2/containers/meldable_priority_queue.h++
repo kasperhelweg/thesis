@@ -16,29 +16,48 @@ namespace KHJ  {
           realizer_( realizer_type( )), allocator_( allocator_type( ) ) { } 
         
         // accessors     
-        value_type top( );               //find-min
-        bool     empty( );
-        int       size( ) const;
+        value_type 
+        top();       
+        bool     
+        empty();
+        int       
+        size() const;
         
         // modifiers     
-        E*          push( E* );            
-        E*       emplace( V const& );
-        E*       extract( );
-        V            pop( );               
-        void       erase( E* );            
-        void    increase( E* );            
-        void    decrease( E* );            
-        void        meld( meldable_priority_queue& );       
-        void       clear( );
+        E*          
+        push(E*);            
+        E*       
+        emplace(V const&);
+        E*       
+        extract();
+        V            
+        pop();               
+        void       
+        erase(E*);            
+        void    
+        increase(E*);            
+        void    
+        decrease(V);            
+        void        
+        meld(meldable_priority_queue&);       
+        void       
+        clear();
+
+        void       
+        print();
 
         
         
       private:
-        realizer_type   realizer_;
-        allocator_type allocator_;
+        realizer_type   
+        realizer_;
+        allocator_type 
+        allocator_;
         
-        E*    buy_( const V& val );
-        void sell_( E* );
+        E*    
+        buy_(const V& val);
+        void 
+        sell_(E* );
       };
     }
   }

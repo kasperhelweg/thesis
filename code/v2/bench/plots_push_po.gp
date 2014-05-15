@@ -6,7 +6,9 @@ set output "./figures/push_po.ps"
 set terminal postscript eps color
 
 plot "./data/magic_push.dat" using 1:($2/$1) title 'Magic Binary Queue Push' w linespoints pointtype 9, \
+     "./data/regular_push.dat" using 1:($2/$1) title 'Regular Binary Queue Push' w linespoints pointtype 4, \
      "./data/lazy_push.dat" using 1:($2/$1) title 'Lazy Binary Queue Push' w linespoints pointtype 8, \
      "./data/eager_push.dat" using 1:($2/$1) title 'Eager Binary Queue Push' w linespoints pointtype 7, \
+     
 
 #pause -1 "cont";

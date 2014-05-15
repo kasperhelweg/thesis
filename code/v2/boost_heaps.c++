@@ -8,6 +8,7 @@
 
 #include "binomial_heap.hpp"
 #include "fibonacci_heap.hpp"
+#include "pairing_heap.hpp"
 
 typedef long E;
 
@@ -35,10 +36,10 @@ int main( )
   erase_bench_fib.open("./bench/data/fibonacci_erase.dat");
 
   boost::heap::binomial_heap<E>  pq_b;
-  boost::heap::fibonacci_heap<E> pq_f;
+  boost::heap::pairing_heap<E> pq_f;
   
   double reps = 3;
-  E max_elements = pow(10, 7);
+  E max_elements = pow(10, 6);
   double sum;
   double mean;
   double sd;
