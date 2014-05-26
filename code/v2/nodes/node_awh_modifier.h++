@@ -87,7 +87,7 @@ namespace KHJ  {
           return S;
         }
 
-        static void replace_elment( N* S, V v )
+        static void replace_element( N* S, V v )
         {
           (*S).element_ = v;
         }
@@ -175,6 +175,11 @@ namespace KHJ  {
           (*O).color_ = (*S).color_; (*S).color_ = oc;
         }
 
+        static void swap_height_( N* S, N* O )
+        {
+          //bool oc = (*O).color_;
+          //(*O).color_ = (*S).color_; (*S).color_ = oc;
+        }
         
         static void exchange_( N* S, N* O )
         {

@@ -19,6 +19,8 @@ namespace KHJ  {
 
         int 
         size() const;
+        bool
+        empty() const;
         
         N*   
         find_min();       

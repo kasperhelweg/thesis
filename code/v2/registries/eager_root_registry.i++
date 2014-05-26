@@ -9,7 +9,7 @@ namespace KHJ  {
        *
        */
       template<typename N, typename M, typename S>
-      eager_root_registry<N, M, S>::eager_root_registry( )
+      eager_root_registry<N, M, S>::eager_root_registry( ) : size_( 0 ), top_( nullptr )
       { }
 
       /**
@@ -33,9 +33,9 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       N* eager_root_registry<N, M, S>::top( ) const
       { 
-        return root_table_.top; 
+        return top_; 
       }
-
+      
       /**
        * size( )
        * 
@@ -46,10 +46,15 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       int eager_root_registry<N, M, S>::size( ) const
       { 
-        return root_table_.size( ); 
+        return size_; 
       }
 
-      
+      template<typename N, typename M, typename S>
+      bool eager_root_registry<N, M, S>::empty( ) const
+      { 
+        return size_ == 0; 
+      }
+     
       /**
        * inject( )
        * 
@@ -60,12 +65,13 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void eager_root_registry<N, M, S>::inject( N* Q )
       { 
-        if( root_table_.top == nullptr || 
-            M::compare_( (*Q).element(), (*root_table_.top).element() ) ) { 
-          root_table_.top = Q; 
+        if( top_ == nullptr || 
+            M::compare_( (*Q).element(), (*top_).element() ) ) { 
+          top_ = Q; 
         } 
         
         root_table_.inject( Q );
+        size_++;
       }
 
       /**
@@ -92,10 +98,11 @@ namespace KHJ  {
             break;
           }
         }
-        if( (*B).element( ) == (*root_table_.top).element( ) ) {
-          M::siftup( root_table_.top );
-          root_table_.top = B;
+        if( (*B).element( ) == (*top_).element( ) ) {
+          M::siftup( top_ );
+          top_ = B;
         }
+        size_--;
         return B;
       }
        
@@ -131,21 +138,34 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void eager_root_registry<N, M, S>::update_top( )
       {
-        root_table_.top = nullptr;
+        top_ = nullptr;
         for( auto it = root_table_.begin( ) ; it != root_table_.end( ) ; it++ ) {
           for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
-            if( root_table_.top == nullptr || 
-                M::compare_( (*(*vit)).element(), (*root_table_.top).element() ) )  {          
-              root_table_.top = *vit; } } 
+            if( top_ == nullptr || 
+                M::compare_( (*(*vit)).element(), (*top_).element() ) )  {          
+              top_ = *vit; } } 
         }
+      }
+
+      /**
+       * update_top( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      void eager_root_registry<N, M, S>::update_top( N* Q )
+      {
+        top_ = Q;
       }
        
       template<typename N, typename M, typename S>
       void eager_root_registry<N, M, S>::print( ) const
       {
         root_table_.print( );
-        if( root_table_.top != nullptr ) {
-          std::cout << "top: " << (*root_table_.top).element( ) << std::endl;
+        if( top_ != nullptr ) {
+          std::cout << "top: " << (*top_).element( ) << std::endl;
         }
       }
 

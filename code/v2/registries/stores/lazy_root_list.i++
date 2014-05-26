@@ -10,10 +10,8 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      lazy_root_list<N>::lazy_root_list( ) : top( nullptr ), size_( 0 )
-      {
-        
-      }
+      lazy_root_list<N>::lazy_root_list( )
+      { }
 
       /**
        * DeConstructor.
@@ -37,8 +35,6 @@ namespace KHJ  {
       void lazy_root_list<N>::inject( N* S ) 
       { 
         root_list_.push_back( S );
-        //++size_;
-        //size_ += pow( 2, (*S).height( ) + 1) - 1;
       }
 
       /**
@@ -53,7 +49,6 @@ namespace KHJ  {
       { 
         N* S = root_list_.back( ); 
         root_list_.pop_back( ); 
-        //--size_;// -= pow( 2, (*S).height( ) + 1) - 1;
         return S;
       }
 
@@ -73,25 +68,25 @@ namespace KHJ  {
       template <typename N>
       int lazy_root_list<N>::size( ) const
       { 
-        return size_;
+        return root_list_.size( );
       }
 
       template <typename N>
       bool lazy_root_list<N>::empty( ) const
       { 
-        return root_list_.empty( ); //size_ == 0;
+        return root_list_.empty( ); 
       }
 
       template <typename N>
-      bool lazy_root_list<N>::one_heap( ) const
+      void lazy_root_list<N>::clear( ) 
       { 
-        return root_list_.size( ) == 1;
+        root_list_.clear( ); 
       }
       
       template<typename N>
       void lazy_root_list<N>::print( ) const
       { 
-        std::cout << "size: " << size( ) << std::endl;     
+        std::cout << "rootlist size: " << size( ) << std::endl;     
         std::cout << "-----------------" << std::endl ;
         std::cout << "< ";
         for( auto it = begin( ); it != end( ); ++it) {

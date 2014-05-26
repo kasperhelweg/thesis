@@ -1,5 +1,7 @@
 #include "heap_a_node.h++"
+#include "heap_awh_node.h++"
 #include "node_a_modifier.h++"
+#include "node_awh_modifier.h++"
 #include "paper_root_table.h++"
 #include "eager_root_registry.h++"
 #include "eager_binary_queue.h++"
@@ -18,12 +20,12 @@ public:
   }
 };
 
-typedef long E;
+typedef long long E;
 typedef std::less<E> C;
 typedef counting_comparator<E> C1;
-typedef KHJ::thesis::heap_node::heap_a_node<E> N;
+typedef KHJ::thesis::heap_node::heap_awh_node<E> N;
 // Node modifier
-typedef KHJ::thesis::modifier::node_a_modifier<E, N, C1> M;
+typedef KHJ::thesis::modifier::node_awh_modifier<E, N, C1> M;
 // Allocator
 typedef std::allocator<N> A;
 // Storage
@@ -42,29 +44,20 @@ int main( )
   B benchmarker( comps, "eager" );
   Q eager_Q;
 
-  /*
-  benchmarker.push( eager_Q );
-  //assert( eager_Q.size( ) == 0 );
-  benchmarker.pop( eager_Q );
-  benchmarker.emplace( eager_Q );
-  benchmarker.erase( eager_Q );
-  */
-
-  std::vector<E>  data;
-  std::vector<N*> nodes;
-
-  for (E i = 10000000; i >= 1; --i) data.push_back( i );
-  std::random_shuffle ( data.begin( ), data.end( ) );
-    
-  for( auto it = data.begin( ) ; it != data.end( ) ; it++ ) {
-    N* n = new N( *it );
-    nodes.push_back( n );
-  }
-
-  for( auto it = nodes.begin( ) ; it != nodes.end( ) ; it++ ) {
-    eager_Q.push( *it );
-  }
+  std::cout << "---EAGER---" << std::endl;
   
+  benchmarker.push( eager_Q );
+  eager_Q.clear( );
+  benchmarker.pop( eager_Q );
+  eager_Q.clear( );
+  benchmarker.emplace( eager_Q );
+  eager_Q.clear( );
+  benchmarker.erase( eager_Q );
+  eager_Q.clear( );
+  benchmarker.decrease_key( eager_Q );
+  eager_Q.clear( );
+  benchmarker.seq_a( eager_Q );
+  eager_Q.clear( );
 
   return 0;
 }

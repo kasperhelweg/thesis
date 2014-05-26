@@ -9,7 +9,10 @@ namespace KHJ  {
        *
        */
       template<typename N, typename M, typename S>
-      lazy_root_registry<N, M, S>::lazy_root_registry( )
+      lazy_root_registry<N, M, S>::lazy_root_registry( ) : size_( 0 ), 
+                                                           cons_( 0 ), 
+                                                           top_( nullptr ), 
+                                                           root_list_( S( ) ) 
       { }
 
       /**
@@ -33,7 +36,7 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       N* lazy_root_registry<N, M, S>::top( ) const
       { 
-        return root_list_.top; 
+        return top_; 
       }
 
       /**
@@ -46,7 +49,13 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       int lazy_root_registry<N, M, S>::size( ) const
       { 
-        return root_list_.size( ); 
+        return size_; 
+      }
+
+      template<typename N, typename M, typename S>
+      bool lazy_root_registry<N, M, S>::empty( ) const
+      { 
+        return size_ == 0; 
       }
 
       
@@ -60,12 +69,12 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void lazy_root_registry<N, M, S>::inject( N* Q )
       { 
-        if( root_list_.top == nullptr || 
-            M::compare_( (*Q).element(), (*root_list_.top).element() ) ) { 
-          root_list_.top = Q; 
+        if( top_ == nullptr || 
+            M::compare_( (*Q).element(), (*top_).element() ) ) { 
+          top_ = Q; 
         }
         root_list_.inject( Q );
-        ++root_list_.size_;
+        cons_ = 1; ++size_;
       }
 
       /**
@@ -86,7 +95,7 @@ namespace KHJ  {
             root_list_.inject( st[0] ); root_list_.inject( st[1] );
             delete[] st;
           }
-          --root_list_.size_;
+          --size_;
         }
         return B;    
       }
@@ -101,75 +110,70 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void lazy_root_registry<N, M, S>::consolidate( )
       { 
-        //int s = floor( log2( root_list_.size( ) ) + 1   );
-        //Alloc array and initialize
-        int i = 0, w = 0, c = 0;
-        int C[root_list_.size()]; for( i = 0 ; i < s; i++) {  C[i] = 0; }
-        
-        for( auto it = root_list_.begin( ) ; it != root_list_.end( ) ; it++ ) {
-          int h = (*it)->height( );
-          C[h] += 1;
-          if ( C[h] > 2 ) { c = 1; break; }
-        }
-        
-        if( c ) {    
-          int s = floor( log2( root_list_.size( ) ) + 1   );
-          std::vector<N*> A[s];
-          for( i = 0; i <= s; i++) { 
-            std::vector<N*> v = std::vector<N*>();
-            A[i] = v;
-          }
-          while( !root_list_.empty( )) {
-            N* Q  = root_list_.eject( );
-            i = (*Q).height( );
-            A[i].push_back(Q);
-          }
+        if( cons_ ) {
+          int i = 0, u = 0, c = 1;
           
-          //root_list_.size_ = 0;
-          i = 0;
-          while( 1 ) {
-            while(!A[i].empty( ) && A[i].size( ) > 2  ) {
-              N* P = A[i].back( ); A[i].pop_back( );
-              N* R = A[i].back( ); A[i].pop_back( );
-              N* T = A[i].back( ); A[i].pop_back( );
-              N* t[3] = { P, R, T };   
-              
-              swap_nodes_( t, 0, M::compare_( 
-                (*t[1]).element(), (*t[0]).element() ) );
-              swap_nodes_( t, 2, M::compare_( 
-                (*t[0]).element(), (*t[2]).element() ) );
-              if( i == 0 ) {
-                M::join_heaps( t[0], t[1], t[2]  );
-                assert( (*t[0]).height() == 1);
-                A[1].push_back( t[0] );
-              } else {
-                N** st = M::split( t[0] );
-                M::join_heaps( t[0], t[1], t[2]  );
-                assert( (*t[0]).height() == i + 1);
-                assert( (*st[0]).height() == i - 1);
-                assert( (*st[1]).height() == i - 1);
-                A[i+1].push_back( t[0] );
-                A[i-1].push_back( st[0] );
-                A[i-1].push_back( st[1] );
-                delete[] st;
-                if( A[i-1].size( ) > 2 ) {
-                  w = 1;
+          /*
+          std::vector<int> h = std::vector<int>( );
+            
+          for( auto it = root_list_.begin( ) ; it != root_list_.end( ) ; it++ ) {
+            u = (*(*it)).height( );
+            if( h.size( ) < u + 1 ) {
+              while( h.size( ) <= u + 1 )
+                h.push_back( 0 );
+            }
+            h[u] += 1;
+            if (h[u] > 2) {
+              c = 1; break;
+            }
+          }
+          */
+          
+          if( c ) {
+            int s = floor( log2( size_ + 1 ) ); u = 0; i = 0;
+            std::vector<N*> A[s];
+            while( !root_list_.empty( )) {
+              N* Q  = root_list_.eject( );
+              i = (*Q).height( );
+              A[i].push_back( std::move( Q ) );
+            } 
+            while( 1 ) {
+              while( !A[i].empty( ) && A[i].size( ) > 2  ) {
+                N* P = A[i].back( ); A[i].pop_back( );
+                N* R = A[i].back( ); A[i].pop_back( );
+                N* T = A[i].back( ); A[i].pop_back( );
+                N* t[3] = { P, R, T };   
+                swap_nodes_( t, 0, M::compare_( 
+                  (*t[1]).element(), (*t[0]).element() ) );
+                swap_nodes_( t, 2, M::compare_( 
+                  (*t[0]).element(), (*t[2]).element() ) );
+                if( i == 0 ) {
+                  M::join_heaps( t[0], t[1], t[2]  );
+                  A[1].push_back( t[0] );
+                } else {
+                  N** st = M::split( t[0] );
+                  M::join_heaps( t[0], t[1], t[2]  );
+                  A[i+1].push_back( t[0] );
+                  A[i-1].push_back( st[0] );
+                  A[i-1].push_back( st[1] );
+                  delete[] st;
+                  if( A[i-1].size( ) > 2 ) 
+                    u = 1;
                 }
               }
+              if( u ) {
+                i = i - 1; u = 0;
+              } else if( i == s - 1 )
+                break; 
+              else
+                i = i + 1;
             }
-            if ( i == s - 1  ) { break; } 
-            else if( w == 1)   { i = i - 1; w = 0; } 
-            else               { i = i + 1; }
-          }
-        
-          for( i = s - 1 ; i >= 0; i--) { 
-            for( auto it = A[i].begin( ); it != A[i].end( ); ++it) {
-              N* v = (*it); 
-              assert( (*v).height() == i);
-              root_list_.inject( v );
-            } 
-            A[i].clear();
-          }
+            for( i = s-1 ; i >= 0; i--) { 
+              for( auto it = A[i].begin( ); it != A[i].end( ); ++it) 
+                root_list_.inject( *it );
+              A[i].clear( );
+            }
+          } cons_ = 0;
         }
       }
 
@@ -183,27 +187,37 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void lazy_root_registry<N, M, S>::update_top( )
       {
-        root_list_.top = nullptr;
+        top_ = nullptr;
         for( auto it = root_list_.begin( ) ; it != root_list_.end( ) ; it++ ) {        
-            if( root_list_.top == nullptr || 
-                M::compare_( (*(*it)).element(),  (*root_list_.top).element() ) )  {          
-              root_list_.top = *it;
-            }
+          if( top_ == nullptr || 
+              M::compare_( (*(*it)).element(),  (*top_).element() ) )  {          
+            top_ = *it;
+          }
         }
+      }
+
+      /**
+       * update_top( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      void lazy_root_registry<N, M, S>::update_top( N* Q )
+      {
+        top_ = Q;
       }
        
       template<typename N, typename M, typename S>
       void lazy_root_registry<N, M, S>::print( ) const
       {
+        std::cout << "queue size: " << size_ << std::endl;     
         root_list_.print( );
-        if( root_list_.top != nullptr ) {
-          std::cout << "top: " << (*root_list_.top).element( ) << std::endl;
+        if( top_ != nullptr ) {
+          std::cout << "top: " << (*top_).element( ) << std::endl;
         }
-      }
-
-      template <typename N, typename M, typename S>
-      void lazy_root_registry<N, M, S>::fix_( I I )
-      { 
+        std::cout << std::endl;     
       }
 
       // swap aux

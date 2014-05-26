@@ -13,21 +13,33 @@ namespace KHJ  {
         typedef R registry_type;
 
         typedef typename registry_type::iterator_type iterator_type;
-                
         explicit eager_binary_queue( ) : registry_( R( )) { } 
         
-        int size( ) const;
+        int 
+        size( ) const;
+        bool 
+        empty( ) const;
 
-        N*   find_min( );     
-        void   insert( N* ); 
-        N*  erase_min( );      
-        void    erase( N* );
+        N* 
+        find_min( );     
+        void 
+        insert( N* ); 
+        N*  
+        erase_min( );      
+        void    
+        erase( N* );
+
+        void
+        decrease_key(N*, E);
         
-        void  meld( eager_binary_queue& );       
-        void clear( );
+        void  
+        meld( eager_binary_queue& );       
+        void 
+        clear( );
         
       private:
-        registry_type registry_;
+        registry_type 
+        registry_;
       };
     }
   }

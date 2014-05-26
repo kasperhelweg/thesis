@@ -1,7 +1,14 @@
 namespace KHJ  {
   namespace thesis  {
     namespace queue  {
-      
+            
+      template<typename E, typename C, typename N, typename M, typename R>
+      bool magical_binary_queue<E, C, N, M, R>::empty(  ) const
+      {
+        return registry_.empty( );
+        
+      }
+
       template<typename E, typename C, typename N, typename M, typename R>
       N* magical_binary_queue<E, C, N, M, R>::find_min(  ) 
       {
@@ -47,10 +54,19 @@ namespace KHJ  {
       template<typename E, typename C, typename N, typename M, typename R>
       void magical_binary_queue<E, C, N, M, R>::decrease_key( N* S, E v ) 
       {
+        bool is_root = (*S).is_root( );
         M::replace_element( S, v );
         M::siftup( S );
+        if( !is_root && (*S).is_root( ) ){
+          for( auto it = registry_.begin( ) ; it != registry_.end( ) ; it++ ) {
+            for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
+              if( !(*(*vit)).is_root( ) )
+                *vit = (*(*vit)).find_root();
+            }
+          }
+        }
         if( M::compare_( v, (*registry_.top( )).element( ) ) ) 
-          registry_.update.top( S );
+          registry_.update_top( S );
       }
 
       template<typename E, typename C, typename N, typename M, typename R>

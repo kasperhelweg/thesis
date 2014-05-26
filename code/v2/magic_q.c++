@@ -1,5 +1,7 @@
 #include "heap_a_node.h++"
+#include "heap_awh_node.h++"
 #include "node_a_modifier.h++"
+#include "node_awh_modifier.h++"
 #include "paper_root_table.h++"
 #include "magical_root_registry.h++"
 #include "magical_binary_queue.h++"
@@ -18,12 +20,12 @@ public:
   }
 };
 
-typedef long E;
+typedef long long E;
 typedef std::less<E> C;
 typedef counting_comparator<E> C1;
-typedef KHJ::thesis::heap_node::heap_a_node<E> N;
+typedef KHJ::thesis::heap_node::heap_awh_node<E> N;
 // Node modifier
-typedef KHJ::thesis::modifier::node_a_modifier<E, N, C1> M;
+typedef KHJ::thesis::modifier::node_awh_modifier<E, N, C1> M;
 // Allocator
 typedef std::allocator<N> A;
 // Storage
@@ -43,11 +45,20 @@ int main( )
   B benchmarker( comps, "magic" );
   Q magic_Q;
 
+
+  std::cout << "---MAGIC---" << std::endl;
   benchmarker.push( magic_Q );
-  //assert( magic_Q.size( ) == 0 );
+  magic_Q.clear( );
   benchmarker.pop( magic_Q );
+  magic_Q.clear( );
   benchmarker.emplace( magic_Q );
+  magic_Q.clear( );
   benchmarker.erase( magic_Q );
-  
+  magic_Q.clear( );
+  benchmarker.decrease_key( magic_Q );
+  magic_Q.clear( );
+  benchmarker.seq_a( magic_Q ); 
+  magic_Q.clear( );
+
   return 0;
 }

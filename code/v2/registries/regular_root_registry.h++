@@ -30,10 +30,7 @@ namespace KHJ  {
         
         explicit regular_root_registry( );
         ~regular_root_registry( ); 
-        
-        int 
-        size_;
-        
+     
         N*     
         top()   const;
         bool 
@@ -60,6 +57,11 @@ namespace KHJ  {
         // Debug utils
         KHJ::thesis::utils::pfb<N, M> utils;
       private:
+        int 
+        size_;
+        N* 
+        top_;
+
         root_table_type 
         root_table_;
         std::list<iterator_type> 

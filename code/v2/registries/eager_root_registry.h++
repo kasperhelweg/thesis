@@ -43,7 +43,9 @@ namespace KHJ  {
         void 
         consolidate();
         void 
-        update_top();        
+        update_top(); 
+        void 
+        update_top(N*); 
                 
         inline iterator_type 
         begin( ) { return root_table_.begin( ); }
@@ -53,8 +55,14 @@ namespace KHJ  {
         // Debug utils
         KHJ::thesis::utils::pfb<N, M> utils;
       private:
+        int 
+        size_;
+        N*
+        top_;
+        
         root_table_type 
         root_table_;
+        
         std::vector<iterator_type> 
         hi_;
         

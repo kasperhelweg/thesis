@@ -53,9 +53,6 @@ namespace KHJ {
         paper_root_table( );
         ~paper_root_table( );
 
-        N* top; 
-        int size_;
-        
         int  
         size( )  const; 
         bool 

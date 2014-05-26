@@ -9,7 +9,7 @@ namespace KHJ  {
        *
        */
       template<typename N, typename M, typename S>
-      regular_root_registry<N, M, S>::regular_root_registry( )
+      regular_root_registry<N, M, S>::regular_root_registry( ) : size_( 0 ), top_( nullptr ), root_table_( ), hi_( ), wall_( )
       { }
 
       /**
@@ -33,7 +33,7 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       N* regular_root_registry<N, M, S>::top( ) const
       { 
-        return root_table_.top; 
+        return top_; 
       }
 
       /**
@@ -46,7 +46,15 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       int regular_root_registry<N, M, S>::size( ) const
       { 
-        return root_table_.size( ); 
+        //return root_table_.size( ); 
+        return size_; 
+      }
+
+      template<typename N, typename M, typename S>
+      bool regular_root_registry<N, M, S>::empty( ) const
+      { 
+        //return root_table_.size_ == 0;
+        return size_ == 0;
       }
       
       /**
@@ -84,12 +92,12 @@ namespace KHJ  {
           if( (*root_table_.begin( )).size( ) == 2  ) 
             hi_.push_front( begin( ) );           
         }
-        if( root_table_.top == nullptr || 
+        if( top_ == nullptr || 
             M::compare_( 
-            (*Q).element(), (*root_table_.top).element() ) ) { 
-          root_table_.top = Q; 
+                        (*Q).element(), (*top_).element() ) ) { 
+          top_ = Q; 
         }
-        root_table_.size_++;
+        size_++;
       }
       
       /**
@@ -106,7 +114,7 @@ namespace KHJ  {
         I j = root_table_.begin( );
         
         if( (*j).size_ == 0 ) ++j;        
-        if( j == wall_.front( ) ) {
+        if( !wall_.empty( ) && j == wall_.front( ) ) {
           reduce_( j );
           if( (*(*j).begin( )).b_ == 0 )
             wall_.pop_front( );
@@ -115,7 +123,7 @@ namespace KHJ  {
         B = l.hp_;
         if( j == hi_.front( ) )      
           hi_.pop_front( );
-        if( j  == wall_.front( ) ) 
+        if( !wall_.empty( ) && j  == wall_.front( ) ) 
           wall_.pop_front( );
         if( j != root_table_.begin( ) ) {
           k = --j; 
@@ -127,22 +135,14 @@ namespace KHJ  {
           root_table_.insert_root( j, st[1], nullptr, 0, 0 );       
           root_table_.insert_root( j, st[0], l.sp_, l.b_, l.bittrace_ >> 1 );       
       
-          /*
-          if( s == 0 ) {
-            root_table_.insert_root( j, st[1], nullptr, 0, 0 );       
-            root_table_.insert_root( j, st[0], l.sp_, l.b_, l.bittrace_ >> 1 );       
-          } else {
-            root_table_.insert_root( j, st[0], nullptr, 0, 0 );       
-            root_table_.insert_root( j, st[1], l.sp_, l.b_, l.bittrace_ >> 1 );       
-          }
-            */
           delete[] st; hi_.push_front( j );   
           if( (*(*j).begin( )).b_ > 0 ) 
             wall_.push_front( j );
           if( (*++j).size_ == 0  )
             root_table_.shrink( j );
         }
-        root_table_.size_--;
+        //root_table_.size_--;
+        size_--;
         return B;
       }
       
@@ -198,19 +198,19 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void regular_root_registry<N, M, S>::update_top( )
       {
-        root_table_.top = nullptr;
+        top_ = nullptr;
         for( auto it = root_table_.begin( ) ; it != root_table_.end( ) ; it++ ) {
           for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
-            if( root_table_.top == nullptr || 
-                M::compare_( (*vit).hp_->element(),  (*root_table_.top).element() ) )  {          
-              root_table_.top = (*vit).hp_; } } 
+            if( top_ == nullptr || 
+                M::compare_( (*vit).hp_->element(),  (*top_).element() ) )  {          
+              top_ = (*vit).hp_; } } 
         }
       }
 
       template<typename N, typename M, typename S>
       void regular_root_registry<N, M, S>::update_top( N* Q )
       {
-        root_table_.top = Q;
+        top_ = Q;
       }
        
       template<typename N, typename M, typename S>

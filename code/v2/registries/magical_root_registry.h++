@@ -53,6 +53,11 @@ namespace KHJ  {
         // Debug utils
         KHJ::thesis::utils::pfb<N, M> utils;
       private:
+        int 
+        size_;
+        N* 
+        top_;
+        
         root_table_type 
         root_table_;
         std::vector<iterator_type> 

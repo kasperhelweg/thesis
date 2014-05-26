@@ -10,7 +10,7 @@ namespace KHJ  {
        *
        */
       template<typename N>
-      paper_root_table<N>::paper_root_table( ) : top( nullptr ), size_( 0 )
+      paper_root_table<N>::paper_root_table( ) 
       {
         root_table_node n1, n2; 
         root_table_.push_back( n1 ); 
@@ -40,7 +40,7 @@ namespace KHJ  {
       { 
         (*(begin( ))).root_list_.push_back( S ); 
         (*begin( )).size_++;
-        ++size_;
+        //++size_;
       }
 
       /**
@@ -56,14 +56,14 @@ namespace KHJ  {
         N* S = (*(begin( ))).root_list_.back( ); 
         (*(begin( ))).root_list_.pop_back( ); 
         --(*begin( )).size_;
-        --size_;
+        //--size_;
         return S;
       }
 
       template <typename N>
       int paper_root_table<N>::size( ) const
       { 
-        return size_;
+        //return size_;
       }
 
       /**

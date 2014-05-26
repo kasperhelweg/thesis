@@ -59,7 +59,7 @@ namespace KHJ  {
       template <typename N>
       int regular_root_table<N>::size( ) const
       { 
-        return size_;
+        return root_table_.size( );
       }
 
       /**

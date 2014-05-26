@@ -13,13 +13,14 @@ namespace KHJ  {
         typedef R realizer_type;
         
         explicit meldable_priority_queue( ) : 
-          realizer_( realizer_type( )), allocator_( allocator_type( ) ) { } 
+          realizer_( realizer_type( )), allocator_( allocator_type( ) ) 
+        { } 
         
         // accessors     
         value_type 
-        top();       
+        top() const;       
         bool     
-        empty();
+        empty() const;
         int       
         size() const;
         
@@ -27,7 +28,7 @@ namespace KHJ  {
         E*          
         push(E*);            
         E*       
-        emplace(V const&);
+        push(V const&);
         E*       
         extract();
         V            
@@ -35,18 +36,18 @@ namespace KHJ  {
         void       
         erase(E*);            
         void    
-        increase(E*);            
+        increase(E*, V);            
         void    
-        decrease(V);            
+        decrease(E*, V);            
         void        
-        meld(meldable_priority_queue&);       
+        meld(meldable_priority_queue&);  
+        E*       
+        borrow();
         void       
         clear();
-
+        
         void       
         print();
-
-        
         
       private:
         realizer_type   

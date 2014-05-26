@@ -9,6 +9,7 @@
 
 #include <bitset>
 
+
 static long long comps;
 template <typename T>
 class counting_comparator {
@@ -20,7 +21,7 @@ public:
   }
 };
 
-typedef long E;
+typedef long long E;
 typedef std::less<E> C;
 typedef counting_comparator<E> C1;
 typedef KHJ::thesis::heap_node::heap_awh_node<E> N;
@@ -43,83 +44,20 @@ int main( )
 
   B benchmarker( comps, "regular" );
   Q regular_Q;
-  /*
-  unsigned long x = 1;
-  unsigned short b = 65535;
-  
-  std::cout << "x size = " << sizeof( x ) << std::endl;
-  std::cout << "b size = " << sizeof( b ) << std::endl;
-  std::cout << "x = " << (std::bitset<sizeof( x ) * 8>) x << std::endl;
-  std::cout << "b = " << (std::bitset<sizeof( b ) * 8>) b << std::endl;
-  
-  x |= 1 << 5;
-  x |= 1 << 10;
-  std::cout << "x = " << (std::bitset<sizeof( x ) * 8>) x << std::endl;
-  
-  // updating the bittrace
-  char s  = x & (1 << 0);
-  x = x >> 1;
-  std::cout << "x = " << (std::bitset<sizeof( x ) * 8>) x << std::endl;
-  std::cout << "s = " <<  (int)s << std::endl;
-  
-  */
-  
-  /*
-  std::vector<E>  data;
-  std::vector<N*> nodes;
-  */
-  /*
-  for (E i = 1000; i >= 1; --i) data.push_back( i );
-  std::random_shuffle ( data.begin( ), data.end( ) );
-  */
-  /*
-  for( auto it = data.begin( ) ; it != data.end( ) ; it++ ) {
-    N* n = new N( *it );
-    nodes.push_back( n );
-  }
 
-  for( auto it = nodes.begin( ) ; it != nodes.end( ) ; it++ ) {
-    regular_Q.push( *it );
-  }
-  */
-
-  /*
-  for( auto it = data.begin( ) ; it != data.end( ) ; it++ ) {
-    regular_Q.emplace( *it );
-  }
-
-   for( auto it = data.begin( ) ; it != data.end( ) ; it++ ) {
-     //std::cout << regular_Q.pop( ) << std::endl;
-     regular_Q.pop( );
-   }
-
-   */
-  /*
-  for( auto it = nodes.begin( ) ; it != nodes.end( ) ; it++ ) {
-    regular_Q.erase( *it );
-  }
- 
-  */
-  /*
-
-  for( auto it = data.begin( ) ; it != data.end( ) ; it++ ) {
-    regular_Q.emplace( *it );
-  }
-
-  regular_Q.print( );
-
-  for( auto it = data.begin( ) ; it != data.end( ) ; it++ ) {
-    regular_Q.pop( );
-  }
-  regular_Q.print( );
-  
-  */
-  
+  std::cout << "---REGULAR---" << std::endl;
   benchmarker.push( regular_Q );
+  regular_Q.clear( );
   benchmarker.pop( regular_Q );
+  regular_Q.clear( );
   benchmarker.emplace( regular_Q );
+  regular_Q.clear( );
   benchmarker.erase( regular_Q );
-  
-  return 0;
+  regular_Q.clear( );
+  benchmarker.decrease_key( regular_Q );
+  regular_Q.clear( );
+  benchmarker.seq_a( regular_Q ); 
+  regular_Q.clear( );
 
+  return 0;
 }

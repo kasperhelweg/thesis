@@ -9,7 +9,7 @@ namespace KHJ  {
        *
        */
       template<typename N, typename M, typename S>
-      magical_root_registry<N, M, S>::magical_root_registry( ) 
+      magical_root_registry<N, M, S>::magical_root_registry( ) : size_( 0 ), top_( nullptr ) 
       { 
         state_.reserve( 2 );
         state_[0] = root_table_.begin( );
@@ -38,7 +38,7 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       N* magical_root_registry<N, M, S>::top( ) const
       { 
-        return root_table_.top; 
+        return top_; 
       }
 
       /**
@@ -51,8 +51,23 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       int magical_root_registry<N, M, S>::size( ) const
       { 
-        return root_table_.size( ); 
+        return size_; 
       }
+
+      /**
+       * size( )
+       * 
+       * complexity is (probably) O(1)
+       * @author KHJ
+       *
+       */
+      template<typename N, typename M, typename S>
+      bool magical_root_registry<N, M, S>::empty( ) const
+      { 
+        return size_ == 0; 
+      }
+
+
 
       
       /**
@@ -65,12 +80,13 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void magical_root_registry<N, M, S>::inject( N* Q )
       { 
-        if( root_table_.top == nullptr || 
-            M::compare_( (*Q).element(), (*root_table_.top).element() ) ) { 
-          root_table_.top = Q; 
+        if( top_ == nullptr || 
+            M::compare_( (*Q).element(), (*top_).element() ) ) { 
+          top_ = Q; 
         } 
         root_table_.inject( Q );
-      
+        size_++;
+        
         if( (*root_table_.begin( )).size( ) == 2 ) { 
           lo_.pop_back( ); 
         } else if( (*root_table_.begin( )).size( ) == 3 ) { 
@@ -93,15 +109,15 @@ namespace KHJ  {
       N* magical_root_registry<N, M, S>::eject( )
       { 
         N* B;
-        int s = root_table_.size( );
-        I j = root_table_.begin( );
+        int s = size_;
+        I j   = root_table_.begin( );
         
         if( s == 4 ) {
           B = root_table_.remove_root( std::next( j ) );
           N** st = M::split( B );
           root_table_.insert_root( j, st[0] );
           root_table_.insert_root( j, st[1] );      
-          --root_table_.size_;
+          delete[] st;
         } else if( s <= 3 ) {
           B = root_table_.eject( );
         } else {
@@ -124,7 +140,7 @@ namespace KHJ  {
             lo_.push_back( j );
           }
         }
-        
+        --size_;
         return B;
       }
 
@@ -138,12 +154,12 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void magical_root_registry<N, M, S>::update_top( )
       { 
-        root_table_.top = nullptr;
+        top_ = nullptr;
         for( auto it = root_table_.begin( ) ; it != root_table_.end( ) ; it++ ) {
           for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
-            if( root_table_.top == nullptr || 
-                M::compare_( (*(*vit)).element(),  (*root_table_.top).element() ) )  {          
-              root_table_.top = *vit;
+            if( top_ == nullptr || 
+                M::compare_( (*(*vit)).element(),  (*top_).element() ) )  {          
+              top_ = *vit;
             }
           }
         }
@@ -152,15 +168,15 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void magical_root_registry<N, M, S>::update_top( N* Q )
       { 
-        root_table_.top = Q;
+        top_ = Q;
       }
        
       template<typename N, typename M, typename S>
       void magical_root_registry<N, M, S>::print( ) const
       {
         root_table_.print( );
-        if( root_table_.top != nullptr ) {
-          std::cout << "top: " << (*root_table_.top).element( ) << std::endl;
+        if( top_ != nullptr ) {
+          std::cout << "top: " << (*top_).element( ) << std::endl;
         }
       }
       

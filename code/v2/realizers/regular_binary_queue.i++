@@ -1,6 +1,12 @@
 namespace KHJ  {
   namespace thesis  {
     namespace queue  {
+
+      template<typename E, typename C, typename N, typename M, typename R>
+      bool regular_binary_queue<E, C, N, M, R>::empty(  ) const 
+      {
+        return registry_.empty( );
+      }
       
       template<typename E, typename C, typename N, typename M, typename R>
       N* regular_binary_queue<E, C, N, M, R>::find_min(  ) 
@@ -33,17 +39,17 @@ namespace KHJ  {
             for( auto vit = (*it).begin( ); vit != (*it).end( ); vit++ ) {
               if( (*vit).hp_ == T ) {
                 if( (*vit).sp_ != nullptr ) {
-                  modifier_type::siftdown( (*vit).sp_ );     
+                  M::siftdown( (*vit).sp_ );     
                   (*vit).sp_ = nullptr; } } }
           }
           if( (*B).element( ) == (*registry_.top( )).element( ) && 
               B != registry_.top( ) ) {
-            modifier_type::siftup( registry_.top( ) );
+            M::siftup( registry_.top( ) );
             registry_.update_top( B ); }
-          modifier_type::replace( P, B );
+          M::replace( P, B );
           if( B != registry_.top( ) ) { 
-            modifier_type::siftdown( B );
-            modifier_type::siftup( B ); }          
+            M::siftdown( B );
+            M::siftup( B ); }          
           if( is_root || (*B).is_root( ) ){
             for( auto it = registry_.begin( ) ; it != registry_.end( ) ; it++ ) {
               for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
@@ -55,6 +61,24 @@ namespace KHJ  {
         }
         if( P == registry_.top( ) ) 
           registry_.update_top( );
+      }
+
+      template<typename E, typename C, typename N, typename M, typename R>
+      void regular_binary_queue<E, C, N, M, R>::decrease_key( N* S, E v ) 
+      {
+        bool is_root = (*S).is_root( );
+        M::replace_element( S, v );
+        M::siftup( S );
+        if( !is_root && (*S).is_root( ) ){
+          for( auto it = registry_.begin( ) ; it != registry_.end( ) ; it++ ) {
+            for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
+              if( !(*(*vit).hp_).is_root( ) )
+                (*vit).hp_ = (*(*vit).hp_).find_root();
+            }
+          }
+        }
+        if( M::compare_( v, (*registry_.top( )).element( ) ) ) 
+          registry_.update_top( S );
       }
       
       template<typename E, typename C, typename N, typename M, typename R>

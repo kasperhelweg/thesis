@@ -8,13 +8,16 @@
 #ifndef THESIS_LAZY_ROOT_REGISTRY
 #define THESIS_LAZY_ROOT_REGISTRY
 #include <memory>
+#include <utility>
 #include "heap_utils.h++"
-
+#include "lazy_binary_queue.h++"
 namespace KHJ  {
   namespace thesis  {
     namespace root_registry  {
       template<typename N, typename M, typename S>
       class lazy_root_registry {
+        template<typename E, typename C, typename U, typename B, typename R>
+        friend class KHJ::thesis::queue::lazy_binary_queue;
       public:
         typedef N node_type;
         typedef M modifier_type;
@@ -41,10 +44,12 @@ namespace KHJ  {
         N*   
         eject();        
         void 
-        update_top();        
+        update_top(); 
+        void
+        update_top( N* Q );
         void 
         consolidate();
-        
+     
         inline iterator_type 
         begin( ) { return root_list_.begin( ); }
         inline iterator_type 
@@ -53,11 +58,16 @@ namespace KHJ  {
         // Debug utils
         KHJ::thesis::utils::pfb<N, M> utils;
       private:
+        int 
+        size_;
+        N*  
+        top_;
+        bool 
+        cons_;
+
         root_list_type 
         root_list_;
               
-        void 
-        fix_(iterator_type);
         void 
         swap_nodes_(N* [], int, int);
       };

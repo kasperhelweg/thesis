@@ -16,12 +16,18 @@ namespace KHJ  {
                 
         explicit regular_binary_queue( ) : registry_( R( )) { } 
         
-        int size( ) const;
+        int 
+        size( ) const;
+        bool 
+        empty( ) const;
         
         N*   find_min( );     
         void insert( N* ); 
         N*   erase_min( );      
         void erase( N* );
+
+        void
+        decrease_key(N*, E);
         
         void  meld( regular_binary_queue& );       
         void clear( );
