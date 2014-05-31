@@ -25,6 +25,9 @@ namespace KHJ {
         size( )  const; 
         bool    
         empty( ) const; 
+        void
+        clear( );    
+     
      
         void 
         inject( N* S );
@@ -34,9 +37,10 @@ namespace KHJ {
         insert_root( iterator_type, N* );
         N* 
         remove_root( iterator_type );
-        void
-        clear( );    
      
+        void
+        concatenate( root_list_type );
+
         /* maybe only support const iterators since "head_" is not supposed to be modified? */
         inline iterator_type 
         begin( ) { return root_list_.begin( ); }

@@ -44,7 +44,9 @@ int main( )
 
   B benchmarker( comps, "regular" );
   Q regular_Q;
-
+  Q regular_Q1;
+  
+  /*
   std::cout << "---REGULAR---" << std::endl;
   benchmarker.push( regular_Q );
   regular_Q.clear( );
@@ -58,6 +60,19 @@ int main( )
   regular_Q.clear( );
   benchmarker.seq_a( regular_Q ); 
   regular_Q.clear( );
+  */
+  //benchmarker.seq_b( regular_Q, regular_Q1 ); 
+
+  for( long long i = 0; i <= 100000; i++ ) {
+    regular_Q.push( i );
+  }
+  
+  for( long long i = 26; i <= 60000; i++ ) {
+    regular_Q1.push( i );
+  }
+
+  regular_Q.meld( regular_Q1 );
+  
 
   return 0;
 }

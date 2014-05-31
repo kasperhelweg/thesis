@@ -68,6 +68,12 @@ namespace KHJ  {
       }
 
       template <typename N>
+      void lazy_root_list_alt<N>::concatenate( lazy_root_list_alt& other ) 
+      { 
+        root_list_.splice(root_list_.end( ), other.root_list_ );        
+      }
+
+      template <typename N>
       int lazy_root_list_alt<N>::size( ) const
       { 
         return root_list_.size( );

@@ -154,7 +154,7 @@ namespace KHJ  {
       void lazy_root_registry_alt<N, M, S>::meld( lazy_root_registry_alt& R )
       {
         int s = R.size( );
-        root_list_.root_list_.splice(root_list_.end( ), R.root_list_.root_list_);
+        root_list_.concatenate( R.root_list_ );
         if( M::compare_( (*(R.top_)).element(),  (*top_).element() ) )
           top_ = R.top_;
       

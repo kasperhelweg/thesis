@@ -66,6 +66,12 @@ namespace KHJ  {
       }
 
       template <typename N>
+      void lazy_root_list<N>::concatenate( root_list_type ) 
+      { 
+        
+      }
+
+      template <typename N>
       int lazy_root_list<N>::size( ) const
       { 
         return root_list_.size( );

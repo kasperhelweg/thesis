@@ -68,8 +68,7 @@ namespace KHJ  {
         if( top_ == nullptr || 
             M::compare_( (*Q).element(), (*top_).element() ) ) { 
           top_ = Q; 
-        } 
-        
+        }         
         root_table_.inject( Q );
         size_++;
       }
@@ -94,13 +93,11 @@ namespace KHJ  {
               root_table_.insert_root( it, st[1] );
               if( (*it).size( ) >= 3 ) { fix_( it ); } 
               delete[] st;
-            }
-            break;
+            } break;
           }
         }
         if( (*B).element( ) == (*top_).element( ) ) {
-          M::siftup( top_ );
-          top_ = B;
+          M::siftup( top_ ); top_ = B;
         }
         size_--;
         return B;
@@ -118,14 +115,36 @@ namespace KHJ  {
       { 
         if( (*root_table_.begin( )).size( ) == 3 )
           hi_.push_back( root_table_.begin( ) ); 
-        while( 1 ) {
-          if( !hi_.empty( ) ) {
-            I j = hi_.back( ); hi_.pop_back( );
-            fix_( j );
-          } else {
-            break;
+        while( !hi_.empty( ) ) {
+          I j = hi_.back( ); hi_.pop_back( );
+          fix_( j );
+        }
+      }
+
+      template<typename N, typename M, typename S>
+      void eager_root_registry<N, M, S>::meld( eager_root_registry& other )
+      {
+        int s = other.size( );
+
+        if( other.size( ) <= size( ) ) {
+          I i = other.begin( );
+          I j = other.end( );
+          I k = begin( );
+          while( i != j ) {
+            while( (*i).size( ) != 0 ) {
+              N* Q =  other.root_table_.remove_root( i );
+              root_table_.insert_root( k, Q );
+              if( (*k).size( ) == 3 && k != begin( ) ) { hi_.push_back( k ); }
+              consolidate( );
+            }
+            i++;
+            k++;
           }
-        }        
+        }
+               
+        if( M::compare_( (*(other.top_)).element(),  (*top_).element() ) )
+          top_ = other.top_;
+        size_ += s; other.size_ = 0; other.top_ = nullptr;
       }
 
       /**
@@ -163,10 +182,12 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void eager_root_registry<N, M, S>::print( ) const
       {
+        std::cout << "size: " << size( ) << std::endl;
         root_table_.print( );
         if( top_ != nullptr ) {
           std::cout << "top: " << (*top_).element( ) << std::endl;
         }
+        std::cout << std::endl;
       }
 
       template <typename N, typename M, typename S>
@@ -183,20 +204,22 @@ namespace KHJ  {
         
         N* t[3] = { Q, R, V };     
         swap_nodes_( t, 0, M::compare_( 
-        (*t[1]).element(), (*t[0]).element() ) );
+          (*t[1]).element(), (*t[0]).element() ) );
         swap_nodes_( t, 2, M::compare_( 
-        (*t[0]).element(), (*t[2]).element() ) );       
+          (*t[0]).element(), (*t[2]).element() ) );       
         if( j != root_table_.begin( ) ) {
           N** st = M::split( t[0] );
           M::join_heaps( t[0], t[1], t[2]  ); 
           root_table_.insert_root( e, t[0]  );
           root_table_.insert_root( w, st[0] ); 
           root_table_.insert_root( w, st[1] );
+          if( (*e).size( ) >= 3 ) { hi_.push_back( e ); }
+          if( (*w).size( ) >= 3 ) { hi_.push_back( w ); }
           delete[] st;
         } else {
           M::join_heaps( t[0], t[1], t[2]  ); root_table_.insert_root( e, t[0] );
+          if( (*e).size( ) >= 3 ) { hi_.push_back( e ); }
         }
-        if( (*e).size( ) == 3 ) { hi_.push_back( e ); }
       }
 
       // swap aux

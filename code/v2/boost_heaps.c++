@@ -38,8 +38,8 @@ typedef long long E;
 typedef counting_comparator<node<E>> C1;
 typedef boost::heap::binomial_heap<node<E>, boost::heap::compare<C1>>  Q_bin;
 typedef Q_bin::handle_type binomial_node;
-
 typedef boost::heap::fibonacci_heap<node<E>, boost::heap::compare<C1>> Q_fib;
+
 typedef Q_fib::handle_type fibonacci_node;
 
 typedef KHJ::thesis::benchmark::bench<fibonacci_node, E, Q_fib> B;

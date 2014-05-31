@@ -40,12 +40,11 @@ typedef KHJ::thesis::benchmark::bench<N, E, Q> B;
 
 int main( )
 {
-
   B benchmarker( comps, "eager" );
   Q eager_Q;
-
-  std::cout << "---EAGER---" << std::endl;
+  Q eager_Q1;
   
+  std::cout << "---EAGER---" << std::endl;  
   benchmarker.push( eager_Q );
   eager_Q.clear( );
   benchmarker.pop( eager_Q );
@@ -57,6 +56,8 @@ int main( )
   benchmarker.decrease_key( eager_Q );
   eager_Q.clear( );
   benchmarker.seq_a( eager_Q );
+  eager_Q.clear( );
+  benchmarker.seq_b( eager_Q, eager_Q1 ); 
   eager_Q.clear( );
 
   return 0;

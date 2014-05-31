@@ -53,7 +53,6 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       bool regular_root_registry<N, M, S>::empty( ) const
       { 
-        //return root_table_.size_ == 0;
         return size_ == 0;
       }
       
@@ -94,7 +93,7 @@ namespace KHJ  {
         }
         if( top_ == nullptr || 
             M::compare_( 
-                        (*Q).element(), (*top_).element() ) ) { 
+              (*Q).element(), (*top_).element() ) ) { 
           top_ = Q; 
         }
         size_++;
@@ -128,7 +127,7 @@ namespace KHJ  {
         if( j != root_table_.begin( ) ) {
           k = --j; 
           if( (*++j).p_ - 1 > (*k).p_ ) 
-            root_table_.test( j, (*j).p_ - 1 ); --j;
+            root_table_.add_table_node( j, (*j).p_ - 1 ); --j;
           st = M::split( l.hp_ ); 
           s = l.bittrace_ & (1 << 0);
           swap_nodes_( st, 0, s );
@@ -141,7 +140,6 @@ namespace KHJ  {
           if( (*++j).size_ == 0  )
             root_table_.shrink( j );
         }
-        //root_table_.size_--;
         size_--;
         return B;
       }
@@ -158,14 +156,15 @@ namespace KHJ  {
       {
         I k = std::next( j ); 
         if( (*k).p_ != (*j).p_ + 1 ) { 
-          root_table_.test( k, (*j).p_ + 1 ); --k;
+          root_table_.add_table_node( k, (*j).p_ + 1 ); --k;
         }        
         root_list_node l0 = root_table_.remove_root( j ); 
         root_list_node l1 = root_table_.remove_root( j );
         
         M::join_heaps( Q, l0.hp_, l1.hp_ );        
         root_table_.insert_root( k, Q, Q, (*j).p_ + 1, 0 );       
-        hi_.pop_front( );
+        if( !hi_.empty( ) ) 
+          hi_.pop_front( );
       }
       
       template<typename N, typename M, typename S>
@@ -187,6 +186,86 @@ namespace KHJ  {
         }
         (*l).b_--;
       }
+
+      template<typename N, typename M, typename S>
+      void regular_root_registry<N, M, S>::meld( regular_root_registry& other )
+      {
+        std::cout << "before" << std::endl;
+        other.print( );
+        print( );
+    
+        /*
+        // Only supported if other.size_ <= this.size_
+        int s = other.size( );
+
+        I it  = begin( );
+        I vit = other.begin( ); 
+        std::vector<N*> A;
+        std::cout << "before" << std::endl;
+        other.print( );
+        print( );
+        for( vit; vit != other.end( ); vit++ ) {
+          while( (*vit).size( ) != 0 ) {
+            RLI k = (*vit).begin( );
+            root_list_node n = other.root_table_.remove_root( vit );
+            if( n.sp_ ) {
+              M::siftdown( n.sp_ );
+              n.sp_ = nullptr; 
+            }
+            n.b_  = 0;
+            n.bittrace_ = 0;
+                  
+            // arbitrary increment
+            A.push_back( eject( ) );
+            A.push_back( eject( ) );
+            
+            I it  = begin( );
+            while( (*it).p_ < (*vit).p_ )
+              it++; 
+            if( (*it).p_ > (*vit).p_ ) { 
+              root_table_.add_table_node( it, (*it).p_ - 1 );
+              it--;
+            }
+            
+            if( !(*it).empty( ) ) { 
+              RLI j = (*it).begin( );
+              if( (*j).sp_ ) {
+                M::siftdown( (*j).sp_ );
+                (*j).sp_ = nullptr; 
+                (*j).b_ = 0;
+                (*j).bittrace_ = 0;
+              }
+              if( (*it).size( ) == 2  ) { 
+                transfer_( it, A.back( ) );
+                A.pop_back( );
+              }
+            }
+            root_table_.insert_root( it, n.hp_, nullptr, 0, 0 );      
+            
+            if( (*it).size( ) == 2  ) { 
+              transfer_( it, A.back( ) );
+              A.pop_back( );
+            }
+            while( !A.empty( ) ) {
+              inject( A.back( ) );
+              A.pop_back( );
+            }      
+          }
+          
+          
+          
+
+          //print();
+          //other.print();
+          //std::cout << "other: " << (*it).p_ << std::endl;
+          //std::cout << "other: " << (*it).size() << std::endl;
+          //std::cout << "this: " << (*vit).p_ << std::endl;
+        }
+        size_ += s;
+        std::cout << "insert after trans" << std::endl;
+        print( );
+        */
+      }
       
       /**
        * update_top( )
@@ -202,7 +281,7 @@ namespace KHJ  {
         for( auto it = root_table_.begin( ) ; it != root_table_.end( ) ; it++ ) {
           for( auto vit = (*it).begin( ) ; vit != (*it).end( ) ; vit++ ) {
             if( top_ == nullptr || 
-                M::compare_( (*vit).hp_->element(),  (*top_).element() ) )  {          
+                M::compare_( (*(*vit).hp_).element(),  (*top_).element() ) )  {          
               top_ = (*vit).hp_; } } 
         }
       }
@@ -216,6 +295,7 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void regular_root_registry<N, M, S>::print( ) const
       {
+        std::cout << "size: " << size( ) << std::endl;     
         root_table_.print( );
         std::cout << "--------------" << std::endl;
         for( auto it = hi_.begin( ); it != hi_.end( ); ++it){

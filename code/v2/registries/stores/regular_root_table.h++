@@ -99,7 +99,7 @@ namespace KHJ {
         inline const_iterator_type last( )  const 
         { return std::prev( root_table_.end( ) );   }
         
-        void   test( iterator_type , unsigned short );  
+        void   add_table_node( iterator_type , unsigned short );  
         void   grow( unsigned short );  
         void shrink( iterator_type );  
         

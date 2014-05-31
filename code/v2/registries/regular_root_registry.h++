@@ -48,6 +48,8 @@ namespace KHJ  {
         update_top(); 
         void 
         update_top(N*); 
+        void 
+        meld( regular_root_registry& );
                 
         inline iterator_type 
         begin() { return root_table_.begin( ); }

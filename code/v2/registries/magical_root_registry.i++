@@ -67,9 +67,6 @@ namespace KHJ  {
         return size_ == 0; 
       }
 
-
-
-      
       /**
        * inject( )
        * 
@@ -174,6 +171,7 @@ namespace KHJ  {
       template<typename N, typename M, typename S>
       void magical_root_registry<N, M, S>::print( ) const
       {
+        std::cout << "size: " << size( ) << std::endl;
         root_table_.print( );
         if( top_ != nullptr ) {
           std::cout << "top: " << (*top_).element( ) << std::endl;

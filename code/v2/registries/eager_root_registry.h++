@@ -46,6 +46,8 @@ namespace KHJ  {
         update_top(); 
         void 
         update_top(N*); 
+        void 
+        meld( eager_root_registry& );
                 
         inline iterator_type 
         begin( ) { return root_table_.begin( ); }
@@ -70,8 +72,6 @@ namespace KHJ  {
         fix_(iterator_type);
         void 
         swap_nodes_(N* [], int, int);
-        
-        
       };
     }
   }

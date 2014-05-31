@@ -29,6 +29,7 @@ namespace KHJ  {
         std::string filename;
         std::string path = "./bench/data/";
         std::ofstream bench_plots;
+        std::ofstream bench_plots_med;
         std::vector<long long> bench_vec;
         std::vector<long long> comp_vec;
 
@@ -44,7 +45,7 @@ namespace KHJ  {
         E     elements_ = 1000;
         
         double reps    = 5;
-        double splits  = 10;
+        double splits  = 7;
         double sum     = 0;
         double mean    = 0;
         double sd      = 0;
@@ -54,9 +55,13 @@ namespace KHJ  {
           std::string post_ = "_push.dat";
           std::cout << "PUSH" << std::endl;
           bench_plots.open(path + filename + post_);
+          bench_plots_med.open(path + filename + "_med" + post_ );
           bench_plots << "#n        " << "#time_in_micro        " << "#compares" << std::endl;
           bench_plots << std::endl;
+          bench_plots_med << "#n        " << "#time_in_micro        "<< std::endl;
+          bench_plots_med << std::endl;
 
+          
           E elements = elements_;
           while( elements <= max_elements ) {
             for (E i = elements; i >= 1; --i) data.push_back( i );
@@ -88,9 +93,11 @@ namespace KHJ  {
             } 
             nodes.clear( );
 
+            std::sort( bench_vec.begin(), bench_vec.end() );
             sum  = std::accumulate( std::begin(bench_vec), std::end(bench_vec), 0.0);
             mean = sum / static_cast<double>(bench_vec.size( ));
             bench_plots << elements << "        " << mean << "        ";
+            bench_plots_med << elements << "        " << bench_vec[floor(reps/2)] << std::endl;
             bench_vec.clear( );
     
             sum  = std::accumulate( std::begin(comp_vec), std::end(comp_vec), 0.0);
@@ -102,6 +109,7 @@ namespace KHJ  {
             elements += elements / splits;
           }
           bench_plots.close( );
+          bench_plots_med.close( );
         }
 
         void pop( queue_type& q )
@@ -109,9 +117,12 @@ namespace KHJ  {
           std::string post_ = "_pop.dat";
           std::cout << "POP" << std::endl;
           bench_plots.open(path + filename + post_);
+          bench_plots_med.open(path + filename + "_med" + post_ );
           bench_plots << "#n        " << "#time_in_micro        " << "#compares" << std::endl;
           bench_plots << std::endl;
-
+          bench_plots_med << "#n        " << "#time_in_micro        "<< std::endl;
+          bench_plots_med << std::endl;
+       
           E elements = elements_;
           while( elements <= max_elements ) {
             for (E i = elements; i >= 1; --i) data.push_back( i );
@@ -132,9 +143,11 @@ namespace KHJ  {
               comp_vec.push_back( compares / elements );
             }
 
+            std::sort( bench_vec.begin(), bench_vec.end() );
             sum  = std::accumulate( std::begin(bench_vec), std::end(bench_vec), 0.0);
             mean = sum / static_cast<double>(bench_vec.size( ));
             bench_plots << elements << "        " << mean << "        ";
+            bench_plots_med << elements << "        " << bench_vec[floor(reps/2)] << std::endl;
             bench_vec.clear( );
     
             sum  = std::accumulate( std::begin(comp_vec), std::end(comp_vec), 0.0);
@@ -146,6 +159,7 @@ namespace KHJ  {
             elements += elements / splits;
           }
           bench_plots.close();
+          bench_plots_med.close();
         }
 
         void emplace( queue_type& q )
@@ -154,8 +168,11 @@ namespace KHJ  {
           std::cout << "EMPLACE" << std::endl;
 
           bench_plots.open(path + filename + post_);
+          bench_plots_med.open(path + filename + "_med" + post_ );
           bench_plots << "#n        " << "#time_in_micro        " << "#compares" << std::endl;
           bench_plots << std::endl;
+          bench_plots_med << "#n        " << "#time_in_micro        "<< std::endl;
+          bench_plots_med << std::endl;
           
           E elements = elements_;
           while( elements <= max_elements ) {
@@ -176,9 +193,11 @@ namespace KHJ  {
           
             }
 
+            std::sort( bench_vec.begin(), bench_vec.end() );
             sum  = std::accumulate( std::begin(bench_vec), std::end(bench_vec), 0.0);
             mean = sum / static_cast<double>(bench_vec.size( ));
             bench_plots << elements << "        " << mean << "        ";
+            bench_plots_med << elements << "        " << bench_vec[floor(reps/2)] << std::endl;
             bench_vec.clear( );
     
             sum  = std::accumulate( std::begin(comp_vec), std::end(comp_vec), 0.0);
@@ -190,6 +209,7 @@ namespace KHJ  {
             elements += elements / splits;
           }
           bench_plots.close();
+          bench_plots_med.close();
         }
 
         void erase( queue_type& q )
@@ -198,8 +218,11 @@ namespace KHJ  {
           
           std::cout << "ERASE" << std::endl;         
           bench_plots.open(path + filename + post_);
+          bench_plots_med.open(path + filename + "_med" + post_ );
           bench_plots << "#n        " << "#time_in_micro        " << "#compares" << std::endl;
           bench_plots << std::endl;
+          bench_plots_med << "#n        " << "#time_in_micro        "<< std::endl;
+          bench_plots_med << std::endl;
 
           E elements = elements_;
           while( elements <= max_elements ) {
@@ -223,9 +246,11 @@ namespace KHJ  {
               nodes.clear();
             }
 
+            std::sort( bench_vec.begin(), bench_vec.end() );
             sum  = std::accumulate( std::begin(bench_vec), std::end(bench_vec), 0.0);
             mean = sum / static_cast<double>(bench_vec.size( ));
             bench_plots << elements << "        " << mean << "        ";
+            bench_plots_med << elements << "        " << bench_vec[floor(reps/2)] << std::endl;
             bench_vec.clear( );
     
             sum  = std::accumulate( std::begin(comp_vec), std::end(comp_vec), 0.0);
@@ -237,6 +262,7 @@ namespace KHJ  {
             elements += elements / splits;
           }
           bench_plots.close();
+          bench_plots_med.close();
         }
 
         void erase_boost( queue_type& q )
@@ -245,8 +271,11 @@ namespace KHJ  {
           
           std::cout << "ERASE" << std::endl;         
           bench_plots.open(path + filename + post_);
+          bench_plots_med.open(path + filename + "_med" + post_ );
           bench_plots << "#n        " << "#time_in_micro        " << "#compares" << std::endl;
           bench_plots << std::endl;
+          bench_plots_med << "#n        " << "#time_in_micro        "<< std::endl;
+          bench_plots_med << std::endl;
 
           E elements = elements_;
           while( elements <= max_elements ) {
@@ -270,9 +299,11 @@ namespace KHJ  {
               nodes_boost.clear();
             }
 
+            std::sort( bench_vec.begin(), bench_vec.end() );
             sum  = std::accumulate( std::begin(bench_vec), std::end(bench_vec), 0.0);
             mean = sum / static_cast<double>(bench_vec.size( ));
             bench_plots << elements << "        " << mean << "        ";
+            bench_plots_med << elements << "        " << bench_vec[floor(reps/2)] << std::endl;
             bench_vec.clear( );
     
             sum  = std::accumulate( std::begin(comp_vec), std::end(comp_vec), 0.0);
@@ -284,6 +315,7 @@ namespace KHJ  {
             elements += elements / splits;
           }
           bench_plots.close();
+          bench_plots_med.close();
         }
 
         void decrease_key( queue_type& q  )
@@ -292,8 +324,11 @@ namespace KHJ  {
           
           std::cout << "DECREASE" << std::endl;         
           bench_plots.open(path + filename + post_);
+          bench_plots_med.open(path + filename + "_med" + post_ );
           bench_plots << "#n        " << "#time_in_micro        " << "#compares" << std::endl;
           bench_plots << std::endl;
+          bench_plots_med << "#n        " << "#time_in_micro        "<< std::endl;
+          bench_plots_med << std::endl;
 
           E elements = elements_;
           std::vector<E> keys;
@@ -326,9 +361,11 @@ namespace KHJ  {
               nodes.clear();
             }
           
+            std::sort( bench_vec.begin(), bench_vec.end() );
             sum  = std::accumulate( std::begin(bench_vec), std::end(bench_vec), 0.0);
             mean = sum / static_cast<double>(bench_vec.size( ));
             bench_plots << elements << "        " << mean << "        ";
+            bench_plots_med << elements << "        " << bench_vec[floor(reps/2)] << std::endl;
             bench_vec.clear( );
     
             sum  = std::accumulate( std::begin(comp_vec), std::end(comp_vec), 0.0);
@@ -344,6 +381,7 @@ namespace KHJ  {
            
           }
           bench_plots.close();
+          bench_plots_med.close();
           
         }
 
@@ -353,8 +391,11 @@ namespace KHJ  {
           
           std::cout << "DECREASE" << std::endl;         
           bench_plots.open(path + filename + post_);
+          bench_plots_med.open(path + filename + "_med" + post_ );
           bench_plots << "#n        " << "#time_in_micro        " << "#compares" << std::endl;
           bench_plots << std::endl;
+          bench_plots_med << "#n        " << "#time_in_micro        "<< std::endl;
+          bench_plots_med << std::endl;
 
           E elements = elements_;
           std::vector<E> keys;
@@ -386,10 +427,12 @@ namespace KHJ  {
               q.clear( );     
               nodes_boost.clear();
             }
-          
+
+            std::sort( bench_vec.begin(), bench_vec.end() );
             sum  = std::accumulate( std::begin(bench_vec), std::end(bench_vec), 0.0);
             mean = sum / static_cast<double>(bench_vec.size( ));
             bench_plots << elements << "        " << mean << "        ";
+            bench_plots_med << elements << "        " << bench_vec[floor(reps/2)] << std::endl;
             bench_vec.clear( );
     
             sum  = std::accumulate( std::begin(comp_vec), std::end(comp_vec), 0.0);
@@ -405,6 +448,7 @@ namespace KHJ  {
            
           }
           bench_plots.close();
+          bench_plots_med.close();
           
         }
 
@@ -413,8 +457,11 @@ namespace KHJ  {
           std::string post_ = "_seq_a.dat";
           std::cout << "SEQUENCE A" << std::endl;
           bench_plots.open(path + filename + post_);
+          bench_plots_med.open(path + filename + "_med" + post_ );
           bench_plots << "#n        " << "#time_in_micro        " << "#compares" << std::endl;
           bench_plots << std::endl;
+          bench_plots_med << "#n        " << "#time_in_micro        "<< std::endl;
+          bench_plots_med << std::endl;
          
           E elements = elements_;
           std::vector<E> keys;
@@ -467,9 +514,11 @@ namespace KHJ  {
               nodes.clear( );
             }
             
+            std::sort( bench_vec.begin(), bench_vec.end() );
             sum  = std::accumulate( std::begin(bench_vec), std::end(bench_vec), 0.0);
             mean = sum / static_cast<double>(bench_vec.size( ));
             bench_plots << elements << "        " << mean << "        ";
+            bench_plots_med << elements << "        " << bench_vec[floor(reps/2)] << std::endl;
             bench_vec.clear( );
     
             sum  = std::accumulate( std::begin(comp_vec), std::end(comp_vec), 0.0);
@@ -485,6 +534,7 @@ namespace KHJ  {
           
           }
           bench_plots.close();
+          bench_plots_med.close();
         }
 
         void seq_a_boost( queue_type& q )
@@ -492,8 +542,11 @@ namespace KHJ  {
           std::string post_ = "_seq_a.dat";
           std::cout << "SEQUENCE A" << std::endl;
           bench_plots.open(path + filename + post_);
+          bench_plots_med.open(path + filename + "_med" + post_ );
           bench_plots << "#n        " << "#time_in_micro        " << "#compares" << std::endl;
           bench_plots << std::endl;
+          bench_plots_med << "#n        " << "#time_in_micro        "<< std::endl;
+          bench_plots_med << std::endl;
          
           E elements = elements_;
           std::vector<E> keys;
@@ -546,9 +599,11 @@ namespace KHJ  {
               nodes_boost.clear( );
             }
             
+            std::sort( bench_vec.begin(), bench_vec.end() );
             sum  = std::accumulate( std::begin(bench_vec), std::end(bench_vec), 0.0);
             mean = sum / static_cast<double>(bench_vec.size( ));
             bench_plots << elements << "        " << mean << "        ";
+            bench_plots_med << elements << "        " << bench_vec[floor(reps/2)] << std::endl;
             bench_vec.clear( );
     
             sum  = std::accumulate( std::begin(comp_vec), std::end(comp_vec), 0.0);
@@ -564,6 +619,7 @@ namespace KHJ  {
           
           }
           bench_plots.close();
+          bench_plots_med.close();
         }
 
         void seq_b( queue_type& q, queue_type& q1 )
@@ -571,8 +627,11 @@ namespace KHJ  {
           std::string post_ = "_seq_b.dat";
           std::cout << "SEQUENCE B" << std::endl;
           bench_plots.open(path + filename + post_);
+          bench_plots_med.open(path + filename + "_med" + post_ );
           bench_plots << "#n        " << "#time_in_micro        " << "#compares" << std::endl;
           bench_plots << std::endl;
+          bench_plots_med << "#n        " << "#time_in_micro        "<< std::endl;
+          bench_plots_med << std::endl;
          
           E elements = elements_;
           std::vector<E>  keys;
@@ -625,9 +684,11 @@ namespace KHJ  {
               keys.clear( );
             }
 
+            std::sort( bench_vec.begin(), bench_vec.end() );
             sum  = std::accumulate( std::begin(bench_vec), std::end(bench_vec), 0.0);
             mean = sum / static_cast<double>(bench_vec.size( ));
             bench_plots << elements << "        " << mean << "        ";
+            bench_plots_med << elements << "        " << bench_vec[floor(reps/2)] << std::endl;
             bench_vec.clear( );
     
             sum  = std::accumulate( std::begin(comp_vec), std::end(comp_vec), 0.0);
@@ -643,6 +704,7 @@ namespace KHJ  {
             elements += elements / splits;
           }
           bench_plots.close();
+          bench_plots_med.close();
         }
 
         void seq_b_boost( queue_type& q, queue_type& q1 )
@@ -650,8 +712,11 @@ namespace KHJ  {
           std::string post_ = "_seq_b.dat";
           std::cout << "SEQUENCE B" << std::endl;
           bench_plots.open(path + filename + post_);
+          bench_plots_med.open(path + filename + "_med" + post_ );
           bench_plots << "#n        " << "#time_in_micro        " << "#compares" << std::endl;
           bench_plots << std::endl;
+          bench_plots_med << "#n        " << "#time_in_micro        "<< std::endl;
+          bench_plots_med << std::endl;
          
           E elements = elements_;
           std::vector<E>  keys;
@@ -704,9 +769,11 @@ namespace KHJ  {
               keys.clear( );
             }
 
+            std::sort( bench_vec.begin(), bench_vec.end() );
             sum  = std::accumulate( std::begin(bench_vec), std::end(bench_vec), 0.0);
             mean = sum / static_cast<double>(bench_vec.size( ));
             bench_plots << elements << "        " << mean << "        ";
+            bench_plots_med << elements << "        " << bench_vec[floor(reps/2)] << std::endl;
             bench_vec.clear( );
     
             sum  = std::accumulate( std::begin(comp_vec), std::end(comp_vec), 0.0);
@@ -722,6 +789,7 @@ namespace KHJ  {
             elements += elements / splits;
           }
           bench_plots.close();
+          bench_plots_med.close();
         }
 
 

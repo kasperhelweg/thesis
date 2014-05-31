@@ -80,6 +80,12 @@ namespace KHJ  {
         if( M::compare_( v, (*registry_.top( )).element( ) ) ) 
           registry_.update_top( S );
       }
+
+      template<typename E, typename C, typename N, typename M, typename R>
+      void regular_binary_queue<E, C, N, M, R>::meld( regular_binary_queue& O )
+      {
+        registry_.meld( O.registry_ );     
+      }
       
       template<typename E, typename C, typename N, typename M, typename R>
       int regular_binary_queue<E, C, N, M, R>::size(  ) const

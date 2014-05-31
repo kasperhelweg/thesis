@@ -82,14 +82,6 @@ namespace KHJ  {
         (*position).size_++;
       }
 
-      template<typename N>
-      void regular_root_table<N>::test( iterator_type position, unsigned short p )
-      { 
-        root_table_node n( p ); 
-        root_table_.insert( position, n );
-      }
-
-
       /**
        * extract( I position )
        * 
@@ -119,10 +111,15 @@ namespace KHJ  {
       typename regular_root_table<N>::root_list_node 
       regular_root_table<N>::remove_root( iterator_type position, root_list_iterator_type index )
       {
-      
-      }
         
-      // grow_( ).
+      }
+  
+      template<typename N>
+      void regular_root_table<N>::add_table_node( iterator_type position, unsigned short p )
+      { 
+        root_table_node n( p ); 
+        root_table_.insert( position, n );
+      }
       
       template <typename N>
       void regular_root_table<N>::grow( unsigned short p ) 

@@ -44,6 +44,9 @@ namespace KHJ {
         insert_root( iterator_type, N* );
         N* 
         remove_root( iterator_type );
+        void
+        concatenate( lazy_root_list_alt& );
+
           
         /* maybe only support const iterators since "head_" is not supposed to be modified? */
         inline iterator_type 

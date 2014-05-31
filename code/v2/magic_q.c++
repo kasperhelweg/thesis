@@ -45,7 +45,6 @@ int main( )
   B benchmarker( comps, "magic" );
   Q magic_Q;
 
-
   std::cout << "---MAGIC---" << std::endl;
   benchmarker.push( magic_Q );
   magic_Q.clear( );
