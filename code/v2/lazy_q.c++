@@ -18,21 +18,31 @@ public:
   }
 };
 
+// Element E
 typedef long long E;
+
+// Comparator C of E
 typedef std::less<E> C;
+
+// Counting Comparator C of E
 typedef counting_comparator<E> C1;
+
+// Node N of E
 typedef KHJ::thesis::heap_node::heap_awh_node<E> N;
-// Node modifier
+
+// Node modifier of E, N, C1
 typedef KHJ::thesis::modifier::node_awh_modifier<E, N, C1> M;
-// Allocator
+
+// Allocator of N
 typedef std::allocator<N> A;
+
 // Storage
 typedef KHJ::thesis::root_list::lazy_root_list_alt<N> S1;
 typedef KHJ::thesis::root_registry::lazy_root_registry_alt<N, M, S1> F1;
+
 /* LAZY BINARY QUEUE */
 typedef KHJ::thesis::queue::lazy_binary_queue<E, C1, N, M, F1> R1;
 typedef KHJ::thesis::priority_queue::meldable_priority_queue<E, C1, A, N, R1> Q1;
-
 
 typedef KHJ::thesis::benchmark::bench<N, E, Q1> B1;
 
@@ -60,5 +70,5 @@ int main( )
   lazy_Q.clear( );
   lazy_Q1.clear( );
   
- return 0;
+  return 0;
 }

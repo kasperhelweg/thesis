@@ -17,7 +17,10 @@ namespace KHJ  {
        */
       template <typename E>
       heap_awh_node<E>::heap_awh_node( const E& e ) : 
-        element_( e ), color_( 0 ), height_( 0 ), left_( nullptr ) , right_( nullptr ) { }
+        element_( e ), color_( 0 ), height_( 0 ), left_( nullptr ) , right_( nullptr )
+      {
+
+      }
 
       /**
        * Constructor with color.
@@ -28,7 +31,10 @@ namespace KHJ  {
        */
       template <typename E>
       heap_awh_node<E>::heap_awh_node( const E& e, bool c ) : 
-        element_( e ), color_( c ), height_( 0 ), left_( nullptr ) , right_( nullptr ) { }
+        element_( e ), color_( c ), height_( 0 ), left_( nullptr ) , right_( nullptr )
+      {
+
+      }
            
       /**
        * DeConstructor.
@@ -38,7 +44,8 @@ namespace KHJ  {
        *
        */
       template <typename E>
-      heap_awh_node<E>::~heap_awh_node( ) { 
+      heap_awh_node<E>::~heap_awh_node( )
+      { 
         
       }    
       
@@ -80,8 +87,12 @@ namespace KHJ  {
       template <typename E>
       typename heap_awh_node<E>::N* heap_awh_node<E>::parent( ) const
       {
-        if( color_ == 0 && !is_root( ) ) { return (*right_).right_; } 
-        else { return right_; }
+        if( color_ == 0 && !is_root( ) ) {
+          return (*right_).right_;
+        } 
+        else {
+          return right_;
+        }
       }
 
       /**

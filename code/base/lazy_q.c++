@@ -11,7 +11,7 @@ static long long comps;
 template <typename T>
 class counting_comparator {
 public:  
-  long long& c = comps;
+  //long long& c = comps;
   bool operator()(T const& a, T const& b) const {
     ++comps;
     return a < b;
@@ -46,6 +46,7 @@ int main( )
   std::cout << "---LAZY LIST---" << std::endl;  
   benchmarker1.push( lazy_Q );
   lazy_Q.clear( );
+  
   benchmarker1.pop( lazy_Q );
   lazy_Q.clear( );
   benchmarker1.emplace( lazy_Q );

@@ -30,8 +30,8 @@ namespace KHJ  {
         std::string path = "./bench/data/";
         std::ofstream bench_plots;
         std::ofstream bench_plots_med;
-        std::vector<long long> bench_vec;
-        std::vector<long long> comp_vec;
+        std::vector<double> bench_vec;
+        std::vector<double> comp_vec;
 
         clock_t cpu0;
         clock_t cpu1;
@@ -39,13 +39,13 @@ namespace KHJ  {
   
         std::vector<E>  data;
         std::vector<N*> nodes;
-        std::vector<N> nodes_boost;
+        std::vector<N>  nodes_boost;
         
-        E max_elements = pow(10, 6);
+        E max_elements = pow(10, 7);
         E     elements_ = 1000;
         
         double reps    = 5;
-        double splits  = 10;
+        double splits  = 2;
         double sum     = 0;
         double mean    = 0;
         double sd      = 0;
@@ -82,8 +82,8 @@ namespace KHJ  {
               cpu1  = clock( );
               cpu_timer = static_cast<double>( cpu1 - cpu0 )  / double(CLOCKS_PER_SEC);
               bench_vec.push_back( cpu_timer * 1000000.0 );
-              comp_vec.push_back( compares / elements );
-              
+              comp_vec.push_back( double(compares) / double(elements) );
+
               for( auto it = nodes.begin( ) ; it != nodes.end( ) ; it++ ) {
                 q.extract( );
               }
@@ -140,7 +140,7 @@ namespace KHJ  {
               cpu1  = clock( );
               cpu_timer = static_cast<double>( cpu1 - cpu0 )  / double(CLOCKS_PER_SEC);
               bench_vec.push_back( cpu_timer * 1000000.0 );
-              comp_vec.push_back( compares / elements );
+              comp_vec.push_back( double(compares) / double(elements) );
             }
 
             std::sort( bench_vec.begin(), bench_vec.end() );
@@ -187,7 +187,7 @@ namespace KHJ  {
               cpu1  = clock( );
               cpu_timer = static_cast<double>( cpu1 - cpu0 )  / double(CLOCKS_PER_SEC);
               bench_vec.push_back( cpu_timer * 1000000.0 );
-              comp_vec.push_back( compares / elements );
+              comp_vec.push_back( double(compares) / double(elements) );
 
               q.clear();
           
@@ -241,7 +241,7 @@ namespace KHJ  {
               cpu1  = clock( );
               cpu_timer = static_cast<double>( cpu1 - cpu0 )  / double(CLOCKS_PER_SEC);
               bench_vec.push_back( cpu_timer * 1000000.0 );
-              comp_vec.push_back( compares / elements );
+              comp_vec.push_back( double(compares) / double(elements) );
               
               nodes.clear();
             }
@@ -294,8 +294,8 @@ namespace KHJ  {
               cpu1  = clock( );
               cpu_timer = static_cast<double>( cpu1 - cpu0 )  / double(CLOCKS_PER_SEC);
               bench_vec.push_back( cpu_timer * 1000000.0 );
-              comp_vec.push_back( compares / elements );
-              
+              comp_vec.push_back( double(compares) / double(elements) );
+                            
               nodes_boost.clear();
             }
 
@@ -355,8 +355,8 @@ namespace KHJ  {
               cpu1  = clock( );
               cpu_timer = static_cast<double>( cpu1 - cpu0 )  / double(CLOCKS_PER_SEC);
               bench_vec.push_back( cpu_timer * 1000000.0 );
-              comp_vec.push_back( compares / elements );
-                      
+              comp_vec.push_back( double(compares) / double(elements) );
+                                    
               q.clear( );     
               nodes.clear();
             }
@@ -422,8 +422,8 @@ namespace KHJ  {
               cpu1  = clock( );
               cpu_timer = static_cast<double>( cpu1 - cpu0 )  / double(CLOCKS_PER_SEC);
               bench_vec.push_back( cpu_timer * 1000000.0 );
-              comp_vec.push_back( compares / elements );
-                      
+              comp_vec.push_back( double(compares) / double(elements) );
+                                    
               q.clear( );     
               nodes_boost.clear();
             }
@@ -508,7 +508,7 @@ namespace KHJ  {
               cpu_timer += static_cast<double>( cpu1 - cpu0 )  / double(CLOCKS_PER_SEC);
             
               bench_vec.push_back( cpu_timer * 1000000.0 );
-              comp_vec.push_back( compares / elements );
+              comp_vec.push_back( double(compares) / double(elements) );
 
               q.clear( );
               nodes.clear( );
@@ -593,8 +593,8 @@ namespace KHJ  {
               cpu_timer += static_cast<double>( cpu1 - cpu0 )  / double(CLOCKS_PER_SEC);
             
               bench_vec.push_back( cpu_timer * 1000000.0 );
-              comp_vec.push_back( compares / elements );
-
+              comp_vec.push_back( double(compares) / double(elements) );
+              
               q.clear( );
               nodes_boost.clear( );
             }
@@ -679,8 +679,8 @@ namespace KHJ  {
               cpu1  = clock( );
               cpu_timer += static_cast<double>( cpu1 - cpu0 )  / double(CLOCKS_PER_SEC);
               bench_vec.push_back( cpu_timer * 1000000.0 );
-              comp_vec.push_back( compares / elements );
-                      
+              comp_vec.push_back( double(compares) / double(elements) );
+                                    
               q.clear( );
               q1.clear( );
               nodes.clear( );
@@ -764,8 +764,8 @@ namespace KHJ  {
               cpu1  = clock( );
               cpu_timer += static_cast<double>( cpu1 - cpu0 )  / double(CLOCKS_PER_SEC);
               bench_vec.push_back( cpu_timer * 1000000.0 );
-              comp_vec.push_back( compares / elements );
-
+              comp_vec.push_back( double(compares) / double(elements) );
+              
               q.clear();
               q1.clear();
               nodes.clear( );

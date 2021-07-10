@@ -71,7 +71,8 @@ namespace KHJ  {
           top_ = Q; 
         }
         root_list_.inject( Q );
-        cons_ = 1; ++size_;
+        cons_ = 1; 
+        ++size_;
       }
 
       /**

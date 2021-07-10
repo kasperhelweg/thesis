@@ -1,5 +1,3 @@
-
-
 /**
  * Desc : A two-pointer basic heap node used in a perfect binary heap.
  * Auth : KHJ
